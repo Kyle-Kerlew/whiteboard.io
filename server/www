@@ -33,10 +33,12 @@ const io = new Server(server, {
 
 
 io.on("connection", (socket => {
-    console.log(socket.id);
+    setInterval(() => socket.emit("drawing-data-from-server", drawingData), 1000)
+    //todo: skip emit execution if there are no new updates
+
+
     socket.on("drawing-data", (data) => {
         drawingData.push(data.data);
-        socket.emit("drawing-data-from-server", drawingData);
     })
 }));
 

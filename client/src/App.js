@@ -10,11 +10,9 @@ function App() {
 
 
     useEffect(() => {
-        console.log("Component mounted");
         const socket = io("http://localhost:3001");
 
         socket.on("drawing-data-from-server", data => {
-            console.log("data received", data)
             setDrawingData(data);
         })
 
@@ -27,25 +25,11 @@ function App() {
         }
 
         const canvas = myRef.current;
-        function drawUpdates() {
-            if (drawingData && drawingData.length > drawingArrIndex + 1) {
-                for (; drawingArrIndex < drawingData.length; drawingArrIndex++) {
-                    const moveTo = drawingData[drawingArrIndex].moveTo;
-                    const lineTo = drawingData[drawingArrIndex].lineTo;
-                    console.log("Drawing updates", {...moveTo});
-                    context.beginPath();
-                    context.moveTo(moveTo.x, moveTo.y);
-                    context.lineTo(lineTo.x, lineTo.y);
-                    context.stroke();
-                    context.closePath();
-                }
-            }
-        }
+
 
         const context = canvas.getContext('2d');
         canvas.height = window.innerHeight;
         canvas.width = window.innerWidth;
-        drawUpdates();
         let localMoveTo;
         let localLineTo;
         canvas.onclick = (e) => {
@@ -96,7 +80,6 @@ function App() {
                     y: prevY
                 }
                 context.stroke();
-                console.log("emitting data...");
                 socket.emit("drawing-data", {
                     data: {
                         lineTo: {...localLineTo},
@@ -106,8 +89,25 @@ function App() {
             }
         }
 
-    }, [])
+    }, []);
 
+    useEffect(() => {
+        const canvas = myRef.current;
+        const context = canvas.getContext('2d');
+        if (drawingData && drawingData.length > drawingArrIndex + 1) {
+            for (; drawingArrIndex < drawingData.length; drawingArrIndex++) {
+                const moveTo = drawingData[drawingArrIndex].moveTo;
+                const lineTo = drawingData[drawingArrIndex].lineTo;
+                console.log("Drawing updates", {...moveTo});
+                context.beginPath();
+                context.moveTo(moveTo.x, moveTo.y);
+                context.lineTo(lineTo.x, lineTo.y);
+                context.stroke();
+                context.closePath();
+            }
+        }
+
+    }, [drawingData]);
     return (
         <React.Fragment>
             <canvas id="drawing-board" ref={myRef}>
