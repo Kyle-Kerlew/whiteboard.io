@@ -1,0 +1,17 @@
+.toolbar ul {
+    position: fixed;
+    background-color: #EEEEEE;
+    border-radius: 30px;
+    width: 200px;
+    bottom: 0;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    margin-left: -100px;
+    box-shadow: 10px 5px 5px #c4c4c4c4;
+
+}
+
+.toolbar li {
+    list-style-type: none;
+}
