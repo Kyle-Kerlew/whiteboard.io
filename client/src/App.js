@@ -2,18 +2,20 @@ import './App.css';
 import React, {createRef, useState, useEffect} from 'react';
 import Toolbar from './components/toolbar/toolbar';
 import {io} from 'socket.io-client';
+import _ from 'lodash';
 
 function App() {
     const myRef = createRef();
     const [drawingData, setDrawingData] = useState();
     let drawingArrIndex = 0;
 
-
     useEffect(() => {
         const socket = io("http://localhost:3001");
 
         socket.on("drawing-data-from-server", data => {
-            setDrawingData(data);
+            if (!_.isEqual(data, drawingData)) {
+                setDrawingData(data);
+            }
         })
 
         let mouseDown = false;
@@ -30,8 +32,8 @@ function App() {
         const context = canvas.getContext('2d');
         canvas.height = window.innerHeight;
         canvas.width = window.innerWidth;
-        let localMoveTo;
-        let localLineTo;
+        let lastMouseDragLocationX;
+        let lastMouseDragLocationY;
         canvas.onclick = (e) => {
             context.beginPath();
             prevX = e.clientX;
@@ -61,10 +63,6 @@ function App() {
             prevX = e.clientX;
             prevY = e.clientY;
             context.moveTo(prevX, prevY);
-            localMoveTo = {
-                x: prevX,
-                y: prevY
-            }
         }
         canvas.onmouseup = () => {
             mouseDown = false;
@@ -72,20 +70,22 @@ function App() {
         }
         canvas.onmousemove = (e) => {
             if (mouseDown) {
-                prevX = e.clientX;
-                prevY = e.clientY;
-                context.lineTo(prevX, prevY);
-                localLineTo = {
-                    x: prevX,
-                    y: prevY
-                }
+                context.lineTo(e.clientX, e.clientY);
                 context.stroke();
                 socket.emit("drawing-data", {
                     data: {
-                        lineTo: {...localLineTo},
-                        moveTo: {...localMoveTo}
+                        moveTo: {
+                            x: prevX,
+                            y: prevY
+                        },
+                        lineTo: {
+                            x: e.clientX,
+                            y: e.clientY
+                        },
                     }
                 })
+                prevX = e.clientX;
+                prevY = e.clientY;
             }
         }
 
@@ -98,7 +98,6 @@ function App() {
             for (; drawingArrIndex < drawingData.length; drawingArrIndex++) {
                 const moveTo = drawingData[drawingArrIndex].moveTo;
                 const lineTo = drawingData[drawingArrIndex].lineTo;
-                console.log("Drawing updates", {...moveTo});
                 context.beginPath();
                 context.moveTo(moveTo.x, moveTo.y);
                 context.lineTo(lineTo.x, lineTo.y);
