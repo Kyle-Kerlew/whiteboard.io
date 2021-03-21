@@ -1,118 +1,137 @@
 import './App.css';
-import React, {createRef, useState, useEffect} from 'react';
-import Toolbar from './components/toolbar/toolbar';
+import React, {createRef, useRef, useState, useEffect} from 'react';
+import BottomToolbar from './components/toolbar/bottomtoolbar';
+import SideToolbar from './components/toolbar/sidetoolbar';
 import {io} from 'socket.io-client';
 import _ from 'lodash';
 
 function App() {
-    const myRef = createRef();
-    const [drawingData, setDrawingData] = useState();
-    let drawingArrIndex = 0;
+    console.log("Drawing arr reset");
+    const canvasRef = createRef();
+    const [drawingData, setDrawingData] = useState([]);
+    const [paintSize, setPaintSize] = useState(25);
+    const [socket, setSocket] = useState();
+    const [mouseDown, setMouseDown] = useState(false);
+    const [color, setColor] = useState('black');
+    let prevX = useRef();
+    let prevY = useRef();
+    let drawingArrIndex = useRef(0);
+
+    function clearBoard(socket, canvas, context) {
+        socket.emit("empty-page");
+        drawingData.current = [];
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+    }
 
     useEffect(() => {
-        const socket = io("http://localhost:3001");
-
-        socket.on("drawing-data-from-server", data => {
+        const Socket = io("http://localhost:3001");
+        setSocket(Socket);
+        Socket.on("drawing-data-from-server", data => {
             if (!_.isEqual(data, drawingData)) {
                 setDrawingData(data);
             }
         })
 
-        let mouseDown = false;
-        let prevX;
-        let prevY;
-
-        function clearBoard(e) {
-            //TODO:
-        }
-
-        const canvas = myRef.current;
-
-
-        const context = canvas.getContext('2d');
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
-        let lastMouseDragLocationX;
-        let lastMouseDragLocationY;
-        canvas.onclick = (e) => {
-            context.beginPath();
-            prevX = e.clientX;
-            prevY = e.clientY;
-            context.moveTo(prevX, prevY);
-            context.lineTo(prevX + 1, prevY + 1);
-            socket.emit("drawing-data", {
-                data:
-                    {
-                        lineTo: {
-                            x: prevX + 1,
-                            y: prevY + 1
-                        },
-                        moveTo: {
-                            x: prevX,
-                            y: prevY
-                        }
-                    }
-            })
-            context.stroke();
-            context.closePath();
-
-        }
-        canvas.onmousedown = (e) => {
-            mouseDown = true;
-            context.beginPath();
-            prevX = e.clientX;
-            prevY = e.clientY;
-            context.moveTo(prevX, prevY);
-        }
-        canvas.onmouseup = () => {
-            mouseDown = false;
-            context.closePath();
-        }
-        canvas.onmousemove = (e) => {
-            if (mouseDown) {
-                context.lineTo(e.clientX, e.clientY);
-                context.stroke();
-                socket.emit("drawing-data", {
-                    data: {
-                        moveTo: {
-                            x: prevX,
-                            y: prevY
-                        },
-                        lineTo: {
-                            x: e.clientX,
-                            y: e.clientY
-                        },
-                    }
-                })
-                prevX = e.clientX;
-                prevY = e.clientY;
-            }
-        }
-
     }, []);
 
     useEffect(() => {
-        const canvas = myRef.current;
-        const context = canvas.getContext('2d');
-        if (drawingData && drawingData.length > drawingArrIndex + 1) {
-            for (; drawingArrIndex < drawingData.length; drawingArrIndex++) {
-                const moveTo = drawingData[drawingArrIndex].moveTo;
-                const lineTo = drawingData[drawingArrIndex].lineTo;
-                context.beginPath();
-                context.moveTo(moveTo.x, moveTo.y);
-                context.lineTo(lineTo.x, lineTo.y);
-                context.stroke();
-                context.closePath();
-            }
+        const context = canvasRef.current.getContext('2d');
+        while (drawingData && drawingData.length > drawingArrIndex.current) {
+            console.log("Drawing from " + drawingArrIndex + " onward");
+            console.log(drawingData)
+            const moveTo = drawingData[drawingArrIndex.current].moveTo;
+            const lineTo = drawingData[drawingArrIndex.current].lineTo;
+            context.beginPath();
+            context.moveTo(moveTo.x, moveTo.y);
+            context.lineTo(lineTo.x, lineTo.y);
+            context.lineJoin = 'round';
+            context.lineCap = 'round';
+            context.lineWidth = lineTo.size;
+            context.strokeStyle = lineTo.color;
+            context.stroke();
+            context.closePath();
+            drawingArrIndex.current += 1;
         }
 
     }, [drawingData]);
     return (
         <React.Fragment>
-            <canvas id="drawing-board" ref={myRef}>
+            <canvas id="drawing-board" ref={canvasRef} onClick={(e) => {
+                const context = canvasRef.current.getContext('2d');
+                context.beginPath();
+                prevX = e.clientX;
+                prevY = e.clientY;
+                context.moveTo(prevX, prevY);
+                context.lineTo(prevX + 1, prevY + 1);
+                context.lineJoin = 'round';
+                context.lineCap = 'round';
+                socket.emit("drawing-data", {
+                    data:
+                        {
+                            lineTo: {
+                                x: prevX + 1,
+                                y: prevY + 1,
+                                size: paintSize,
+                                color: color
+                            },
+                            moveTo: {
+                                x: prevX,
+                                y: prevY
+                            }
+                        }
+                })
+                context.lineWidth = paintSize;
+                context.strokeStyle = color;
+                context.stroke();
+                context.closePath();
+
+            }} onMouseDown={(e) => {
+                const context = canvasRef.current.getContext('2d');
+                setMouseDown(true);
+                context.beginPath();
+                prevX = e.clientX;
+                prevY = e.clientY;
+                context.moveTo(prevX, prevY);
+            }} onMouseUp={() => {
+                const context = canvasRef.current.getContext('2d');
+                setMouseDown(false);
+                context.closePath();
+            }} onMouseMove={(e) => {
+                const context = canvasRef.current.getContext('2d');
+                if (mouseDown) {
+                    context.lineTo(e.clientX, e.clientY);
+                    context.lineJoin = 'round';
+                    context.lineCap = 'round';
+                    context.lineWidth = paintSize;
+                    context.strokeStyle = color;
+                    context.stroke();
+                    socket.emit("drawing-data", {
+                        data: {
+                            moveTo: {
+                                x: prevX,
+                                y: prevY,
+                            },
+                            lineTo: {
+                                x: e.clientX,
+                                y: e.clientY,
+                                size: paintSize,
+                                color: color
+
+                            },
+                        }
+                    })
+                    prevX = e.clientX;
+                    prevY = e.clientY;
+                }
+            }}
+                    width={window.innerWidth}
+                    height={window.innerHeight}
+            >
                 Please update your browser.
             </canvas>
-            <Toolbar/>
+            <BottomToolbar setPaintSize={setPaintSize}/>
+            <SideToolbar setColor={setColor}/>
         </React.Fragment>
     );
 }

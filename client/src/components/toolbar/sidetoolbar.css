@@ -1,0 +1,25 @@
+.sidetoolbar ul {
+    padding: 0;
+    position: fixed;
+    background-color: #EEEEEE;
+    border-radius: 30px;
+    height: 400px;
+    width: 100px;
+    bottom: 50%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -200px;
+    box-shadow: 10px 5px 5px #c4c4c4c4;
+
+}
+
+svg {
+    cursor: pointer;
+}
+
+.sidetoolbar li {
+    list-style-type: none;
+}

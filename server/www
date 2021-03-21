@@ -20,7 +20,7 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-const drawingData = [];
+let drawingData = [];
 
 const io = new Server(server, {
     cors: {
@@ -31,14 +31,13 @@ const io = new Server(server, {
 
 })
 
-
 io.on("connection", (socket => {
     setInterval(() => socket.emit("drawing-data-from-server", drawingData), 1000)
-    //todo: skip emit execution if there are no new updates
-
-
     socket.on("drawing-data", (data) => {
         drawingData.push(data.data);
+    })
+    socket.on("empty-page", () => {
+        drawingData = [];
     })
 }));
 
