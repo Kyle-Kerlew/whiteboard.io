@@ -3,18 +3,33 @@
     position: fixed;
     background-color: #EEEEEE;
     border-radius: 30px;
-    width: 200px;
+    min-width: 350px;
     bottom: 0;
     left: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: -100px;
+    margin-left: -170px;
     box-shadow: 10px 5px 5px #c4c4c4c4;
 
 }
 
+li > img {
+    margin: 0 15px 0 15px;
+
+}
+
+.divider {
+    height: 50px;
+    border-left: 1px solid #000;
+    margin: 0 30px;
+}
+
 svg {
+    cursor: pointer;
+}
+
+li img {
     cursor: pointer;
 }
 

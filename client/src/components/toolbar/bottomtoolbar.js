@@ -1,6 +1,7 @@
 import React from 'react';
 import './bottomtoolbar.css';
-
+import CrossIcon from '../../resources/svg/cross-icon.svg'
+import LinkIcon from '../../resources/svg/link-icon.svg'
 const BottomToolbar = props => {
     return (
         <div className="bottomtoolbar">
@@ -19,6 +20,13 @@ const BottomToolbar = props => {
                     <svg onClick={() => props.setPaintSize(55)} height="75" width="75">
                         <circle cx="37.5" cy="37.5" r="27.5" stroke="black" strokeWidth="3" fill="black"/>
                     </svg>
+                </li>
+                <div className={"divider"}/>
+                <li>
+                    <img width="24px" height="24px" onClick={props.clearBoard} src={CrossIcon} alt={"Clear Board"}/>
+                </li>
+                <li>
+                    <img width="24px" height="24px" onClick={() => {}} src={LinkIcon} alt="Get Share Link"/>
                 </li>
             </ul>
         </div>
