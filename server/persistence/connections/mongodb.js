@@ -1,26 +1,48 @@
-const MongoClient = require('mongodb').MongoClient;
+const {MongoClient} = require('mongodb');
 
 const uri = "mongodb+srv://***REMOVED***@cluster0.bwkf5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
-async function insert(client, db, doc) {
-    return db.collection('DrawingData').insertOne(doc).catch(err => console.log(err)).finally(() => client.close);
+async function insert(doc, collection) {
+    console.log("Inserting data....")
+    console.log("Value of collection " + collection)
+    try {
+        await collection.insertOne(doc);
+    } catch (e) {
+        console.log("Error inserting data", e)
+    } finally {
+        await client.close()
+    }
 }
 
-async function update(fillQuery, updateQuery, client, db) {
-    return db.collection('DrawingData').updateOne(fillQuery, updateQuery).catch(err => console.log(err)).finally(() => client.close);
+async function update(fillQuery, updateQuery, collection) {
+    try {
+        await collection.updateOne(fillQuery, updateQuery);
+    } catch (error) {
+        console.log("An error happened while updating db", error);
+    } finally {
+        await client.close();
+    }
 }
 
-client.connect(err => {
-    if (err) throw err;
-    console.log('connected');
+async function run() {
+    try {
+        await client.connect();
+    } catch (error) {
+        console.log("Problem connecting to mongo db", error);
 
-})
+    } finally {
+
+    }
+}
+
+
 module.exports = {
     mongodb: {
         insert,
         update,
-        client
+        client,
+        run
     }
 }
