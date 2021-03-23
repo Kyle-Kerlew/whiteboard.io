@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" application-parameters="--max-http-header-size=16384 " path-to-js-file="server/www" working-dir="$PROJECT_DIR$">
+  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" application-parameters="--max-http-header-size=16384 " path-to-js-file="$PROJECT_DIR$/server/server.js" working-dir="$PROJECT_DIR$">
     <envs>
       <env name="DEBUG" value="collaborative-drawing-app:*" />
     </envs>
