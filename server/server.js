@@ -22,7 +22,6 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-// SocketIOServer.listen();
 let drawingData = [];
 
 const io = new Server(server, {
@@ -34,42 +33,47 @@ const io = new Server(server, {
 
 })
 
-io.on("connection", (socket => {
-    console.log("Connected by client");
-    setInterval(() => socket.emit("drawing-data-from-server", drawingData), 1000)
-    socket.on("drawing-data", async (data) => {
-        drawingData.push(data.data);
-        const fillQuery = {whiteboardId: data.whiteboardId};
-        const updateQuery = {$set: {data: drawingData}};
-        await mongodb.update(fillQuery, updateQuery, client, db);
-    })
-    socket.on("empty-page", (whiteboardId) => {
-        drawingData = [];
-        const fillQuery = {whiteboardId: whiteboardId};
-        const updateQuery = {$set: {data: []}};
+async function connectToMongo() {
+    await mongodb.run();
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    io.on("connection", (socket => {
+        setInterval(() => socket.emit("drawing-data-from-server", drawingData), 1000)
+        socket.on("drawing-data", async (data) => {
+            drawingData.push(data.data);
+            const fillQuery = {whiteboardId: data.whiteboardId};
+            const updateQuery = {$set: {data: drawingData}};
+            await mongodb.update(fillQuery, updateQuery, drawingCollection);
+        })
+        socket.on("empty-page", async (whiteboardId) => {
+            drawingData = [];
+            const fillQuery = {whiteboardId: whiteboardId};
+            const updateQuery = {$set: {data: []}};
+            await mongodb.update(fillQuery, updateQuery, drawingCollection);
+        })
+        socket.on("create-whiteboard", async (data) => {
+            try {
+                await mongodb.insert(data, drawingCollection);
+            } catch (err) {
+                console.log("Something went wrong inserting data");
+            }
 
-        mongodb.update(fillQuery, updateQuery, client, db).then(r => r);
-    })
-    socket.on("create-whiteboard", async (data) => {
-        console.log("We out here")
-        try {
-            await mongodb.insert(client, db, data);
-        } catch (err) {
-            console.log("Something went wrong inserting data");
-        }
+        })
+    }));
 
-    })
-}));
+    io.on("connection", (socket => {
+        setInterval(() => socket.emit("drawing-data-from-server", drawingData), 1000)
+        socket.on("drawing-data", (data) => {
+            drawingData.push(data.data);
+        })
+        socket.on("empty-page", () => {
+            drawingData = [];
+        })
+    }));
 
-io.on("connection", (socket => {
-    setInterval(() => socket.emit("drawing-data-from-server", drawingData), 1000)
-    socket.on("drawing-data", (data) => {
-        drawingData.push(data.data);
-    })
-    socket.on("empty-page", () => {
-        drawingData = [];
-    })
-}));
+}
+
+void  connectToMongo()
+
 
 /**
  * Listen on provided port, on all network interfaces.
