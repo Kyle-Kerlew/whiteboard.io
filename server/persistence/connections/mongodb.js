@@ -1,8 +1,9 @@
 const {MongoClient} = require('mongodb');
-
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const uri = process.env.DB_URI
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-console.log(uri);
 async function insert(doc, collection) {
     console.log("Inserting data....")
     console.log("Value of collection " + collection)
