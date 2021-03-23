@@ -1,9 +1,8 @@
 const {MongoClient} = require('mongodb');
 
-const uri = "mongodb+srv://kerlks:hhaXCgdDWHioKdEE@cluster0.bwkf5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
+const uri = process.env.DB_URI
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-
+console.log(uri);
 async function insert(doc, collection) {
     console.log("Inserting data....")
     console.log("Value of collection " + collection)
