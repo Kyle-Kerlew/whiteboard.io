@@ -1,8 +1,8 @@
 import React, {createRef, useRef, useState, useEffect} from 'react';
-import {io} from 'socket.io-client';
 import _ from 'lodash';
 import BottomToolbar from "../toolbar/bottomtoolbar";
 import SideToolbar from "../toolbar/sidetoolbar";
+import {Socket}  from '../socket/socket';
 
 function Canvas() {
     const canvasRef = createRef();
@@ -24,7 +24,6 @@ function Canvas() {
     }
 
     useEffect(() => {
-        const Socket = io("http://localhost:3001");
         setSocket(Socket);
         Socket.on("drawing-data-from-server", data => {
             if (!_.isEqual(data, drawingData)) {
@@ -37,8 +36,6 @@ function Canvas() {
     useEffect(() => {
         const context = canvasRef.current.getContext('2d');
         while (drawingData && drawingData.length > drawingArrIndex.current) {
-            console.log("Drawing from " + drawingArrIndex + " onward");
-            console.log(drawingData)
             const moveTo = drawingData[drawingArrIndex.current].moveTo;
             const lineTo = drawingData[drawingArrIndex.current].lineTo;
             context.beginPath();
