@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import './popover.css';
 import {v4 as uuidv4} from 'uuid';
 import {useHistory} from "react-router-dom";
+import {Socket} from '../socket/socket';
 
 function Popover() {
     const history = useHistory();
@@ -11,6 +12,10 @@ function Popover() {
     function createNewWhiteboard() {
         const whiteboardUuid = btoa(uuidv4());
         history.push(`/${whiteboardUuid}`);
+        Socket.emit('create-whiteboard', {
+            whiteboardId: whiteboardUuid,
+            data: []
+        })
         //todo: store whiteboard ids and data in mongodb
     }
 
