@@ -7,15 +7,15 @@ import {useRouteMatch} from "react-router-dom";
 
 function Canvas() {
     const canvasRef = createRef();
-    const [drawingData, setDrawingData] = useState();
+    const [drawingData, setDrawingData] = useState([]);
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
     const [color, setColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch("/:canvasId").params;
 
-    let prevX = useRef();
-    let prevY = useRef();
-    let drawingArrIndex = useRef(0);
+    const prevX = useRef();
+    const prevY = useRef();
+    const drawingArrIndex = useRef(0);
 
     function clearBoard() {
         const context = canvasRef.current.getContext('2d');
@@ -30,14 +30,14 @@ function Canvas() {
             whiteboardId: whiteboardId
         })
         Socket.on("data-loaded", (data) => {
-            console.log("Data-loaded", data)
+            console.log("Retrieved data from server", data);
             if (!_.isEmpty(data)) {
-                setDrawingData(data);
+                setDrawingData(data.data);
             }
         })
         Socket.on("drawing-data-from-server", data => {
-            if (!_.isEqual(data, drawingData)) {
-                setDrawingData(data);
+            if (!_.isEmpty(data) && !_.isEqual(data, drawingData)) {
+                setDrawingData(data.data);
             }
         })
 
@@ -45,7 +45,9 @@ function Canvas() {
 
     useEffect(() => {
         const context = canvasRef.current.getContext('2d');
-        console.log("State changed", drawingData);
+        if (!_.isEmpty(drawingData)) {
+            Socket.emit("drawing-data", drawingData);
+        }
         while (!_.isEmpty(drawingData) && drawingData.length > drawingArrIndex.current) {
             const moveTo = drawingData[drawingArrIndex.current].moveTo;
             const lineTo = drawingData[drawingArrIndex.current].lineTo;
@@ -68,8 +70,8 @@ function Canvas() {
             <canvas id="drawing-board" ref={canvasRef} onClick={(e) => {
                 const context = canvasRef.current.getContext('2d');
                 context.beginPath();
-                prevX = e.clientX;
-                prevY = e.clientY;
+                prevX.current = e.clientX;
+                prevY.current = e.clientY;
                 context.moveTo(prevX, prevY);
                 context.lineTo(prevX + 1, prevY + 1);
                 context.lineJoin = 'round';
@@ -87,10 +89,10 @@ function Canvas() {
                         y: prevY
                     }
                 });
-                const stateClone = drawingData || [];
-                stateClone.push(newDrawData);
-                setDrawingData(stateClone);
-                Socket.emit("drawing-data", stateClone);
+                const arr = drawingData;
+                arr.push(newDrawData);
+                setDrawingData(arr);
+                Socket.emit("drawing-data", arr);
                 context.lineWidth = paintSize;
                 context.strokeStyle = color;
                 context.stroke();
@@ -100,8 +102,8 @@ function Canvas() {
                 const context = canvasRef.current.getContext('2d');
                 setMouseDown(true);
                 context.beginPath();
-                prevX = e.clientX;
-                prevY = e.clientY;
+                prevX.current = e.clientX;
+                prevY.current = e.clientY;
                 context.moveTo(prevX, prevY);
             }} onMouseUp={() => {
                 const context = canvasRef.current.getContext('2d');
@@ -130,12 +132,12 @@ function Canvas() {
 
                         },
                     });
-                    const stateClone = drawingData || [];
-                    stateClone.push(newDrawData);
-                    setDrawingData(stateClone);
-                    Socket.emit("drawing-data", stateClone);
-                    prevX = e.clientX;
-                    prevY = e.clientY;
+                    const arr = drawingData;
+                    arr.push(newDrawData);
+                    setDrawingData(arr);
+                    Socket.emit("drawing-data", arr);
+                    prevX.current = e.clientX;
+                    prevY.current = e.clientY;
                 }
             }}
                     width={window.innerWidth}
