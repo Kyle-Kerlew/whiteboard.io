@@ -7,7 +7,7 @@ import {useRouteMatch} from "react-router-dom";
 
 function Canvas() {
     const canvasRef = createRef();
-    const [drawingData, setDrawingData] = useState([]);
+    const [newData, setNewData] = useState();
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
     const [color, setColor] = useState('black');
@@ -15,42 +15,40 @@ function Canvas() {
 
     const prevX = useRef();
     const prevY = useRef();
-    const drawingArrIndex = useRef(0);
+
+
+    function updateBoardManyPoints(data, context) {
+        if (!_.isEmpty(data)) {
+            for (let i = 0; i < data.length; i++) {
+                //todo: make sure this wont mess up lines and lose sequence
+                const moveTo = data[i].moveTo;
+                const lineTo = data[i].lineTo;
+                context.beginPath();
+                context.moveTo(moveTo.x, moveTo.y);
+                context.lineTo(lineTo.x, lineTo.y);
+                context.lineJoin = 'round';
+                context.lineCap = 'round';
+                context.lineWidth = lineTo.size;
+                context.strokeStyle = lineTo.color;
+                context.stroke();
+                context.closePath();
+            }
+        }
+    }
+
 
     function clearBoard() {
         const context = canvasRef.current.getContext('2d');
         Socket.emit("empty-page");
-        setDrawingData([]);
         context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-
     }
 
     useEffect(() => {
-        Socket.emit("load-data", {
-            whiteboardId: whiteboardId
-        })
-        Socket.on("data-loaded", (data) => {
-            console.log("Retrieved data from server", data);
-            if (!_.isEmpty(data)) {
-                setDrawingData(data.data);
-            }
-        })
-        Socket.on("drawing-data-from-server", data => {
-            if (!_.isEmpty(data) && !_.isEqual(data, drawingData)) {
-                setDrawingData(data.data);
-            }
-        })
-
-    }, []);
-
-    useEffect(() => {
         const context = canvasRef.current.getContext('2d');
-        if (!_.isEmpty(drawingData)) {
-            Socket.emit("drawing-data", drawingData);
-        }
-        while (!_.isEmpty(drawingData) && drawingData.length > drawingArrIndex.current) {
-            const moveTo = drawingData[drawingArrIndex.current].moveTo;
-            const lineTo = drawingData[drawingArrIndex.current].lineTo;
+        if (!_.isEmpty(newData)) {
+            //todo: make sure this wont mess up lines and lose sequence
+            const moveTo = newData.moveTo;
+            const lineTo = newData.lineTo;
             context.beginPath();
             context.moveTo(moveTo.x, moveTo.y);
             context.lineTo(lineTo.x, lineTo.y);
@@ -60,10 +58,26 @@ function Canvas() {
             context.strokeStyle = lineTo.color;
             context.stroke();
             context.closePath();
-            drawingArrIndex.current += 1;
         }
+    }, [newData])
+    useEffect(() => {
+        const context = canvasRef.current.getContext('2d');
+        Socket.emit("load-data", {
+            whiteboardId: whiteboardId
+        });
+        Socket.on("data-loaded", (data) => {
+            if (!_.isEmpty(data)) {
+                updateBoardManyPoints(data.data, context);
+            }
+        });
+        Socket.on("clear-board", () => context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height));
+        Socket.on("drawing-data-from-server", data => {
+            if (!_.isEmpty(data)) {
+                setNewData(data);
+            }
+        })
 
-    }, [drawingData]);
+    }, []);
 
     return (
         <React.Fragment>
@@ -72,27 +86,25 @@ function Canvas() {
                 context.beginPath();
                 prevX.current = e.clientX;
                 prevY.current = e.clientY;
-                context.moveTo(prevX, prevY);
-                context.lineTo(prevX + 1, prevY + 1);
+                context.moveTo(prevX.current, prevY.current);
+                context.lineTo(prevX.current + 1, prevY.current + 1);
                 context.lineJoin = 'round';
                 context.lineCap = 'round';
                 const newDrawData = ({
                     whiteboardId: whiteboardId,
                     lineTo: {
-                        x: prevX + 1,
-                        y: prevY + 1,
+                        x: prevX.current + 1,
+                        y: prevY.current + 1,
                         size: paintSize,
                         color: color
                     },
                     moveTo: {
-                        x: prevX,
-                        y: prevY
+                        x: prevX.current,
+                        y: prevY.current
                     }
                 });
-                const arr = drawingData;
-                arr.push(newDrawData);
-                setDrawingData(arr);
-                Socket.emit("drawing-data", arr);
+
+                Socket.emit("drawing-data", newDrawData);
                 context.lineWidth = paintSize;
                 context.strokeStyle = color;
                 context.stroke();
@@ -121,8 +133,8 @@ function Canvas() {
                     const newDrawData = ({
                         whiteboardId: whiteboardId,
                         moveTo: {
-                            x: prevX,
-                            y: prevY,
+                            x: prevX.current,
+                            y: prevY.current,
                         },
                         lineTo: {
                             x: e.clientX,
@@ -132,10 +144,7 @@ function Canvas() {
 
                         },
                     });
-                    const arr = drawingData;
-                    arr.push(newDrawData);
-                    setDrawingData(arr);
-                    Socket.emit("drawing-data", arr);
+                    Socket.emit("drawing-data", newDrawData);
                     prevX.current = e.clientX;
                     prevY.current = e.clientY;
                 }
