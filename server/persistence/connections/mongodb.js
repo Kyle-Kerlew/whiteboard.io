@@ -4,15 +4,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const uri = process.env.DB_URI
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+
 async function insert(doc, collection) {
-    console.log("Inserting data....")
-    console.log("Value of collection " + collection)
     try {
         await collection.insertOne(doc);
     } catch (e) {
         console.log("Error inserting data", e)
     } finally {
-        await client.close()
+        // await client.close()
     }
 }
 
@@ -22,18 +21,30 @@ async function update(fillQuery, updateQuery, collection) {
     } catch (error) {
         console.log("An error happened while updating db", error);
     } finally {
-        await client.close();
+        // await client.close();
+    }
+}
+
+async function read(findQuery, collection, callback) {
+    try {
+        await collection.findOne(findQuery, callback);
+    } catch (error) {
+        console.log("An error happened while updating db", error);
+    } finally {
+        // await client.close();
     }
 }
 
 async function run() {
     try {
         await client.connect();
+        console.log("Successfully connected")
     } catch (error) {
         console.log("Problem connecting to mongo db", error);
 
     } finally {
-
+        // await client.close();
+        // console.log("Successfully closed connection")
     }
 }
 
@@ -42,6 +53,7 @@ module.exports = {
     mongodb: {
         insert,
         update,
+        read,
         client,
         run
     }
