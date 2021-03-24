@@ -22,8 +22,6 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-let drawingData = [];
-
 const io = new Server(server, {
     cors: {
         origin: "http://localhost:3000",
@@ -37,15 +35,30 @@ async function connectToMongo() {
     await mongodb.run();
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
     io.on("connection", (socket => {
-        setInterval(() => socket.emit("drawing-data-from-server", drawingData), 1000)
+        socket.on("load-data", async ({whiteboardId}) => {
+            console.log("request to load data for whiteboard", whiteboardId);
+            try {
+                const findQuery = {whiteboardId: whiteboardId};
+                await mongodb.read(findQuery, drawingCollection, (err, response) => socket.emit("data-loaded", response));
+            } catch (err) {
+                console.log("Something went wrong inserting data");
+            }
+
+        })
         socket.on("drawing-data", async (data) => {
-            drawingData.push(data.data);
-            const fillQuery = {whiteboardId: data.whiteboardId};
-            const updateQuery = {$set: {data: drawingData}};
-            await mongodb.update(fillQuery, updateQuery, drawingCollection);
+            //todo: handle requests coming from multiple people
+            const query = {whiteboardId: data[0].whiteboardId};
+            const updateQuery = {$set: {data: data}};
+            try {
+                let result;
+                await mongodb.update(query, updateQuery, drawingCollection).then(response => result = response);
+                socket.emit("drawing-data-from-server", {...result})
+            } catch (err) {
+                console.log("Something went wrong updating drawing data", err);
+            }
+
         })
         socket.on("empty-page", async (whiteboardId) => {
-            drawingData = [];
             const fillQuery = {whiteboardId: whiteboardId};
             const updateQuery = {$set: {data: []}};
             await mongodb.update(fillQuery, updateQuery, drawingCollection);
@@ -58,21 +71,12 @@ async function connectToMongo() {
             }
 
         })
-    }));
 
-    io.on("connection", (socket => {
-        setInterval(() => socket.emit("drawing-data-from-server", drawingData), 1000)
-        socket.on("drawing-data", (data) => {
-            drawingData.push(data.data);
-        })
-        socket.on("empty-page", () => {
-            drawingData = [];
-        })
     }));
 
 }
 
-void  connectToMongo()
+void connectToMongo()
 
 
 /**
