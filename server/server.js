@@ -30,42 +30,45 @@ const io = new Server(server, {
     serveClient: false,
 
 })
-
+let inMemoryDrawingData = []; //track by whiteboard id
 async function connectToMongo() {
     await mongodb.run();
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
     io.on("connection", (socket => {
-        socket.on("load-data", async ({whiteboardId}) => {
-            console.log("request to load data for whiteboard", whiteboardId);
+        socket.on("load-data", ({whiteboardId}) => {
             try {
+                console.log("User has connected to room", whiteboardId);
+                socket.join(whiteboardId); //join a room for everyone in a whiteboard
+                //todo: make sure users can leave a room to
                 const findQuery = {whiteboardId: whiteboardId};
-                await mongodb.read(findQuery, drawingCollection, (err, response) => socket.emit("data-loaded", response));
+                mongodb.read(findQuery, drawingCollection, (err, response) => socket.emit("data-loaded", response));
             } catch (err) {
                 console.log("Something went wrong inserting data");
             }
 
         })
-        socket.on("drawing-data", async (data) => {
+        socket.on("drawing-data", (data) => {
             //todo: handle requests coming from multiple people
-            const query = {whiteboardId: data[0].whiteboardId};
-            const updateQuery = {$set: {data: data}};
+            const query = {whiteboardId: data.whiteboardId};
+            inMemoryDrawingData.push(data);
+            const updateQuery = {$set: {data: inMemoryDrawingData}};
+            socket.to(data.whiteboardId).emit("drawing-data-from-server", data)
             try {
-                let result;
-                await mongodb.update(query, updateQuery, drawingCollection).then(response => result = response);
-                socket.emit("drawing-data-from-server", {...result})
+                mongodb.update(query, updateQuery, drawingCollection);
             } catch (err) {
                 console.log("Something went wrong updating drawing data", err);
             }
 
         })
-        socket.on("empty-page", async (whiteboardId) => {
+        socket.on("empty-page", (whiteboardId) => {
             const fillQuery = {whiteboardId: whiteboardId};
             const updateQuery = {$set: {data: []}};
-            await mongodb.update(fillQuery, updateQuery, drawingCollection);
+            socket.emit("empty-page")
+            mongodb.update(fillQuery, updateQuery, drawingCollection);
         })
-        socket.on("create-whiteboard", async (data) => {
+        socket.on("create-whiteboard", (data) => {
             try {
-                await mongodb.insert(data, drawingCollection);
+                mongodb.insert(data, drawingCollection);
             } catch (err) {
                 console.log("Something went wrong inserting data");
             }
