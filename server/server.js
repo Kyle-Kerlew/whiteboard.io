@@ -57,7 +57,6 @@ async function connectToMongo() {
         socket.on("drawing-data", (data) => {
             //todo: handle requests coming from multiple people
             const query = {whiteboardId: data.whiteboardId};
-            // console.log("Map:", inMemoryDrawingData.get(data.whiteboardId))
             const updateQuery = {$push: {data: data}};
             socket.to(data.whiteboardId).emit("drawing-data-from-server", data)
             try {
@@ -70,7 +69,7 @@ async function connectToMongo() {
         socket.on("empty-page", (whiteboardId) => {
             const fillQuery = {whiteboardId: whiteboardId};
             const updateQuery = {$set: {data: []}};
-            socket.emit("empty-page")
+            socket.to(whiteboardId).emit("empty-page-from-server")
             mongodb.update(fillQuery, updateQuery, drawingCollection);
         })
         socket.on("create-whiteboard", (data) => {

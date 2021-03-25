@@ -16,14 +16,9 @@ function Canvas() {
     const prevX = useRef();
     const prevY = useRef();
 
-
     function updateBoardManyPoints(data, context) {
         if (!_.isEmpty(data)) {
-            // console.log("Data in func", data);
             for (let i = 0; i < data.length; i++) {
-                // if (!data[i].moveTo || !data[i].lineTo) {
-                //     console.log(data[i])
-                // }
                 //todo: make sure this wont mess up lines and lose sequence
                 const moveTo = data[i].moveTo;
                 const lineTo = data[i].lineTo;
@@ -42,9 +37,9 @@ function Canvas() {
 
 
     function clearBoard() {
-        const context = canvasRef.current.getContext('2d');
-        Socket.emit("empty-page");
-        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        Socket.emit("empty-page", whiteboardId);
+        setNewData([]);
+
     }
 
     useEffect(() => {
@@ -62,6 +57,8 @@ function Canvas() {
             context.strokeStyle = lineTo.color;
             context.stroke();
             context.closePath();
+        } else {
+            context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         }
     }, [newData])
     useEffect(() => {
@@ -74,9 +71,8 @@ function Canvas() {
                 updateBoardManyPoints(data, context);
             }
         });
-        Socket.on("clear-board", () => context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height));
+        Socket.on("empty-page-from-server", () => setNewData([]));
         Socket.on("drawing-data-from-server", data => {
-            console.log("drawing data from server", data)
             if (!_.isEmpty(data)) {
                 setNewData(data);
             }
