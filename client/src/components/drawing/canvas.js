@@ -19,7 +19,11 @@ function Canvas() {
 
     function updateBoardManyPoints(data, context) {
         if (!_.isEmpty(data)) {
+            // console.log("Data in func", data);
             for (let i = 0; i < data.length; i++) {
+                // if (!data[i].moveTo || !data[i].lineTo) {
+                //     console.log(data[i])
+                // }
                 //todo: make sure this wont mess up lines and lose sequence
                 const moveTo = data[i].moveTo;
                 const lineTo = data[i].lineTo;
@@ -67,11 +71,12 @@ function Canvas() {
         });
         Socket.on("data-loaded", (data) => {
             if (!_.isEmpty(data)) {
-                updateBoardManyPoints(data.data, context);
+                updateBoardManyPoints(data, context);
             }
         });
         Socket.on("clear-board", () => context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height));
         Socket.on("drawing-data-from-server", data => {
+            console.log("drawing data from server", data)
             if (!_.isEmpty(data)) {
                 setNewData(data);
             }

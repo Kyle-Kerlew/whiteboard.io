@@ -27,7 +27,7 @@ async function update(fillQuery, updateQuery, collection) {
 
 async function read(findQuery, collection, callback) {
     try {
-        await collection.findOne(findQuery, callback);
+        return await collection.findOne(findQuery, callback);
     } catch (error) {
         console.log("An error happened while updating db", error);
     } finally {
