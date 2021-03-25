@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 /**
  * Module dependencies.
  */
@@ -9,7 +8,7 @@ const debug = require('debug')('collaborative-drawing-app:server');
 const http = require('http');
 const {Server} = require("socket.io");
 const {mongodb} = require('./persistence/connections/mongodb');
-
+const _ = require('lodash');
 /**
  * Get port from environment and store in Express.
  */
@@ -30,18 +29,26 @@ const io = new Server(server, {
     serveClient: false,
 
 })
-let inMemoryDrawingData = []; //track by whiteboard id
+
+//todo: look into using cache instead of a map
+// const inMemoryDrawingData = new Map(); //track by whiteboard id
 async function connectToMongo() {
     await mongodb.run();
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
     io.on("connection", (socket => {
         socket.on("load-data", ({whiteboardId}) => {
             try {
-                console.log("User has connected to room", whiteboardId);
                 socket.join(whiteboardId); //join a room for everyone in a whiteboard
                 //todo: make sure users can leave a room to
                 const findQuery = {whiteboardId: whiteboardId};
-                mongodb.read(findQuery, drawingCollection, (err, response) => socket.emit("data-loaded", response));
+                mongodb.read(findQuery, drawingCollection, (err, response) => {
+                    if (err) {
+                        console.log("something wrong");
+                        return;
+                    }
+                    socket.emit("data-loaded", response.data);
+                });
+
             } catch (err) {
                 console.log("Something went wrong inserting data");
             }
@@ -50,8 +57,8 @@ async function connectToMongo() {
         socket.on("drawing-data", (data) => {
             //todo: handle requests coming from multiple people
             const query = {whiteboardId: data.whiteboardId};
-            inMemoryDrawingData.push(data);
-            const updateQuery = {$set: {data: inMemoryDrawingData}};
+            // console.log("Map:", inMemoryDrawingData.get(data.whiteboardId))
+            const updateQuery = {$push: {data: data}};
             socket.to(data.whiteboardId).emit("drawing-data-from-server", data)
             try {
                 mongodb.update(query, updateQuery, drawingCollection);
