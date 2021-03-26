@@ -1,5 +1,5 @@
 import React from 'react';
-import './sidetoolbar.css';
+import '../../styles/sidetoolbar.css';
 
 const SideToolbar = props => {
     return (
