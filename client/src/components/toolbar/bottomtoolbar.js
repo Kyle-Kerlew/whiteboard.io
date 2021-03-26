@@ -1,8 +1,10 @@
-import React from 'react';
-import './bottomtoolbar.css';
+import React, {useState} from 'react';
+import '../../styles/bottomtoolbar.css';
 import CrossIcon from '../../resources/svg/cross-icon.svg'
 import LinkIcon from '../../resources/svg/link-icon.svg'
+
 const BottomToolbar = props => {
+
     return (
         <div className="bottomtoolbar">
             <ul>
@@ -26,7 +28,7 @@ const BottomToolbar = props => {
                     <img width="24px" height="24px" onClick={props.clearBoard} src={CrossIcon} alt={"Clear Board"}/>
                 </li>
                 <li>
-                    <img width="24px" height="24px" onClick={() => {}} src={LinkIcon} alt="Get Share Link"/>
+                    <img width="24px" height="24px" onClick={() => props.setIsPopupVisible(true)} src={LinkIcon} alt="Get Share Link"/>
                 </li>
             </ul>
         </div>
