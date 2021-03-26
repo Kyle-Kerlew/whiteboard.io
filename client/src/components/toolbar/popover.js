@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import './popover.css';
+import '../../styles/popover.css';
 import {v4 as uuidv4} from 'uuid';
 import {useHistory} from "react-router-dom";
 import {Socket} from '../socket/socket';
