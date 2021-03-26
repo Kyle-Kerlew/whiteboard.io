@@ -4,12 +4,14 @@ import BottomToolbar from "../toolbar/bottomtoolbar";
 import SideToolbar from "../toolbar/sidetoolbar";
 import {Socket} from '../socket/socket';
 import {useRouteMatch} from "react-router-dom";
+import ShareLinkBox from "../shared/linkShare";
 
 function Canvas() {
     const canvasRef = createRef();
     const [newData, setNewData] = useState();
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [color, setColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch("/:canvasId").params;
 
@@ -82,6 +84,9 @@ function Canvas() {
 
     return (
         <React.Fragment>
+            {isPopupVisible &&
+            <ShareLinkBox whiteboardId={whiteboardId} text={"Copy this link to share and collaborate!"}/>
+            }
             <canvas id="drawing-board" ref={canvasRef} onClick={(e) => {
                 const context = canvasRef.current.getContext('2d');
                 context.beginPath();
@@ -155,7 +160,7 @@ function Canvas() {
             >
                 Please update your browser.
             </canvas>
-            <BottomToolbar setPaintSize={setPaintSize} clearBoard={clearBoard}/>
+            <BottomToolbar setIsPopupVisible={setIsPopupVisible} setPaintSize={setPaintSize} clearBoard={clearBoard}/>
             <SideToolbar setColor={setColor}/>
         </React.Fragment>
     );
