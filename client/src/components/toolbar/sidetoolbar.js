@@ -1,9 +1,39 @@
-import React from 'react';
+import React, {createRef, useEffect, useRef, useState} from 'react';
 import '../../styles/sidetoolbar.css';
 
 const SideToolbar = props => {
+    const [isActive, setIsActive] = useState(false);
+    const prevMouseDown = useRef();
+    const toolbarRef = createRef();
+    useEffect(() => prevMouseDown.current = props.mouseDown)
+    useEffect(() => {
+
+        if (props.mouseDown && toolbarRef.current.style.opacity === "0") {
+            setTimeout(() => {
+                if (toolbarRef.current)
+                    toolbarRef.current.style.display = "none";
+            }, 500);
+        } else {
+            toolbarRef.current.style.display = "block";
+        }
+    });
+
+    function getStyle() {
+        if (props.mouseDown) {
+            return {opacity: 0, animation: 'fadeOutComplete .5s linear'}
+        }
+        if (prevMouseDown.current && !props.mouseDown) {
+            return {opacity: 0.5, animation: 'fadeInFromComplete .5s linear'}
+        }
+        return !isActive ? {opacity: 0.5, animation: 'fadeOut .5s linear'} : {
+            opacity: 1.0,
+            animation: 'fadeIn 1s linear'
+        }
+    }
+
     return (
-        <div className="sidetoolbar">
+        <div ref={el => toolbarRef.current = el} style={getStyle()} className="sidetoolbar"
+             onMouseEnter={() => setIsActive(true)} onMouseLeave={() => setIsActive(false)}>
             <ul>
                 <li>
                     <svg onClick={() => props.setColor("black")} height="50" width="50">
