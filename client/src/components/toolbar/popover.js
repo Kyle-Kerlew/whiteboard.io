@@ -16,7 +16,6 @@ function Popover() {
             whiteboardId: whiteboardUuid,
             data: []
         })
-        //todo: store whiteboard ids and data in mongodb
     }
 
     function handleInput(event) {
@@ -27,7 +26,7 @@ function Popover() {
         <div className="grayed-background">
             <div className="content">
                 {joinExisting &&
-                <div className={"existing"}>
+                <div>
                     <h1>Enter the ID of the whiteboard</h1>
                     <form onSubmit={() => history.push(`/${fieldValue.current}`)}>
                         <input onChange={handleInput} type={"text"}/>
@@ -36,14 +35,10 @@ function Popover() {
                 </div>
                 }
                 {!joinExisting &&
-                <>
-                    <div className={"new"}>
-                        <h1 onClick={createNewWhiteboard}>Create New Whiteboard</h1>
-                    </div>
-                    <div onClick={() => setJoinExisting(true)} className={"existing"}>
-                        <h1>Join Existing Whiteboard</h1>
-                    </div>
-                </>
+                <React.Fragment>
+                    <h1 onClick={createNewWhiteboard}>Create New Whiteboard</h1>
+                    <h1 onClick={() => setJoinExisting(true)} className={"existing"}>Join Existing Whiteboard</h1>
+                </React.Fragment>
                 }
             </div>
         </div>
