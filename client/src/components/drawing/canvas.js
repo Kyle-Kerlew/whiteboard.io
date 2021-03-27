@@ -21,7 +21,6 @@ function Canvas() {
     function updateBoardManyPoints(data, context) {
         if (!_.isEmpty(data)) {
             for (let i = 0; i < data.length; i++) {
-                //todo: make sure this wont mess up lines and lose sequence
                 const moveTo = data[i].moveTo;
                 const lineTo = data[i].lineTo;
                 context.beginPath();
@@ -44,12 +43,12 @@ function Canvas() {
 
     }
 
-    useEffect(() => {
+    function drawPoint(data) {
         const context = canvasRef.current.getContext('2d');
-        if (!_.isEmpty(newData)) {
+        if (!_.isEmpty(data)) {
             //todo: make sure this wont mess up lines and lose sequence
-            const moveTo = newData.moveTo;
-            const lineTo = newData.lineTo;
+            const moveTo = data.moveTo;
+            const lineTo = data.lineTo;
             context.beginPath();
             context.moveTo(moveTo.x, moveTo.y);
             context.lineTo(lineTo.x, lineTo.y);
@@ -62,7 +61,10 @@ function Canvas() {
         } else {
             context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         }
-    }, [newData])
+    }
+
+    useEffect(() => drawPoint(newData), [newData]);
+
     useEffect(() => {
         const context = canvasRef.current.getContext('2d');
         Socket.emit("load-data", {
@@ -85,7 +87,8 @@ function Canvas() {
     return (
         <React.Fragment>
             {isPopupVisible &&
-            <ShareLinkBox whiteboardId={whiteboardId} setIsVisible={setIsPopupVisible} text={"Copy this link to share and collaborate!"}/>
+            <ShareLinkBox whiteboardId={whiteboardId} setIsVisible={setIsPopupVisible}
+                          text={"Copy this link to share and collaborate!"}/>
             }
             <canvas id="drawing-board" ref={canvasRef} onClick={(e) => {
                 const context = canvasRef.current.getContext('2d');
@@ -160,8 +163,10 @@ function Canvas() {
             >
                 Please update your browser.
             </canvas>
-            <BottomToolbar setIsPopupVisible={setIsPopupVisible} setPaintSize={setPaintSize} clearBoard={clearBoard}/>
-            <SideToolbar setColor={setColor}/>
+            <BottomToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown} setIsPopupVisible={setIsPopupVisible}
+                           setPaintSize={setPaintSize}
+                           clearBoard={clearBoard}/>
+            <SideToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown} setColor={setColor}/>
         </React.Fragment>
     );
 }
