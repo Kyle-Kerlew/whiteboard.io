@@ -2,6 +2,7 @@ import React, {createRef, useEffect, useRef, useState} from 'react';
 import '../../styles/sidetoolbar.css';
 
 const SideToolbar = props => {
+    //todo: create a wrapper component as to not duplicate this code
     const [isActive, setIsActive] = useState(false);
     const prevMouseDown = useRef();
     const toolbarRef = createRef();
