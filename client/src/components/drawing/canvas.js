@@ -85,7 +85,7 @@ function Canvas() {
     return (
         <React.Fragment>
             {isPopupVisible &&
-            <ShareLinkBox whiteboardId={whiteboardId} text={"Copy this link to share and collaborate!"}/>
+            <ShareLinkBox whiteboardId={whiteboardId} setIsVisible={setIsPopupVisible} text={"Copy this link to share and collaborate!"}/>
             }
             <canvas id="drawing-board" ref={canvasRef} onClick={(e) => {
                 const context = canvasRef.current.getContext('2d');
