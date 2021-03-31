@@ -1,13 +1,12 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import '../../styles/popover.css';
 import {v4 as uuidv4} from 'uuid';
 import {useHistory} from "react-router-dom";
 import {Socket} from '../socket/socket';
+import NewWhiteBoardIcon from '../../resources/svg/new-whiteboard-icon.svg';
 
 function Popover() {
     const history = useHistory();
-    const [joinExisting, setJoinExisting] = useState(false);
-    const fieldValue = useRef();
 
     function createNewWhiteboard() {
         const whiteboardUuid = btoa(uuidv4());
@@ -18,28 +17,11 @@ function Popover() {
         })
     }
 
-    function handleInput(event) {
-        fieldValue.current = event.target.value;
-    }
-
     return (
         <div className="grayed-background">
             <div className="content">
-                {joinExisting &&
-                <div>
-                    <h1>Enter the ID of the whiteboard</h1>
-                    <form onSubmit={() => history.push(`/${fieldValue.current}`)}>
-                        <input onChange={handleInput} type={"text"}/>
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
-                }
-                {!joinExisting &&
-                <React.Fragment>
-                    <h1 onClick={createNewWhiteboard}>Create New Whiteboard</h1>
-                    <h1 onClick={() => setJoinExisting(true)} className={"existing"}>Join Existing Whiteboard</h1>
-                </React.Fragment>
-                }
+                <h1 onClick={createNewWhiteboard}>Create New Whiteboard</h1>
+                <img alt="New Whiteboard" width="150px" height="150px" src={NewWhiteBoardIcon}/>
             </div>
         </div>
     )
