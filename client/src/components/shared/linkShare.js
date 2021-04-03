@@ -1,5 +1,7 @@
 import React from 'react';
 import '../../styles/shareLinkBox.css';
+import {Button, TextField} from '@material-ui/core';
+import onClickOutside from "react-onclickoutside";
 
 function ShareLinkBox({text, whiteboardId, setIsVisible}) {
 
@@ -12,16 +14,20 @@ function ShareLinkBox({text, whiteboardId, setIsVisible}) {
         document.execCommand('copy');
     }
 
+    ShareLinkBox.handleClickOutside = () => setIsVisible(false);
     return (
-        <div className={"container"}>
-            <div className={"box"}>
-                <input type={"text"} value={baseurl + whiteboardId} id={"value"}/>
-                <p>{text}</p>
-                <button onClick={copyLink}>Copy Link</button>
-                <button onClick={() => setIsVisible(false)}>Done</button>
+        <div className={"box"}>
+            <div className="inline-copy">
+                <TextField type={"text"} value={baseurl + whiteboardId} id={"value"}/>
+                <Button onClick={copyLink} variant="contained">Copy</Button>
             </div>
+            <p>{text}</p>
+            <Button onClick={() => setIsVisible(false)} variant="contained">OK</Button>
         </div>
     )
 }
 
-export default ShareLinkBox;
+const clickOutsideConfig = {
+    handleClickOutside: () => ShareLinkBox.handleClickOutside
+}
+export default onClickOutside(ShareLinkBox, clickOutsideConfig);
