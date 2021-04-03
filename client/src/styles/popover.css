@@ -19,6 +19,11 @@
     margin-bottom: -150px;
 }
 .content > h1 {
-    width: 200px;
+    width: 300px;
     text-align: center;
+}
+
+.content > h1, img {
+    cursor: pointer;
+
 }
