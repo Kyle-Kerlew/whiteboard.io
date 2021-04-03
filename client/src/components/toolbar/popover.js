@@ -19,8 +19,8 @@ function Popover() {
 
     return (
         <div className="grayed-background">
-            <div className="content">
-                <h1 onClick={createNewWhiteboard}>Create New Whiteboard</h1>
+            <div className="content" onClick={createNewWhiteboard}>
+                <h1>New Whiteboard</h1>
                 <img alt="New Whiteboard" width="150px" height="150px" src={NewWhiteBoardIcon}/>
             </div>
         </div>
