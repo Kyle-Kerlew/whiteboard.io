@@ -6,14 +6,17 @@ function ShareLinkBox({text, whiteboardId, setIsVisible}) {
     const baseurl = "http://localhost:3000/";
 
     function copyLink() {
-        //todo: automatically copy link into users browser & tell user we've done so
+        const copyText = document.getElementById("value");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+        document.execCommand('copy');
     }
 
     return (
         <div className={"container"}>
             <div className={"box"}>
+                <input type={"text"} value={baseurl + whiteboardId} id={"value"}/>
                 <p>{text}</p>
-                <p className={"highlight"}>{baseurl + whiteboardId}</p>
                 <button onClick={copyLink}>Copy Link</button>
                 <button onClick={() => setIsVisible(false)}>Done</button>
             </div>

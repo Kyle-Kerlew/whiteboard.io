@@ -46,7 +46,6 @@ function Canvas() {
     function drawPoint(data) {
         const context = canvasRef.current.getContext('2d');
         if (!_.isEmpty(data)) {
-            //todo: make sure this wont mess up lines and lose sequence
             const moveTo = data.moveTo;
             const lineTo = data.lineTo;
             context.beginPath();
@@ -90,7 +89,7 @@ function Canvas() {
             <ShareLinkBox whiteboardId={whiteboardId} setIsVisible={setIsPopupVisible}
                           text={"Copy this link to share and collaborate!"}/>
             }
-            <canvas id="drawing-board" ref={canvasRef} onClick={(e) => {
+            <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={canvasRef} onClick={(e) => {
                 const context = canvasRef.current.getContext('2d');
                 context.beginPath();
                 prevX.current = e.clientX;
@@ -163,7 +162,8 @@ function Canvas() {
             >
                 Please update your browser.
             </canvas>
-            <BottomToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown} setIsPopupVisible={setIsPopupVisible}
+            <BottomToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown}
+                           setIsPopupVisible={setIsPopupVisible}
                            setPaintSize={setPaintSize}
                            clearBoard={clearBoard}/>
             <SideToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown} setColor={setColor}/>
