@@ -5,6 +5,7 @@ import SideToolbar from "../toolbar/sidetoolbar";
 import {Socket} from '../socket/socket';
 import {useRouteMatch} from "react-router-dom";
 import ShareLinkBox from "../shared/linkShare";
+import  '../../styles/shareLinkBox.css';
 
 function Canvas() {
     const canvasRef = createRef();
@@ -86,8 +87,11 @@ function Canvas() {
     return (
         <React.Fragment>
             {isPopupVisible &&
-            <ShareLinkBox whiteboardId={whiteboardId} setIsVisible={setIsPopupVisible}
-                          text={"Copy this link to share and collaborate!"}/>
+            <div className={"container"}>
+                <ShareLinkBox whiteboardId={whiteboardId}
+                              setIsVisible={setIsPopupVisible}
+                              text={"Copy this link to share and collaborate!"}/>
+            </div>
             }
             <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={canvasRef} onClick={(e) => {
                 const context = canvasRef.current.getContext('2d');
