@@ -5,8 +5,8 @@
 
 .container {
     position: fixed;
-    width: 100vw;
-    height: 100vw;
+    min-width: 100%;
+    min-height: 100%;
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -22,17 +22,26 @@
     bottom: 50%;
     border-radius: 10px;
     background-color: white;
-    box-shadow: 10px 5px 5px #e4e4e4e4;
-    width: 800px;
-    height: 400px;
-    margin-left: -400px;
-    margin-bottom: -200px;
+    box-shadow: 10px 5px 5px #c4c4c4c4;
+    width: 300px;
+    height: 250px;
+    margin-left: -150px;
+    margin-bottom: -137.5px;
 }
 
-.box > p, button {
+.box > p {
     margin: 15px 30px 15px 30px;
     padding: 5px;
 }
-.box > button {
-    width: 90px;
+.box > p {
+    text-align: center;
+}
+
+.inline-copy {
+    display: flex;
+}
+
+.inline-copy > button {
+    height: 28px;
+    border-radius: 0;
 }
