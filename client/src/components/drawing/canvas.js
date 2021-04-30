@@ -5,9 +5,11 @@ import SideToolbar from "../toolbar/sidetoolbar";
 import {Socket} from '../socket/socket';
 import {useRouteMatch} from "react-router-dom";
 import ShareLinkBox from "../shared/linkShare";
-import  '../../styles/shareLinkBox.css';
+import '../../styles/shareLinkBox.css';
 
 function Canvas() {
+    //TODO: Cache points so we don't need to add all the data each time
+
     const canvasRef = createRef();
     const [newData, setNewData] = useState();
     const [paintSize, setPaintSize] = useState(25);
@@ -67,6 +69,17 @@ function Canvas() {
 
     useEffect(() => {
         const context = canvasRef.current.getContext('2d');
+        function windowResize() {
+            const canvas = document.getElementById('drawing-board');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight - 56;
+
+            //TODO: Redraw points
+        }
+
+        window.addEventListener('resize', windowResize);
+
+
         Socket.emit("load-data", {
             whiteboardId: whiteboardId
         });
@@ -81,6 +94,11 @@ function Canvas() {
                 setNewData(data);
             }
         })
+        // clean up function
+        return () => {
+            // remove resize listener
+            window.removeEventListener('resize', windowResize);
+        }
 
     }, []);
 
@@ -97,7 +115,7 @@ function Canvas() {
                 const context = canvasRef.current.getContext('2d');
                 context.beginPath();
                 prevX.current = e.clientX;
-                prevY.current = e.clientY;
+                prevY.current = e.clientY - 56;
                 context.moveTo(prevX.current, prevY.current);
                 context.lineTo(prevX.current + 1, prevY.current + 1);
                 context.lineJoin = 'round';
@@ -127,7 +145,7 @@ function Canvas() {
                 setMouseDown(true);
                 context.beginPath();
                 prevX.current = e.clientX;
-                prevY.current = e.clientY;
+                prevY.current = e.clientY - 56;
                 context.moveTo(prevX, prevY);
             }} onMouseUp={() => {
                 const context = canvasRef.current.getContext('2d');
@@ -136,7 +154,7 @@ function Canvas() {
             }} onMouseMove={(e) => {
                 const context = canvasRef.current.getContext('2d');
                 if (mouseDown) {
-                    context.lineTo(e.clientX, e.clientY);
+                    context.lineTo(e.clientX, e.clientY - 56);
                     context.lineJoin = 'round';
                     context.lineCap = 'round';
                     context.lineWidth = paintSize;
@@ -150,7 +168,7 @@ function Canvas() {
                         },
                         lineTo: {
                             x: e.clientX,
-                            y: e.clientY,
+                            y: e.clientY - 56,
                             size: paintSize,
                             color: color
 
@@ -158,11 +176,11 @@ function Canvas() {
                     });
                     Socket.emit("drawing-data", newDrawData);
                     prevX.current = e.clientX;
-                    prevY.current = e.clientY;
+                    prevY.current = e.clientY - 56;
                 }
             }}
-                    width={window.innerWidth}
-                    height={window.innerHeight}
+                    width={window.innerWidth} //initial size
+                    height={window.innerHeight - 56} //initial size minus height of nav bar
             >
                 Please update your browser.
             </canvas>
