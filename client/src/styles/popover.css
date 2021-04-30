@@ -1,22 +1,27 @@
-.grayed-background {
-    position: fixed;
-    background-color: gray;
-    height: 100vh;
-    width: 100vw;
+.background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.grid-item {
+    padding: 20px;
+    text-align: center;
+}
+
 .content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 10px;
-    position: fixed;
-    bottom: 50%;
-    left: 50%;
     background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 19px 38px, rgba(0, 0, 0, 0.22) 0 15px 12px;
+    border-radius: 10px;
     height: 300px;
-    width: 600px;
-    margin-left: -300px;
-    margin-bottom: -150px;
+    width: 400px;
 }
 .content > h1 {
     width: 300px;
@@ -25,5 +30,4 @@
 
 .content > h1, img {
     cursor: pointer;
-
 }
