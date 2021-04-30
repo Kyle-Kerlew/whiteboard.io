@@ -3,7 +3,6 @@ import '../../styles/popover.css';
 import {v4 as uuidv4} from 'uuid';
 import {useHistory} from "react-router-dom";
 import {Socket} from '../socket/socket';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import {Container} from "react-bootstrap";
 
@@ -20,28 +19,20 @@ function Home() {
     }
 
     return (
-        <Jumbotron fluid>
-            <Container fluid>
-                <div className={'grid-container'}>
-                    <div className={'grid-item'}>
-                        <h1 style={{fontSize: '60px', textAlign: 'left'}}>Whiteboard IO</h1>
-                        <div>
+        <Container className={'flex-container'} fluid>
+            <h1 style={{fontSize: '60px', textAlign: 'center', verticalAlign: 'top'}}>Whiteboard IO</h1>
+            <p style={{fontSize: '18px', textAlign: 'center', maxWidth: '490px'}}>
+                Whiteboard IO is an open source tool for collaborative drawing in real time. It
+                simplifies planning, instructing, and documenting.
+            </p>
+            <Button onClick={createNewWhiteboard} style={{alignSelf: 'center'}} variant="primary" size="lg">Let's Start</Button>
 
-                            <p style={{fontSize: '18px', textAlign: 'left', maxWidth: '490px'}}>
-                                Storybook is an open source tool for developing UI components and pages in isolation. It
-                                simplifies building, documenting, and testing UIs.
-                            </p>
-                        </div>
-                        <Button variant="primary" size="lg">Let's Start</Button>
-                    </div>
-                    <div className={'grid-item'}>
-                        1,000,502 whiteboards have been created already!
-                    </div>
-                </div>
-            </Container>
+            <p style={{fontSize: '60px', paddingTop: '50px', textAlign: 'center', maxWidth: '490px'}}>
+                1,000,502
+                <p style={{fontSize: '18px', textAlign: 'center', maxWidth: '490px'}}>Whiteboards have been created.</p>
+            </p>
+        </Container>
 
-
-        </Jumbotron>
     )
 }
 
