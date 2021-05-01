@@ -18,10 +18,9 @@ function Canvas() {
     const [color, setColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch("/:canvasId").params;
     const points = useRef([]);
-    const prevWidth = useRef();
-    const prevHeight = useRef();
     const prevX = useRef();
     const prevY = useRef();
+    const isMobile = useRef(false);
 
     function updateBoardManyPoints(data, context) {
         if (!_.isEmpty(data)) {
@@ -45,7 +44,6 @@ function Canvas() {
     function clearBoard() {
         Socket.emit("empty-page", whiteboardId);
         setNewData([]);
-
     }
 
     function drawPoint(data) {
@@ -77,6 +75,7 @@ function Canvas() {
         }
 
         window.addEventListener('resize', handleWindowResize);
+
         Socket.emit("load-data", {
             whiteboardId: whiteboardId
         });
@@ -99,6 +98,100 @@ function Canvas() {
 
     }, []);
 
+    function handleDrawPoint(e) {
+        //context.scale for zoom in/out
+        //TODO: VIEWER/DRAWER MODE?
+        const context = canvasRef.current.getContext('2d');
+        context.beginPath();
+
+        prevX.current = e.pageX;
+        prevY.current = e.pageY;
+        context.moveTo(prevX.current, prevY.current);
+        context.lineTo(prevX.current + 1, prevY.current + 1);
+        context.lineJoin = 'round';
+        context.lineCap = 'round';
+        const newDrawData = ({
+            whiteboardId: whiteboardId,
+            lineTo: {
+                x: prevX.current + 1,
+                y: prevY.current + 1,
+                size: paintSize,
+                color: color
+            },
+            moveTo: {
+                x: prevX.current,
+                y: prevY.current
+            }
+        });
+
+        Socket.emit("drawing-data", newDrawData);
+        points.current.push(newDrawData);
+        context.lineWidth = paintSize;
+        context.strokeStyle = color;
+        context.stroke();
+        context.closePath();
+
+    }
+
+    function handleDrawPointMovement(e) {
+        const context = canvasRef.current.getContext('2d');
+        setMouseDown(true);
+        context.beginPath();
+
+        if (e.type ==='touchmove') {
+            isMobile.current = true;
+            prevX.current = e.touches[0].pageX;
+            prevY.current = e.touches[0].pageY;
+        } else {
+            isMobile.current = false;
+            prevX.current = e.pageX;
+            prevY.current = e.pageY;
+
+        }
+        context.moveTo(prevX, prevY);
+    }
+
+    function handleStartMovementDrawing(e) {
+        const context = canvasRef.current.getContext('2d');
+        if (mouseDown) {
+            context.lineJoin = 'round';
+            context.lineCap = 'round';
+            context.lineWidth = paintSize;
+            context.strokeStyle = color;
+            if (e.type === "touchmove") {
+                context.lineTo(e.touches[0].pageX, e.touches[0].pageY); //this is where the mobile mouseCoords are stored for some reason
+                isMobile.current = true;
+            } else {
+                context.lineTo(e.pageX, e.pageY);
+                isMobile.current = false;
+            }
+            context.stroke();
+            const newDrawData = ({
+                whiteboardId: whiteboardId,
+                moveTo: {
+                    x: prevX.current,
+                    y: prevY.current,
+                },
+                lineTo: {
+                    x: e.pageX,
+                    y: e.pageY,
+                    size: paintSize,
+                    color: color
+
+                },
+            });
+            Socket.emit("drawing-data", newDrawData);
+            points.current.push(newDrawData);
+            prevX.current = e.pageX;
+            prevY.current = e.pageY;
+        }
+    }
+
+    function handleEndDrawing(e) {
+        const context = canvasRef.current.getContext('2d');
+        setMouseDown(false);
+        context.closePath();
+    }
     return (
         <div className="canvas-container">
             {isPopupVisible &&
@@ -109,80 +202,15 @@ function Canvas() {
             </div>
             }
 
-            <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={canvasRef} onClick={(e) => {
-                //context.scale for zoom in/out
-                //context.translate for  movement up, down, left, right
-                //TODO: VIEWER/DRAWER MODE?
-                const context = canvasRef.current.getContext('2d');
-                context.beginPath();
+            <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={canvasRef}
+                    onTouchStart={handleDrawPointMovement}
+                    onClick={handleDrawPoint}
 
-                prevX.current = e.pageX;
-                prevY.current = e.pageY;
-                context.moveTo(prevX.current, prevY.current);
-                context.lineTo(prevX.current + 1, prevY.current + 1);
-                context.lineJoin = 'round';
-                context.lineCap = 'round';
-                const newDrawData = ({
-                    whiteboardId: whiteboardId,
-                    lineTo: {
-                        x: prevX.current + 1,
-                        y: prevY.current + 1,
-                        size: paintSize,
-                        color: color
-                    },
-                    moveTo: {
-                        x: prevX.current,
-                        y: prevY.current
-                    }
-                });
-
-                Socket.emit("drawing-data", newDrawData);
-                points.current.push(newDrawData);
-                context.lineWidth = paintSize;
-                context.strokeStyle = color;
-                context.stroke();
-                context.closePath();
-
-            }} onMouseDown={(e) => {
-                const context = canvasRef.current.getContext('2d');
-                setMouseDown(true);
-                context.beginPath();
-                prevX.current = e.pageX;
-                prevY.current = e.pageY;
-                context.moveTo(prevX, prevY);
-            }} onMouseUp={() => {
-                const context = canvasRef.current.getContext('2d');
-                setMouseDown(false);
-                context.closePath();
-            }} onMouseMove={(e) => {
-                const context = canvasRef.current.getContext('2d');
-                if (mouseDown) {
-                    context.lineTo(e.pageX, e.pageY);
-                    context.lineJoin = 'round';
-                    context.lineCap = 'round';
-                    context.lineWidth = paintSize;
-                    context.strokeStyle = color;
-                    context.stroke();
-                    const newDrawData = ({
-                        whiteboardId: whiteboardId,
-                        moveTo: {
-                            x: prevX.current,
-                            y: prevY.current,
-                        },
-                        lineTo: {
-                            x: e.pageX,
-                            y: e.pageY,
-                            size: paintSize,
-                            color: color
-
-                        },
-                    });
-                    Socket.emit("drawing-data", newDrawData);
-                    points.current.push(newDrawData);
-                    prevX.current = e.pageX;
-                    prevY.current = e.pageY;
-                }
-            }}
+                    onTouchMove={handleStartMovementDrawing}
+                    onMouseDown={handleDrawPointMovement}
+                    onMouseUp={handleEndDrawing}
+                    onTouchEnd={handleEndDrawing}
+                    onMouseMove={handleStartMovementDrawing}
                     width={2000}
                     height={1500}
             >
