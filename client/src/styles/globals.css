@@ -1,4 +1,12 @@
+@media only screen and (max-width: 600px) {
+    #root {
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+}
+
 #root {
     width: 100vw;
-    height: calc(100vh - 56px);
+    height: 100vh;
 }
