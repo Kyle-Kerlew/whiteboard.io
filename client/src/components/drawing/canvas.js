@@ -17,7 +17,9 @@ function Canvas() {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [color, setColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch("/:canvasId").params;
-
+    const points = useRef([]);
+    const prevWidth = useRef();
+    const prevHeight = useRef();
     const prevX = useRef();
     const prevY = useRef();
 
@@ -66,20 +68,15 @@ function Canvas() {
     }
 
     useEffect(() => drawPoint(newData), [newData]);
-
     useEffect(() => {
         const context = canvasRef.current.getContext('2d');
-        function windowResize() {
-            const canvas = document.getElementById('drawing-board');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight - 56;
 
-            //TODO: Redraw points
+        function handleWindowResize() {
+            const context = document.getElementById('drawing-board').getContext('2d');
+            updateBoardManyPoints(points.current, context);
         }
 
-        window.addEventListener('resize', windowResize);
-
-
+        window.addEventListener('resize', handleWindowResize);
         Socket.emit("load-data", {
             whiteboardId: whiteboardId
         });
@@ -97,13 +94,13 @@ function Canvas() {
         // clean up function
         return () => {
             // remove resize listener
-            window.removeEventListener('resize', windowResize);
+            window.removeEventListener('resize', handleWindowResize);
         }
 
     }, []);
 
     return (
-        <React.Fragment>
+        <div className="canvas-container">
             {isPopupVisible &&
             <div className={"container"}>
                 <ShareLinkBox whiteboardId={whiteboardId}
@@ -111,11 +108,16 @@ function Canvas() {
                               text={"Copy this link to share and collaborate!"}/>
             </div>
             }
+
             <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={canvasRef} onClick={(e) => {
+                //context.scale for zoom in/out
+                //context.translate for  movement up, down, left, right
+                //TODO: VIEWER/DRAWER MODE?
                 const context = canvasRef.current.getContext('2d');
                 context.beginPath();
-                prevX.current = e.clientX;
-                prevY.current = e.clientY - 56;
+
+                prevX.current = e.pageX;
+                prevY.current = e.pageY;
                 context.moveTo(prevX.current, prevY.current);
                 context.lineTo(prevX.current + 1, prevY.current + 1);
                 context.lineJoin = 'round';
@@ -135,6 +137,7 @@ function Canvas() {
                 });
 
                 Socket.emit("drawing-data", newDrawData);
+                points.current.push(newDrawData);
                 context.lineWidth = paintSize;
                 context.strokeStyle = color;
                 context.stroke();
@@ -144,8 +147,8 @@ function Canvas() {
                 const context = canvasRef.current.getContext('2d');
                 setMouseDown(true);
                 context.beginPath();
-                prevX.current = e.clientX;
-                prevY.current = e.clientY - 56;
+                prevX.current = e.pageX;
+                prevY.current = e.pageY;
                 context.moveTo(prevX, prevY);
             }} onMouseUp={() => {
                 const context = canvasRef.current.getContext('2d');
@@ -154,7 +157,7 @@ function Canvas() {
             }} onMouseMove={(e) => {
                 const context = canvasRef.current.getContext('2d');
                 if (mouseDown) {
-                    context.lineTo(e.clientX, e.clientY - 56);
+                    context.lineTo(e.pageX, e.pageY);
                     context.lineJoin = 'round';
                     context.lineCap = 'round';
                     context.lineWidth = paintSize;
@@ -167,20 +170,21 @@ function Canvas() {
                             y: prevY.current,
                         },
                         lineTo: {
-                            x: e.clientX,
-                            y: e.clientY - 56,
+                            x: e.pageX,
+                            y: e.pageY,
                             size: paintSize,
                             color: color
 
                         },
                     });
                     Socket.emit("drawing-data", newDrawData);
-                    prevX.current = e.clientX;
-                    prevY.current = e.clientY - 56;
+                    points.current.push(newDrawData);
+                    prevX.current = e.pageX;
+                    prevY.current = e.pageY;
                 }
             }}
-                    width={window.innerWidth} //initial size
-                    height={window.innerHeight - 56} //initial size minus height of nav bar
+                    width={2000}
+                    height={1500}
             >
                 Please update your browser.
             </canvas>
@@ -189,7 +193,7 @@ function Canvas() {
                            setPaintSize={setPaintSize}
                            clearBoard={clearBoard}/>
             <SideToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown} setColor={setColor}/>
-        </React.Fragment>
+        </div>
     );
 }
 
