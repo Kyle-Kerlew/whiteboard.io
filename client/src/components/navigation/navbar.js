@@ -2,10 +2,11 @@ import React from "react";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import '../../styles/nav.css'
 const NavBar = () => {
 
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" className='fixed-top'>
             <Navbar.Brand href="#home">Whiteboard IO</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
