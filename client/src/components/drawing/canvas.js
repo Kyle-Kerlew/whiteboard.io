@@ -21,6 +21,7 @@ function Canvas() {
     const prevX = useRef();
     const prevY = useRef();
     const isMobile = useRef(false);
+    const scale = useRef(1);
 
     function updateBoardManyPoints(data, context) {
         if (!_.isEmpty(data)) {
@@ -51,6 +52,7 @@ function Canvas() {
         if (!_.isEmpty(data)) {
             const moveTo = data.moveTo;
             const lineTo = data.lineTo;
+            context.scale(scale.current, scale.current);
             context.beginPath();
             context.moveTo(moveTo.x, moveTo.y);
             context.lineTo(lineTo.x, lineTo.y);
@@ -74,8 +76,19 @@ function Canvas() {
             updateBoardManyPoints(points.current, context);
         }
 
-        window.addEventListener('resize', handleWindowResize);
+        function handleKeyDown(e) {
+            if (e.ctrlKey && e.key === '=') {
+                e.preventDefault(); //prevent browser from zooming normally
+                handleZoomIn();
+            }
+            if (e.ctrlKey && e.key === '-') {
+                e.preventDefault(); //prevent browser from zooming normally
+                handleZoomOut();
+            }
+        }
 
+        window.addEventListener('resize', handleWindowResize);
+        window.addEventListener('keydown', handleKeyDown)
         Socket.emit("load-data", {
             whiteboardId: whiteboardId
         });
@@ -138,7 +151,7 @@ function Canvas() {
         setMouseDown(true);
         context.beginPath();
 
-        if (e.type ==='touchmove') {
+        if (e.type === 'touchmove') {
             isMobile.current = true;
             prevX.current = e.touches[0].pageX;
             prevY.current = e.touches[0].pageY;
@@ -180,6 +193,7 @@ function Canvas() {
 
                 },
             });
+
             Socket.emit("drawing-data", newDrawData);
             points.current.push(newDrawData);
             prevX.current = e.pageX;
@@ -187,11 +201,45 @@ function Canvas() {
         }
     }
 
+
     function handleEndDrawing(e) {
         const context = canvasRef.current.getContext('2d');
         setMouseDown(false);
         context.closePath();
     }
+
+    function handleZoomIn() {
+        const canvas = document.getElementById('drawing-board');
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.scale(1.5, 1.5);
+        canvas.width *= 1.5;
+        canvas.height *= 1.5;
+        points.current.forEach(point => {
+            point.moveTo.x *= 1.5;
+            point.moveTo.y *= 1.5;
+            point.lineTo.x *= 1.5;
+            point.lineTo.y *= 1.5;
+        })
+        updateBoardManyPoints(points.current, context);
+    }
+
+    function handleZoomOut() {
+        const canvas = document.getElementById('drawing-board');
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.width *= 2 / 3;
+        canvas.height *= 2 / 3;
+        context.scale(2 / 3, 2 / 3);
+        points.current.forEach(point => {
+            point.moveTo.x *= 2 / 3;
+            point.moveTo.y *= 2 / 3;
+            point.lineTo.x *= 2 / 3;
+            point.lineTo.y *= 2 / 3;
+        })
+        updateBoardManyPoints(points.current, context);
+    }
+
     return (
         <div className="canvas-container">
             {isPopupVisible &&
@@ -219,7 +267,11 @@ function Canvas() {
             <BottomToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown}
                            setIsPopupVisible={setIsPopupVisible}
                            setPaintSize={setPaintSize}
-                           clearBoard={clearBoard}/>
+                           clearBoard={clearBoard}
+                           zoomIn={handleZoomIn}
+                           zoomOut={handleZoomOut}
+                           id={'bottom-toolbar'}
+            />
             <SideToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown} setColor={setColor}/>
         </div>
     );

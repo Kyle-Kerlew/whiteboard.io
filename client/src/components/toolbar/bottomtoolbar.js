@@ -2,6 +2,9 @@ import React, {createRef, useEffect, useRef, useState} from 'react';
 import '../../styles/bottomtoolbar.css';
 import CrossIcon from '../../resources/svg/cross-icon.svg'
 import LinkIcon from '../../resources/svg/link-icon.svg'
+import ZoomInIcon from '../../resources/svg/zoom-in-icon.svg'
+import ZoomOutIcon from '../../resources/svg/zoom-out-icon.svg'
+import Circle from "../svg/circle";
 
 const BottomToolbar = props => {
 
@@ -15,7 +18,7 @@ const BottomToolbar = props => {
         if (props.mouseDown && toolbarRef.current.style.opacity === "0") {
             setTimeout(() => {
                 if (toolbarRef.current)
-                toolbarRef.current.style.display = "none";
+                    toolbarRef.current.style.display = "none";
             }, 500);
         } else {
             toolbarRef.current.style.display = "block";
@@ -36,30 +39,32 @@ const BottomToolbar = props => {
     }
 
     return (
-        <div ref={el => toolbarRef.current = el} style={getStyle()} className="bottomtoolbar"
+        <div id={props.id} ref={el => toolbarRef.current = el} style={getStyle()} className="bottomtoolbar"
              onMouseEnter={() => setIsActive(true)} onMouseLeave={() => setIsActive(false)}>
             <ul>
                 <li>
-                    <svg onClick={() => props.setPaintSize(5)} height="25" width="25">
-                        <circle cx="12.5" cy="12.5" r="2.5" stroke="black" strokeWidth="3" fill="black"/>
-                    </svg>
+                    <Circle onClick={() => props.setPaintSize(5)} width={25} height={25}/>
                 </li>
                 <li>
-                    <svg onClick={() => props.setPaintSize(30)} height="50" width="50">
-                        <circle cx="25" cy="25" r="15" stroke="black" strokeWidth="3" fill="black"/>
-                    </svg>
+                    <Circle onClick={() => props.setPaintSize(30)} width={50} height={50}/>
                 </li>
                 <li>
-                    <svg onClick={() => props.setPaintSize(55)} height="75" width="75">
-                        <circle cx="37.5" cy="37.5" r="27.5" stroke="black" strokeWidth="3" fill="black"/>
-                    </svg>
+                    <Circle onClick={() => props.setPaintSize(55)} width={75} height={75}/>
                 </li>
                 <div className="divider"/>
                 <li>
-                    <img width="24px" height="24px" onClick={props.clearBoard} src={CrossIcon} alt={"Clear Board"}/>
+                    <img width={"36px"} height={"36px"} onClick={props.zoomIn} src={ZoomInIcon} alt={"Zoom In"}/>
                 </li>
                 <li>
-                    <img width="24px" height="24px" onClick={() => props.setIsPopupVisible(true)} src={LinkIcon}
+                    <img width={"36px"} height={"36px"} onClick={props.zoomOut} src={ZoomOutIcon} alt={"Zoom Out"}/>
+                </li>
+                <div className="divider"/>
+
+                <li>
+                    <img width={"36px"} height={"36px"} onClick={props.clearBoard} src={CrossIcon} alt={"Clear Board"}/>
+                </li>
+                <li>
+                    <img width={"36px"} height={"36px"} onClick={() => props.setIsPopupVisible(true)} src={LinkIcon}
                          alt="Get Share Link"/>
                 </li>
             </ul>

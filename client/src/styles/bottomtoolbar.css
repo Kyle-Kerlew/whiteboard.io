@@ -3,37 +3,29 @@
     position: fixed;
     background-color: #EEEEEE;
     border-radius: 30px;
-    min-width: 350px;
+    max-width: 550px;
     bottom: 0;
-    left: 50%;
+    left: 0;
+    right: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: -170px;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 10px 5px 5px #c4c4c4c4;
 }
 
 
 
-.minimized-menu {
-    padding: 0;
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    min-width: 350px;
-    min-height: 50px;
-    margin-left: -170px;
-}
-
 li > img {
-    margin: 0 15px 0 15px;
+    margin: 0 15px;
 
 }
 
 .divider {
     height: 50px;
     border-left: 1px solid #000;
-    margin: 0 30px;
+    margin: 0 15px;
 }
 
 svg {
