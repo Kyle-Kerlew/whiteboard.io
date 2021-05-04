@@ -55,7 +55,6 @@ async function connectToMongo() {
 
         })
         socket.on("drawing-data", (data) => {
-            //todo: handle requests coming from multiple people
             const query = {whiteboardId: data.whiteboardId};
             const updateQuery = {$push: {data: data}};
             socket.to(data.whiteboardId).emit("drawing-data-from-server", data)
@@ -72,14 +71,18 @@ async function connectToMongo() {
             socket.to(whiteboardId).emit("empty-page-from-server")
             mongodb.update(fillQuery, updateQuery, drawingCollection);
         })
-        socket.on("create-whiteboard", (data) => {
-            try {
-                mongodb.insert(data, drawingCollection);
-            } catch (err) {
-                console.log("Something went wrong inserting data");
-            }
+        socket.on("counterRequest", async () => socket.emit("counter", await mongodb.drawingBoardsCount(drawingCollection)));
+        socket.on("create-whiteboard", async (data) => {
+                try {
+                    mongodb.insert(data, drawingCollection);
+                    const response = await mongodb.drawingBoardsCount(drawingCollection);
+                    socket.emit("counter", response)
+                } catch (err) {
+                    console.log("Something went wrong inserting data");
+                }
 
-        })
+            }
+        )
 
     }));
 
