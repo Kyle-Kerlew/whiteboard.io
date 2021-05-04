@@ -1,33 +1,43 @@
 import React from 'react';
 import '../../styles/shareLinkBox.css';
-import {Button, TextField} from '@material-ui/core';
-import onClickOutside from "react-onclickoutside";
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import copy from "copy-to-clipboard";
 
 function ShareLinkBox({text, whiteboardId, setIsVisible}) {
-
-    const baseurl = "http://localhost:3000/";
+    const baseurl = `http://localhost:3000/`; //todo: not for prod
 
     function copyLink() {
         const copyText = document.getElementById("value");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
-        document.execCommand('copy');
+        copy(copyText.value);
     }
 
-    ShareLinkBox.handleClickOutside = () => setIsVisible(false);
     return (
-        <div className={"box"}>
-            <div className="inline-copy">
-                <TextField type={"text"} value={baseurl + whiteboardId} id={"value"}/>
-                <Button onClick={copyLink} variant="contained">Copy</Button>
-            </div>
-            <p>{text}</p>
-            <Button onClick={() => setIsVisible(false)} variant="contained">OK</Button>
-        </div>
+        <Dialog open={true} onClose={() => setIsVisible(false)} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Share With Your Friends</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    {text}
+                </DialogContentText>
+                <TextField
+                    margin="dense"
+                    type="text"
+                    id={"value"}
+                    fullWidth
+                    disabled
+                    value={baseurl + whiteboardId}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => {
+                    copyLink();
+                    setIsVisible(false);
+                }} color="primary">
+                    Copy
+                </Button>
+            </DialogActions>
+        </Dialog>
     )
 }
 
-const clickOutsideConfig = {
-    handleClickOutside: () => ShareLinkBox.handleClickOutside
-}
-export default onClickOutside(ShareLinkBox, clickOutsideConfig);
+export default ShareLinkBox;
