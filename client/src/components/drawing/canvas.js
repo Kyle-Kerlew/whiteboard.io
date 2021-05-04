@@ -1,4 +1,4 @@
-import React, {createRef, useRef, useState, useEffect} from 'react';
+import React, {createRef, useRef, useState, useEffect, useCallback} from 'react';
 import _ from 'lodash';
 import BottomToolbar from "../toolbar/bottomtoolbar";
 import SideToolbar from "../toolbar/sidetoolbar";
@@ -9,8 +9,9 @@ import '../../styles/shareLinkBox.css';
 
 function Canvas() {
     //TODO: Cache points so we don't need to add all the data each time
+    //TODO: Can data be compressed upon sending to the browser foro performance boost?
 
-    const canvasRef = createRef();
+    const canvasRef = useRef();
     const [newData, setNewData] = useState();
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
@@ -56,6 +57,7 @@ function Canvas() {
     function clearBoard() {
         Socket.emit("empty-page", whiteboardId);
         setNewData([]);
+        points.current = [];
     }
 
     function drawPoint(data) {
@@ -78,25 +80,26 @@ function Canvas() {
         }
     }
 
+    function handleWindowResize() {
+        const context = canvasRef.current.getContext('2d');
+        updateBoardManyPoints(points.current, context);
+    }
+
+    function handleKeyDown(e) {
+        if (e.ctrlKey && e.key === '=') {
+            e.preventDefault(); //prevent browser from zooming normally
+            handleZoomIn();
+        }
+        if (e.ctrlKey && e.key === '-') {
+            e.preventDefault(); //prevent browser from zooming normally
+            handleZoomOut();
+        }
+    }
+
     useEffect(() => drawPoint(newData), [newData]);
     useEffect(() => {
         const context = canvasRef.current.getContext('2d');
 
-        function handleWindowResize() {
-            const context = canvasRef.current.getContext('2d');
-            updateBoardManyPoints(points.current, context);
-        }
-
-        function handleKeyDown(e) {
-            if (e.ctrlKey && e.key === '=') {
-                e.preventDefault(); //prevent browser from zooming normally
-                handleZoomIn();
-            }
-            if (e.ctrlKey && e.key === '-') {
-                e.preventDefault(); //prevent browser from zooming normally
-                handleZoomOut();
-            }
-        }
 
         window.addEventListener('resize', handleWindowResize);
         window.addEventListener('keydown', handleKeyDown)
@@ -105,6 +108,7 @@ function Canvas() {
         });
         Socket.on("data-loaded", (data) => {
             if (!_.isEmpty(data)) {
+                points.current = data;
                 updateBoardManyPoints(data, context);
             }
         });
@@ -112,6 +116,7 @@ function Canvas() {
         Socket.on("drawing-data-from-server", data => {
             if (!_.isEmpty(data)) {
                 setNewData(data);
+                points.current.push(data);
             }
         })
         return () => {
@@ -208,7 +213,6 @@ function Canvas() {
         }
     }
 
-
     function handleEndDrawing(e) {
         const context = canvasRef.current.getContext('2d');
         setMouseDown(false);
@@ -265,7 +269,7 @@ function Canvas() {
             </div>
             }
 
-            <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={canvasRef}
+            <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={(ref) => canvasRef.current = ref}
                     onTouchStart={handleDrawPointMovement}
                     onClick={handleDrawPoint}
 
