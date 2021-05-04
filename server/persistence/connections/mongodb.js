@@ -22,6 +22,14 @@ async function update(fillQuery, updateQuery, collection) {
     }
 }
 
+async function drawingBoardsCount(collection) {
+    try {
+        return await collection.countDocuments({});
+    } catch (error) {
+        console.log("An error happened while counting entries in db", error);
+    }
+}
+
 async function read(findQuery, collection, callback) {
     try {
         return await collection.findOne(findQuery, callback);
@@ -44,6 +52,7 @@ module.exports = {
     mongodb: {
         insert,
         update,
+        drawingBoardsCount,
         read,
         client,
         run
