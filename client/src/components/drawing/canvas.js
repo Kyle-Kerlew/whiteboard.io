@@ -6,6 +6,8 @@ import {Socket} from '../socket/socket';
 import {useRouteMatch} from "react-router-dom";
 import ShareLinkBox from "../shared/linkShare";
 import '../../styles/shareLinkBox.css';
+import {DialogContent, Snackbar} from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 function Canvas() {
     //TODO: Cache points so we don't need to add all the data each time
@@ -16,6 +18,7 @@ function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isToastVisible, setIsToastVisible] = useState(false);
     const [color, setColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch("/:canvasId").params;
     const points = useRef([]);
@@ -259,12 +262,17 @@ function Canvas() {
         updateBoardManyPoints(points.current, context);
     }
 
+    function showSuccessToast() {
+        setIsToastVisible(true);
+    }
+
     return (
         <div className="canvas-container">
             {isPopupVisible &&
             <div className={"container"}>
                 <ShareLinkBox whiteboardId={whiteboardId}
                               setIsVisible={setIsPopupVisible}
+                              showSuccessToast={showSuccessToast}
                               text={"Copy this link to share and collaborate!"}/>
             </div>
             }
@@ -283,6 +291,12 @@ function Canvas() {
             >
                 Please update your browser.
             </canvas>
+            {isToastVisible &&
+            <Snackbar onClose={() => setIsToastVisible(false)} open={isToastVisible} autoHideDuration={6000}>
+                <Alert severity="success">
+                    We've copied the link to your clipboard!
+                </Alert>
+            </Snackbar>}
             <BottomToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown}
                            setIsPopupVisible={setIsPopupVisible}
                            setPaintSize={setPaintSize}
