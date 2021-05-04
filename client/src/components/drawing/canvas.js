@@ -22,12 +22,23 @@ function Canvas() {
     const prevY = useRef();
     const isMobile = useRef(false);
     const scale = useRef(1);
+    const xLeftView = useRef(0);
+    const yTopView = useRef(0);
+    const widthViewOriginal = useRef(0);
+    const heightViewOriginal = useRef(0);
+    const widthView = useRef(widthViewOriginal.current);
+    const heightView = useRef(heightViewOriginal.current);
 
     function updateBoardManyPoints(data, context) {
         if (!_.isEmpty(data)) {
             for (let i = 0; i < data.length; i++) {
+
                 const moveTo = data[i].moveTo;
                 const lineTo = data[i].lineTo;
+                context.setTransform(1, 0, 0, 1, 0, 0);
+                context.scale(canvasRef.current.width / widthView.current, canvasRef.current.height / heightView.current);
+                context.translate(-xLeftView.current, -yTopView.current);
+
                 context.beginPath();
                 context.moveTo(moveTo.x, moveTo.y);
                 context.lineTo(lineTo.x, lineTo.y);
@@ -72,7 +83,7 @@ function Canvas() {
         const context = canvasRef.current.getContext('2d');
 
         function handleWindowResize() {
-            const context = document.getElementById('drawing-board').getContext('2d');
+            const context = canvasRef.current.getContext('2d');
             updateBoardManyPoints(points.current, context);
         }
 
@@ -103,20 +114,16 @@ function Canvas() {
                 setNewData(data);
             }
         })
-        // clean up function
         return () => {
-            // remove resize listener
             window.removeEventListener('resize', handleWindowResize);
+            window.removeEventListener("keydown", handleKeyDown);
         }
 
     }, []);
 
     function handleDrawPoint(e) {
-        //context.scale for zoom in/out
-        //TODO: VIEWER/DRAWER MODE?
         const context = canvasRef.current.getContext('2d');
         context.beginPath();
-
         prevX.current = e.pageX;
         prevY.current = e.pageY;
         context.moveTo(prevX.current, prevY.current);
@@ -208,35 +215,43 @@ function Canvas() {
         context.closePath();
     }
 
-    function handleZoomIn() {
-        const canvas = document.getElementById('drawing-board');
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.scale(1.5, 1.5);
-        canvas.width *= 1.5;
-        canvas.height *= 1.5;
+    function zoom() {
+        let X = canvasRef.current.width / 2; //Canvas coordinates
+        let Y = canvasRef.current.height / 2;
+        let x = X / canvasRef.current.width * widthView.current + xLeftView.current;  // View coordinates
+        let y = Y / canvasRef.current.height * heightView.current + yTopView.current;
+        widthView.current *= scale.current;
+        heightView.current *= scale.current;
+        if (widthView.current > widthViewOriginal.current || heightView.current > heightViewOriginal.current) {
+            widthView.current = widthViewOriginal.current;
+            heightView.current = heightViewOriginal.current;
+            x = widthView / 2;
+            y = heightView / 2;
+        }
+        xLeftView.current = x - widthView / 2;
+        yTopView.current = y - heightView / 2;
         points.current.forEach(point => {
-            point.moveTo.x *= 1.5;
-            point.moveTo.y *= 1.5;
-            point.lineTo.x *= 1.5;
-            point.lineTo.y *= 1.5;
+            point.moveTo.x *= scale.current;
+            point.moveTo.y *= scale.current;
+            point.lineTo.x *= scale.current;
+            point.lineTo.y *= scale.current;
         })
+
+    }
+
+    function handleZoomIn() {
+        const context = canvasRef.current.getContext('2d');
+        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        scale.current = 1.5;
+        zoom();
         updateBoardManyPoints(points.current, context);
     }
 
     function handleZoomOut() {
-        const canvas = document.getElementById('drawing-board');
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        canvas.width *= 2 / 3;
-        canvas.height *= 2 / 3;
-        context.scale(2 / 3, 2 / 3);
-        points.current.forEach(point => {
-            point.moveTo.x *= 2 / 3;
-            point.moveTo.y *= 2 / 3;
-            point.lineTo.x *= 2 / 3;
-            point.lineTo.y *= 2 / 3;
-        })
+        const context = canvasRef.current.getContext('2d');
+        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        scale.current = 2 / 3;
+        zoom();
         updateBoardManyPoints(points.current, context);
     }
 
