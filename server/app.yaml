@@ -1,15 +1,6 @@
-runtime: nodejs14 # or another supported version
-
-instance_class: F2
+runtime: nodejs14
+env: flex
 
 env_variables:
-  BUCKET_NAME: "example-gcs-bucket"
-
-handlers:
-  - url: /stylesheets
-    static_dir: stylesheets
-
-  - url: /.*
-    secure: always
-    redirect_http_response_code: 301
-    script: auto
+  DB_URI: $DB_URI_KEY
+  NODE_ENV: "production"
