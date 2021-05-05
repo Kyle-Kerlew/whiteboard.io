@@ -1,9 +1,8 @@
 runtime: nodejs14
-env: flex
 instance_class: F2
 
 env_variables:
-  DB_URI: $DB_URI_KEY
+  DB_URI: { $DB_URI_KEY }
   NODE_ENV: "production"
 handlers:
   - url: /.*
