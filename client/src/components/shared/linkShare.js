@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import '../../styles/shareLinkBox.css';
 import {
     Dialog,
@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import copy from "copy-to-clipboard";
 
 function ShareLinkBox({text, whiteboardId, setIsVisible, showSuccessToast}) {
-    const baseurl = `http://localhost:3000/`; //todo: not for prod
+    const baseurl = `${process.env.BASE_URL}`;
 
     function copyLink() {
         const copyText = document.getElementById("value");
