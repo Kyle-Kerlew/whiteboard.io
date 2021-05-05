@@ -23,7 +23,7 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://whiteboard-io-ui.ue.r.appspot.com/",
+        origin: "https://whiteboard-io-ui.ue.r.appspot.com",
         methods: ["GET", "POST"]
     },
     serveClient: false,
