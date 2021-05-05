@@ -1,10 +1,10 @@
 {
-  "name": "collaborative-drawing-app",
-  "version": "0.0.0",
+  "name": "whiteboard-io",
+  "version": "1.0.0",
   "private": true,
-  "proxy": "http://localhost:3000",
+  "proxy": "https://whiteboard-io-ui.ue.r.appspot.com/",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "bufferutil": "^4.0.3",
