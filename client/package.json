@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "https://whiteboard-io-ui.ue.r.appspot.com/",
+  "proxy": "http://node-express-env.eba-wfyzvmz8.us-east-2.elasticbeanstalk.com/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",

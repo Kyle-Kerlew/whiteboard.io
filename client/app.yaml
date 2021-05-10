@@ -1,6 +1,0 @@
-runtime: nodejs14
-env: flex
-
-env_variables:
-  BASE_URL: https://whiteboard-io-ui.ue.r.appspot.com
-  NODE_ENV: "production"
