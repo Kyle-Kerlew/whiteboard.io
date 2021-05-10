@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const sassMiddleware = require('node-sass-middleware');
 
 const app = express();
-
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
