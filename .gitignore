@@ -6,7 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 build
-
+.ebextensions
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -31,6 +31,9 @@ coverage
 
 # Bower dependency directory (https://bower.io/)
 bower_components
+
+# Deployment config
+
 
 # node-waf configuration
 .lock-wscript
