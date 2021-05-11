@@ -6,6 +6,7 @@
 const app = require('./app');
 const http = require('http');
 const {Server} = require("socket.io");
+const compression  = require('compression');
 const {mongodb} = require('./persistence/connections/mongodb');
 /**
  * Get port from environment and store in Express.
@@ -13,7 +14,7 @@ const {mongodb} = require('./persistence/connections/mongodb');
 
 const port = process.env.PORT || 8080;
 app.set('port', port);
-
+app.use(compression());
 
 /**
  * Create HTTP server.
