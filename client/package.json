@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "http://node-express-env.eba-wfyzvmz8.us-east-2.elasticbeanstalk.com/",
+  "proxy": "localhost:8080",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -23,7 +23,7 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
