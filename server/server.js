@@ -4,11 +4,9 @@
  */
 
 const app = require('./app');
-const debug = require('debug')('collaborative-drawing-app:server');
 const http = require('http');
 const {Server} = require("socket.io");
 const {mongodb} = require('./persistence/connections/mongodb');
-const _ = require('lodash');
 /**
  * Get port from environment and store in Express.
  */
@@ -24,7 +22,7 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "http://whiteboardui-env.eba-ez2npcya.us-east-2.elasticbeanstalk.com/",
+        origin: process.env.REACT_APP_URL,
         methods: ["GET"]
     },
     serveClient: false,
@@ -98,7 +96,6 @@ void connectToMongo()
 
 server.listen(port);
 server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * Event listener for HTTP server "error" event.
@@ -126,16 +123,4 @@ function onError(error) {
         default:
             throw error;
     }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-    const addr = server.address();
-    const bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-    debug('Listening on ' + bind);
 }
