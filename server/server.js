@@ -13,8 +13,9 @@ const _ = require('lodash');
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '8081');
+const port = process.env.PORT || 8080;
 app.set('port', port);
+
 
 /**
  * Create HTTP server.
@@ -23,7 +24,7 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://whiteboard-io-ui.ue.r.appspot.com",
+        origin: "http://whiteboardui-env.eba-ez2npcya.us-east-2.elasticbeanstalk.com/",
         methods: ["GET"]
     },
     serveClient: false,
@@ -98,26 +99,6 @@ void connectToMongo()
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-    const port = parseInt(val, 10);
-
-    if (isNaN(port)) {
-        // named pipe
-        return val;
-    }
-
-    if (port >= 0) {
-        // port number
-        return port;
-    }
-
-    return false;
-}
 
 /**
  * Event listener for HTTP server "error" event.
