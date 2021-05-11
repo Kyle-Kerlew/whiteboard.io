@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const sassMiddleware = require('node-sass-middleware');
 
 const app = express();
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static('build'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -14,6 +14,8 @@ app.use(sassMiddleware({
     indentedSyntax: true, // true = .sass and false = .scss
     sourceMap: true
 }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '/build', '/index.html'));
+});
 
 module.exports = app;
