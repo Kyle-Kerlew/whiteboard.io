@@ -11,8 +11,8 @@ import Alert from "@material-ui/lab/Alert";
 
 function Canvas() {
     //TODO: Cache points so we don't need to add all the data each time
-    //TODO: Can data be compressed upon sending to the browser foro performance boost?
-
+    //TODO: Add eraser tool
+    //TODO: Fix scrolling on mobile devices
     const canvasRef = useRef();
     const [newData, setNewData] = useState();
     const [paintSize, setPaintSize] = useState(25);
