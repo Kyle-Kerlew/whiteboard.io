@@ -4,9 +4,19 @@ import CrossIcon from '../../resources/svg/cross-icon.svg'
 import LinkIcon from '../../resources/svg/link-icon.svg'
 import ZoomInIcon from '../../resources/svg/zoom-in-icon.svg'
 import ZoomOutIcon from '../../resources/svg/zoom-out-icon.svg'
-import Circle from "../svg/circle";
+import Circle from '../svg/circle';
+import EraserIcon from '../../resources/svg/eraser-icon.svg';
 
-const BottomToolbar = ({mouseDown, id, setPaintSize, zoomIn, zoomOut, clearBoard, setIsPopupVisible, isPopupVisible}) => {
+const BottomToolbar = ({
+                           mouseDown,
+                           id,
+                           setPaintSize,
+                           zoomIn,
+                           zoomOut,
+                           clearBoard,
+                           setIsPopupVisible,
+                           setIsErasing
+                       }) => {
 
     const [isActive, setIsActive] = useState(false);
     const toolbarRef = createRef();
@@ -50,6 +60,10 @@ const BottomToolbar = ({mouseDown, id, setPaintSize, zoomIn, zoomOut, clearBoard
                 </li>
                 <li>
                     <Circle onClick={() => setPaintSize(55)} width={75} height={75}/>
+                </li>
+                <li>
+                    <img idth={"36px"} height={"36px"} alt="Eraser" src={EraserIcon}
+                         onClick={() => setIsErasing(true)}/>
                 </li>
                 <div className="divider"/>
                 <li>
