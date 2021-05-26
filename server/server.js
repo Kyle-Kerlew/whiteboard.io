@@ -6,13 +6,13 @@
 const app = require('./app');
 const http = require('http');
 const {Server} = require("socket.io");
-const compression  = require('compression');
+const compression = require('compression');
 const {mongodb} = require('./persistence/connections/mongodb');
 /**
  * Get port from environment and store in Express.
  */
 
-const port = process.env.PORT || 8080;
+const port = process.env.NODE_ENV !== 'production' ? 3001 : 8080;
 app.set('port', port);
 app.use(compression());
 
@@ -23,15 +23,13 @@ app.use(compression());
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: process.env.REACT_APP_URL,
+        origin: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : process.env.REACT_APP_URL,
         methods: ["GET"]
     },
     serveClient: false,
 
 })
 
-//todo: look into using cache instead of a map
-// const inMemoryDrawingData = new Map(); //track by whiteboard id
 async function connectToMongo() {
     await mongodb.run();
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
@@ -57,7 +55,7 @@ async function connectToMongo() {
         socket.on("drawing-data", (data) => {
             const query = {whiteboardId: data.whiteboardId};
             const updateQuery = {$push: {data: data}};
-            socket.to(data.whiteboardId).emit("drawing-data-from-server", data)
+            socket.to(data.whiteboardId).emit("drawing-data-from-server", data);
             try {
                 mongodb.update(query, updateQuery, drawingCollection);
             } catch (err) {

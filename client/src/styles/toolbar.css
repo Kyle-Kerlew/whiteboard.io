@@ -1,0 +1,61 @@
+.toolbar {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #EEEEEE;
+    border-radius: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 10px 5px 5px #c4c4c4c4;
+}
+.bottom {
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 35rem;
+}
+
+.left {
+    flex-direction: column;
+    margin-top: auto;
+    margin-bottom: auto;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    max-height: 20rem;
+
+}
+
+.bottom div, .bottom hr {
+    margin-right: 1rem;
+}
+
+svg, img {
+    cursor: pointer;
+}
+
+
+@keyframes fadeInFromComplete {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes fadeOutComplete {
+    0% {
+        opacity: 1;
+
+    }
+    100% {
+        opacity: 0;
+    }
+}
