@@ -8,7 +8,7 @@ import {Container} from "react-bootstrap";
 
 function Home() {
     const history = useHistory();
-    const [whiteboardCounter, setWhiteboardCounter] = useState(); //use cache
+    const [whiteboardCounter, setWhiteboardCounter] = useState();
 
     function createNewWhiteboard() {
         const whiteboardUuid = btoa(uuidv4());
@@ -23,7 +23,6 @@ function Home() {
     useEffect(() => {
         Socket.emit("counterRequest", null);
         Socket.on("counter", data => {
-            console.log("read counter");
             setWhiteboardCounter(data)
         });
     }, []);
