@@ -10,17 +10,16 @@ import {DialogContent, Snackbar} from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
 function Canvas() {
-    //TODO: Cache points so we don't need to add all the data each time
-    //TODO: Add eraser tool
-    //TODO: Fix scrolling on mobile devices
     const canvasRef = useRef();
     const [newData, setNewData] = useState();
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isToastVisible, setIsToastVisible] = useState(false);
+    const isDragging = useRef(false);
     const [color, setColor] = useState('black');
-    const {canvasId: whiteboardId} = useRouteMatch("/:canvasId").params;
+    const [isErasing, setIsErasing] = useState(false);
+    const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;
     const points = useRef([]);
     const prevX = useRef();
     const prevY = useRef();
@@ -99,10 +98,12 @@ function Canvas() {
         }
     }
 
+    useEffect(() => {
+        setIsErasing(false);
+    }, [color])
     useEffect(() => drawPoint(newData), [newData]);
     useEffect(() => {
         const context = canvasRef.current.getContext('2d');
-
 
         window.addEventListener('resize', handleWindowResize);
         window.addEventListener('keydown', handleKeyDown)
@@ -129,37 +130,6 @@ function Canvas() {
 
     }, []);
 
-    function handleDrawPoint(e) {
-        const context = canvasRef.current.getContext('2d');
-        context.beginPath();
-        prevX.current = e.pageX;
-        prevY.current = e.pageY;
-        context.moveTo(prevX.current, prevY.current);
-        context.lineTo(prevX.current + 1, prevY.current + 1);
-        context.lineJoin = 'round';
-        context.lineCap = 'round';
-        const newDrawData = ({
-            whiteboardId: whiteboardId,
-            lineTo: {
-                x: prevX.current + 1,
-                y: prevY.current + 1,
-                size: paintSize,
-                color: color
-            },
-            moveTo: {
-                x: prevX.current,
-                y: prevY.current
-            }
-        });
-
-        Socket.emit("drawing-data", newDrawData);
-        points.current.push(newDrawData);
-        context.lineWidth = paintSize;
-        context.strokeStyle = color;
-        context.stroke();
-        context.closePath();
-
-    }
 
     function handleDrawPointMovement(e) {
         const context = canvasRef.current.getContext('2d');
@@ -182,10 +152,12 @@ function Canvas() {
     function handleStartMovementDrawing(e) {
         const context = canvasRef.current.getContext('2d');
         if (mouseDown) {
+            isDragging.current = true;
             context.lineJoin = 'round';
             context.lineCap = 'round';
             context.lineWidth = paintSize;
             context.strokeStyle = color;
+
             if (e.type === "touchmove") {
                 context.lineTo(e.touches[0].pageX, e.touches[0].pageY); //this is where the mobile mouseCoords are stored for some reason
                 isMobile.current = true;
@@ -193,7 +165,6 @@ function Canvas() {
                 context.lineTo(e.pageX, e.pageY);
                 isMobile.current = false;
             }
-            context.stroke();
             const newDrawData = ({
                 whiteboardId: whiteboardId,
                 moveTo: {
@@ -209,8 +180,17 @@ function Canvas() {
                 },
             });
 
-            Socket.emit("drawing-data", newDrawData);
-            points.current.push(newDrawData);
+            if (isErasing) {
+                context.globalCompositeOperation = 'destination-out'
+                context.stroke();
+
+            } else {
+                context.globalCompositeOperation = 'source-over';
+                Socket.emit("drawing-data", newDrawData);
+                points.current.push(newDrawData);
+                context.stroke();
+
+            }
             prevX.current = e.pageX;
             prevY.current = e.pageY;
         }
@@ -218,8 +198,37 @@ function Canvas() {
 
     function handleEndDrawing(e) {
         const context = canvasRef.current.getContext('2d');
+        if (!isDragging.current) {
+            context.beginPath();
+            prevX.current = e.pageX;
+            prevY.current = e.pageY;
+            context.moveTo(prevX.current, prevY.current);
+            context.lineTo(prevX.current + 1, prevY.current + 1);
+            context.lineJoin = 'round';
+            context.lineCap = 'round';
+            const newDrawData = ({
+                whiteboardId: whiteboardId,
+                lineTo: {
+                    x: prevX.current + 1,
+                    y: prevY.current + 1,
+                    size: paintSize,
+                    color: color
+                },
+                moveTo: {
+                    x: prevX.current,
+                    y: prevY.current
+                }
+            });
+
+            Socket.emit("drawing-data", newDrawData);
+            points.current.push(newDrawData);
+            context.lineWidth = paintSize;
+            context.strokeStyle = color;
+            context.stroke();
+            context.closePath();
+        }
         setMouseDown(false);
-        context.closePath();
+        isDragging.current = false;
     }
 
     function zoom() {
@@ -279,8 +288,6 @@ function Canvas() {
 
             <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={(ref) => canvasRef.current = ref}
                     onTouchStart={handleDrawPointMovement}
-                    onClick={handleDrawPoint}
-
                     onTouchMove={handleStartMovementDrawing}
                     onMouseDown={handleDrawPointMovement}
                     onMouseUp={handleEndDrawing}
@@ -302,6 +309,7 @@ function Canvas() {
                            setPaintSize={setPaintSize}
                            clearBoard={clearBoard}
                            zoomIn={handleZoomIn}
+                           setIsErasing={setIsErasing}
                            zoomOut={handleZoomOut}
                            id={'bottom-toolbar'}
             />
