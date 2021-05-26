@@ -114,7 +114,24 @@ function Canvas() {
             prevY.current = e.pageY;
 
         }
-        context.moveTo(prevX, prevY);
+        const newDrawData = ({
+            whiteboardId: whiteboardId,
+            moveTo: {
+                x: prevX.current,
+                y: prevY.current,
+            },
+            lineTo: {
+                x: e.pageX,
+                y: e.pageY,
+                size: paintSize,
+                color: color
+
+            },
+        });
+        context.moveTo(prevX.current, prevY.current);
+        context.lineTo(prevX.current, prevY.current);
+        Socket.emit('drawing-data', newDrawData);
+
     }
 
     function handleStartMovementDrawing(e) {
