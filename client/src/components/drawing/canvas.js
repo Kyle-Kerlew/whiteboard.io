@@ -1,26 +1,25 @@
-import React, {createRef, useRef, useState, useEffect, useCallback} from 'react';
-import _ from 'lodash';
-import BottomToolbar from "../toolbar/bottomtoolbar";
-import SideToolbar from "../toolbar/sidetoolbar";
+import React, {useRef, useState, useEffect} from 'react';
+import Toolbar from "../toolbar/toolbar";
 import {Socket} from '../socket/socket';
-import {useRouteMatch} from "react-router-dom";
-import ShareLinkBox from "../shared/linkShare";
+import ShareLinkBox from "../toolbar/tools/linkShareTool";
 import '../../styles/shareLinkBox.css';
-import {DialogContent, Snackbar} from "@material-ui/core";
+import {Divider, Snackbar} from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import EraserTool from "../toolbar/tools/eraserTool";
+import ZoomInTool from "../toolbar/tools/zoomInTool";
+import ZoomOutTool from "../toolbar/tools/zoomOutTool";
+import ClearBoardTool from "../toolbar/tools/clearBoardTool";
+import Circle from "../svg/circle";
+import {useRouteMatch} from "react-router-dom";
 
 function Canvas() {
-    const canvasRef = useRef();
-    const [newData, setNewData] = useState();
+    const [drawingData, setDrawingData] = useState([]);
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
-    const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isToastVisible, setIsToastVisible] = useState(false);
-    const isDragging = useRef(false);
     const [color, setColor] = useState('black');
-    const [isErasing, setIsErasing] = useState(false);
     const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;
-    const points = useRef([]);
+    const canvasRef = useRef();
     const prevX = useRef();
     const prevY = useRef();
     const isMobile = useRef(false);
@@ -32,59 +31,60 @@ function Canvas() {
     const widthView = useRef(widthViewOriginal.current);
     const heightView = useRef(heightViewOriginal.current);
 
-    function updateBoardManyPoints(data, context) {
-        if (!_.isEmpty(data)) {
-            for (let i = 0; i < data.length; i++) {
-
-                const moveTo = data[i].moveTo;
-                const lineTo = data[i].lineTo;
-                context.setTransform(1, 0, 0, 1, 0, 0);
-                context.scale(canvasRef.current.width / widthView.current, canvasRef.current.height / heightView.current);
-                context.translate(-xLeftView.current, -yTopView.current);
-
-                context.beginPath();
-                context.moveTo(moveTo.x, moveTo.y);
-                context.lineTo(lineTo.x, lineTo.y);
-                context.lineJoin = 'round';
-                context.lineCap = 'round';
-                context.lineWidth = lineTo.size;
-                context.strokeStyle = lineTo.color;
-                context.stroke();
-                context.closePath();
-            }
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowResize);
+        window.addEventListener('keydown', handleKeyDown)
+        Socket.emit("load-data", {
+            whiteboardId: whiteboardId
+        });
+        Socket.on("data-loaded", data => {
+            redrawAllPoints(data, () => setDrawingData(data));
+        });
+        Socket.on("empty-page-from-server", () => clearBoard(false));
+        Socket.on("drawing-data-from-server", data => drawPoint(data));
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+            window.removeEventListener('keydown', handleKeyDown);
         }
-    }
 
+    }, []);
 
-    function clearBoard() {
-        Socket.emit("empty-page", whiteboardId);
-        setNewData([]);
-        points.current = [];
-    }
-
-    function drawPoint(data) {
+    function redrawAllPoints(data = drawingData, updateState = undefined) {
         const context = canvasRef.current.getContext('2d');
-        if (!_.isEmpty(data)) {
-            const moveTo = data.moveTo;
-            const lineTo = data.lineTo;
-            context.scale(scale.current, scale.current);
-            context.beginPath();
-            context.moveTo(moveTo.x, moveTo.y);
-            context.lineTo(lineTo.x, lineTo.y);
-            context.lineJoin = 'round';
-            context.lineCap = 'round';
-            context.lineWidth = lineTo.size;
-            context.strokeStyle = lineTo.color;
-            context.stroke();
-            context.closePath();
-        } else {
-            context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        context.beginPath();
+        for (let i = 0; i < data.length; i++) {
+            drawPoint(data[i], updateState);
         }
+    }
+
+    function clearBoard(emitMessage) {
+        const context = canvasRef.current.getContext('2d');
+        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        emitMessage && Socket.emit("empty-page", whiteboardId);
+        setDrawingData([]);
+
+    }
+
+    function drawPoint(data, updateState = () => setDrawingData(drawingData.concat(data))) {
+        const context = canvasRef.current.getContext('2d');
+        const moveTo = data.moveTo;
+        const lineTo = data.lineTo;
+        context.scale(scale.current, scale.current);
+        context.beginPath();
+        context.moveTo(moveTo.x, moveTo.y);
+        context.lineTo(lineTo.x, lineTo.y);
+        context.lineJoin = 'round';
+        context.lineCap = 'round';
+        context.lineWidth = lineTo.size;
+        context.strokeStyle = lineTo.color;
+        context.stroke();
+        context.closePath();
+        updateState && updateState();
     }
 
     function handleWindowResize() {
-        const context = canvasRef.current.getContext('2d');
-        updateBoardManyPoints(points.current, context);
+        redrawAllPoints();
     }
 
     function handleKeyDown(e) {
@@ -97,38 +97,6 @@ function Canvas() {
             handleZoomOut();
         }
     }
-
-    useEffect(() => {
-        setIsErasing(false);
-    }, [color])
-    useEffect(() => drawPoint(newData), [newData]);
-    useEffect(() => {
-        const context = canvasRef.current.getContext('2d');
-
-        window.addEventListener('resize', handleWindowResize);
-        window.addEventListener('keydown', handleKeyDown)
-        Socket.emit("load-data", {
-            whiteboardId: whiteboardId
-        });
-        Socket.on("data-loaded", (data) => {
-            if (!_.isEmpty(data)) {
-                points.current = data;
-                updateBoardManyPoints(data, context);
-            }
-        });
-        Socket.on("empty-page-from-server", () => setNewData([]));
-        Socket.on("drawing-data-from-server", data => {
-            if (!_.isEmpty(data)) {
-                setNewData(data);
-                points.current.push(data);
-            }
-        })
-        return () => {
-            window.removeEventListener('resize', handleWindowResize);
-            window.removeEventListener("keydown", handleKeyDown);
-        }
-
-    }, []);
 
 
     function handleDrawPointMovement(e) {
@@ -152,12 +120,6 @@ function Canvas() {
     function handleStartMovementDrawing(e) {
         const context = canvasRef.current.getContext('2d');
         if (mouseDown) {
-            isDragging.current = true;
-            context.lineJoin = 'round';
-            context.lineCap = 'round';
-            context.lineWidth = paintSize;
-            context.strokeStyle = color;
-
             if (e.type === "touchmove") {
                 context.lineTo(e.touches[0].pageX, e.touches[0].pageY); //this is where the mobile mouseCoords are stored for some reason
                 isMobile.current = true;
@@ -179,18 +141,8 @@ function Canvas() {
 
                 },
             });
-
-            if (isErasing) {
-                context.globalCompositeOperation = 'destination-out'
-                context.stroke();
-
-            } else {
-                context.globalCompositeOperation = 'source-over';
-                Socket.emit("drawing-data", newDrawData);
-                points.current.push(newDrawData);
-                context.stroke();
-
-            }
+            drawPoint(newDrawData);
+            Socket.emit('drawing-data', newDrawData);
             prevX.current = e.pageX;
             prevY.current = e.pageY;
         }
@@ -198,37 +150,9 @@ function Canvas() {
 
     function handleEndDrawing(e) {
         const context = canvasRef.current.getContext('2d');
-        if (!isDragging.current) {
-            context.beginPath();
-            prevX.current = e.pageX;
-            prevY.current = e.pageY;
-            context.moveTo(prevX.current, prevY.current);
-            context.lineTo(prevX.current + 1, prevY.current + 1);
-            context.lineJoin = 'round';
-            context.lineCap = 'round';
-            const newDrawData = ({
-                whiteboardId: whiteboardId,
-                lineTo: {
-                    x: prevX.current + 1,
-                    y: prevY.current + 1,
-                    size: paintSize,
-                    color: color
-                },
-                moveTo: {
-                    x: prevX.current,
-                    y: prevY.current
-                }
-            });
-
-            Socket.emit("drawing-data", newDrawData);
-            points.current.push(newDrawData);
-            context.lineWidth = paintSize;
-            context.strokeStyle = color;
-            context.stroke();
-            context.closePath();
-        }
         setMouseDown(false);
-        isDragging.current = false;
+        context.stroke();
+        context.closePath();
     }
 
     function zoom() {
@@ -246,7 +170,7 @@ function Canvas() {
         }
         xLeftView.current = x - widthView / 2;
         yTopView.current = y - heightView / 2;
-        points.current.forEach(point => {
+        drawingData.forEach(point => {
             point.moveTo.x *= scale.current;
             point.moveTo.y *= scale.current;
             point.lineTo.x *= scale.current;
@@ -260,7 +184,7 @@ function Canvas() {
         context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         scale.current = 1.5;
         zoom();
-        updateBoardManyPoints(points.current, context);
+        redrawAllPoints();
     }
 
     function handleZoomOut() {
@@ -268,33 +192,30 @@ function Canvas() {
         context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         scale.current = 2 / 3;
         zoom();
-        updateBoardManyPoints(points.current, context);
+        redrawAllPoints();
     }
 
     function showSuccessToast() {
         setIsToastVisible(true);
     }
 
+    const paintSizes = [5, 30, 55];
+    const colors = ['red', 'blue', 'green', 'yellow', 'black']
+
     return (
         <div className="canvas-container">
-            {isPopupVisible &&
-            <div className={"container"}>
-                <ShareLinkBox whiteboardId={whiteboardId}
-                              setIsVisible={setIsPopupVisible}
-                              showSuccessToast={showSuccessToast}
-                              text={"Copy this link to share and collaborate!"}/>
-            </div>
-            }
-
-            <canvas onMouseLeave={() => setMouseDown(false)} id="drawing-board" ref={(ref) => canvasRef.current = ref}
-                    onTouchStart={handleDrawPointMovement}
-                    onTouchMove={handleStartMovementDrawing}
-                    onMouseDown={handleDrawPointMovement}
-                    onMouseUp={handleEndDrawing}
-                    onTouchEnd={handleEndDrawing}
-                    onMouseMove={handleStartMovementDrawing}
-                    width={2000}
-                    height={1500}
+            <canvas
+                onMouseLeave={() => setMouseDown(false)}
+                className="drawing-board"
+                ref={canvasRef}
+                onTouchStart={handleDrawPointMovement}
+                onTouchMove={handleStartMovementDrawing}
+                onMouseDown={handleDrawPointMovement}
+                onMouseUp={handleEndDrawing}
+                onTouchEnd={handleEndDrawing}
+                onMouseMove={handleStartMovementDrawing}
+                width={2000}
+                height={1500}
             >
                 Please update your browser.
             </canvas>
@@ -304,16 +225,32 @@ function Canvas() {
                     We've copied the link to your clipboard!
                 </Alert>
             </Snackbar>}
-            <BottomToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown}
-                           setIsPopupVisible={setIsPopupVisible}
-                           setPaintSize={setPaintSize}
-                           clearBoard={clearBoard}
-                           zoomIn={handleZoomIn}
-                           setIsErasing={setIsErasing}
-                           zoomOut={handleZoomOut}
-                           id={'bottom-toolbar'}
-            />
-            <SideToolbar mouseDown={mouseDown} drawPoint={drawPoint} setMouseDown={setMouseDown} setColor={setColor}/>
+            <Toolbar position='bottom' mouseDown={mouseDown}>
+                {paintSizes.map(size => (
+                        <React.Fragment key={size}>
+                            <Circle identifier={size} onClick={() => setPaintSize(size)} size={size}/>
+                        </React.Fragment>
+                    )
+                )}
+                <EraserTool setIsErasing={() => setColor('white')}/>
+                <Divider orientation="vertical" flexItem/>
+                <ZoomInTool zoomIn={handleZoomIn}/>
+                <ZoomOutTool zoomOut={handleZoomOut}/>
+                <Divider orientation="vertical" flexItem/>
+                <ClearBoardTool clearBoard={clearBoard}/>
+                <ShareLinkBox showSuccessToast={showSuccessToast} text={"Copy this link to share and collaborate!"}/>
+            </Toolbar>
+            <Toolbar position='left' mouseDown={mouseDown}>
+                {colors.map(color => (
+                    <React.Fragment key={color}>
+                        <Circle
+                            identifier={color}
+                            color={color}
+                            onClick={() => setColor(color)}
+                            size={30}/>
+                    </React.Fragment>
+                ))}
+            </Toolbar>
         </div>
     );
 }

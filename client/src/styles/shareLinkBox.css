@@ -14,7 +14,7 @@
     height: 100vh;
 }
 
-#drawing-board {
+.drawing-board {
     background-color: white;
 }
 

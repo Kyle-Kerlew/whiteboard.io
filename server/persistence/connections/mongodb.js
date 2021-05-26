@@ -22,6 +22,15 @@ async function update(fillQuery, updateQuery, collection) {
     }
 }
 
+async function findAndUpdate(query, updateQuery, collection, options, callback) {
+    try {
+        await collection.findOneAndUpdate(query, updateQuery, options, callback);
+
+    } catch (error) {
+        console.log("An error happened while updating db", error);
+    }
+}
+
 async function drawingBoardsCount(collection) {
     try {
         return await collection.countDocuments({});
@@ -53,6 +62,7 @@ module.exports = {
         insert,
         update,
         drawingBoardsCount,
+        findAndUpdate,
         read,
         client,
         run
