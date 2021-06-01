@@ -1,27 +1,26 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import '../../styles/toolbar.css';
 
 const Toolbar = ({mouseDown, children, position = 'bottom'}) => {
     const toolbarRef = useRef();
+    const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
-        if (mouseDown && toolbarRef.current.style.opacity === "0") {
-            setTimeout(() => {
-                if (toolbarRef.current) {
-                    toolbarRef.current.style.display = "none";
-                }
-            }, 500);
-        } else {
-            toolbarRef.current.style.display = "flex";
-        }
+        toolbarRef.current.style.display = !isVisible ? "none" : "flex";
 
-    }, [mouseDown]);
+    }, []);
 
     function getStyle() {
-        return mouseDown ? {opacity: 0, animation: 'fadeOutComplete .5s forwards'} : {
-            opacity: 1,
-            animation: 'fadeInFromComplete .5s forwards'
-        };
+        if (mouseDown) {
+            setTimeout(() => setIsVisible(false), 500);
+            return {opacity: 0, animation: 'fadeOutComplete .5s forwards'};
+        } else {
+            setTimeout(() => setIsVisible(true), 500);
+            return {
+                opacity: 1,
+                animation: 'fadeInFromComplete .5s forwards'
+            };
+        }
     }
 
     return (

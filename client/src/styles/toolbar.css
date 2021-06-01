@@ -1,33 +1,37 @@
 .toolbar {
     display: flex;
-    position: fixed;
+    position: absolute;
     justify-content: center;
     align-items: center;
 
     background-color: #EEEEEE;
-    border-radius: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 10px 5px 5px #c4c4c4c4;
+    border-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0 10px 20px, rgba(0, 0, 0, 0.23) 0 6px 6px;
 }
+
 .bottom {
     margin-left: auto;
     margin-right: auto;
-    bottom: 0;
+    bottom: 15px;
     left: 0;
     right: 0;
-    max-width: 35rem;
+    width: 50vw;
+    max-width: 650px;
+    min-width: 500px;
+    padding: 10px;
 }
 
 .left {
     flex-direction: column;
+    justify-content: space-between;
     margin-top: auto;
     margin-bottom: auto;
     bottom: 0;
     top: 0;
-    left: 0;
-    max-height: 20rem;
-
+    left: 15px;
+    height: 50vh;
+    width: 75px;
+    padding: 30px 10px 30px 10px;
 }
 
 .bottom div, .bottom hr {
