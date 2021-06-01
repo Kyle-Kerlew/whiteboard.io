@@ -13,48 +13,41 @@ import Circle from "../svg/circle";
 import {useRouteMatch} from "react-router-dom";
 
 function Canvas() {
-    const [drawingData, setDrawingData] = useState([]);
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [color, setColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;
+    const [scale, setScale] = useState(1);
     const canvasRef = useRef();
-    const prevX = useRef();
-    const prevY = useRef();
+
     const isMobile = useRef(false);
-    const scale = useRef(1);
-    const xLeftView = useRef(0);
-    const yTopView = useRef(0);
-    const widthViewOriginal = useRef(0);
-    const heightViewOriginal = useRef(0);
-    const widthView = useRef(widthViewOriginal.current);
-    const heightView = useRef(heightViewOriginal.current);
+
+    function handleResize() {
+        canvasRef.current.width = window.innerWidth / 2;
+        canvasRef.current.height = window.innerHeight / 2;
+        /* redraw canvas*/
+
+    }
 
     useEffect(() => {
-        window.addEventListener('resize', handleWindowResize);
-        window.addEventListener('keydown', handleKeyDown)
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('resize', handleResize);
         Socket.emit("load-data", {
             whiteboardId: whiteboardId
         });
-        Socket.on("data-loaded", data => {
-            redrawAllPoints(data, () => setDrawingData(data));
-        });
+        Socket.on("data-loaded", data => redrawAllPoints(data));
         Socket.on("empty-page-from-server", () => clearBoard(false));
         Socket.on("drawing-data-from-server", data => drawPoint(data));
-        return () => {
-            window.removeEventListener('resize', handleWindowResize);
-            window.removeEventListener('keydown', handleKeyDown);
-        }
-
+        return () => window.removeEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('resize', handleKeyDown);
     }, []);
 
-    function redrawAllPoints(data = drawingData, updateState = undefined) {
+    function redrawAllPoints(data) {
         const context = canvasRef.current.getContext('2d');
         context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        context.beginPath();
         for (let i = 0; i < data.length; i++) {
-            drawPoint(data[i], updateState);
+            drawPoint({...data[i]});
         }
     }
 
@@ -62,154 +55,78 @@ function Canvas() {
         const context = canvasRef.current.getContext('2d');
         context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         emitMessage && Socket.emit("empty-page", whiteboardId);
-        setDrawingData([]);
-
     }
 
-    function drawPoint(data, updateState = () => setDrawingData(drawingData.concat(data))) {
+    function drawPoint({x, y, color, size}) {
         const context = canvasRef.current.getContext('2d');
-        const moveTo = data.moveTo;
-        const lineTo = data.lineTo;
-        context.scale(scale.current, scale.current);
-        context.beginPath();
-        context.moveTo(moveTo.x, moveTo.y);
-        context.lineTo(lineTo.x, lineTo.y);
         context.lineJoin = 'round';
         context.lineCap = 'round';
-        context.lineWidth = lineTo.size;
-        context.strokeStyle = lineTo.color;
+        context.lineWidth = size;
+        context.strokeStyle = color;
+        context.lineTo(x, y);
         context.stroke();
-        context.closePath();
-        updateState && updateState();
-    }
-
-    function handleWindowResize() {
-        redrawAllPoints();
     }
 
     function handleKeyDown(e) {
         if (e.ctrlKey && e.key === '=') {
             e.preventDefault(); //prevent browser from zooming normally
-            handleZoomIn();
+            handleZoom(1.5);
         }
         if (e.ctrlKey && e.key === '-') {
             e.preventDefault(); //prevent browser from zooming normally
-            handleZoomOut();
+            handleZoom(.5);
         }
     }
 
-
-    function handleDrawPointMovement(e) {
+    function handleDrawingStart(e) {
+        const mouseX = e.clientX - canvasRef.current.offsetLeft;
+        const mouseY = e.clientY - canvasRef.current.offsetTop;
         const context = canvasRef.current.getContext('2d');
         setMouseDown(true);
-        context.beginPath();
-
         if (e.type === 'touchmove') {
             isMobile.current = true;
-            prevX.current = e.touches[0].pageX;
-            prevY.current = e.touches[0].pageY;
+            context.moveTo(e.touches[0].clientX, e.touches[0].clientY);
         } else {
             isMobile.current = false;
-            prevX.current = e.pageX;
-            prevY.current = e.pageY;
-
+            context.moveTo(mouseX, mouseY);
         }
-        const newDrawData = ({
-            whiteboardId: whiteboardId,
-            moveTo: {
-                x: prevX.current,
-                y: prevY.current,
-            },
-            lineTo: {
-                x: e.pageX,
-                y: e.pageY,
-                size: paintSize,
-                color: color
-
-            },
-        });
-        context.moveTo(prevX.current, prevY.current);
-        context.lineTo(prevX.current, prevY.current);
-        Socket.emit('drawing-data', newDrawData);
-
     }
 
-    function handleStartMovementDrawing(e) {
-        const context = canvasRef.current.getContext('2d');
+    function handleDragTouch(e) {
+        const mouseX = e.clientX - canvasRef.current.offsetLeft;
+        const mouseY = e.clientY - canvasRef.current.offsetTop;
         if (mouseDown) {
-            if (e.type === "touchmove") {
-                context.lineTo(e.touches[0].pageX, e.touches[0].pageY); //this is where the mobile mouseCoords are stored for some reason
-                isMobile.current = true;
-            } else {
-                context.lineTo(e.pageX, e.pageY);
-                isMobile.current = false;
-            }
-            const newDrawData = ({
+            const newDrawData = {
                 whiteboardId: whiteboardId,
-                moveTo: {
-                    x: prevX.current,
-                    y: prevY.current,
-                },
-                lineTo: {
-                    x: e.pageX,
-                    y: e.pageY,
-                    size: paintSize,
-                    color: color
-
-                },
-            });
-            drawPoint(newDrawData);
+                // x: e.type === "touchmove" ? e.touches[0].clientX : e.clientX,
+                // y: e.type === "touchmove" ? e.touches[0].clientY : e.clientY,
+                x: e.type === "touchmove" ? e.touches[0].clientX : mouseX,
+                y: e.type === "touchmove" ? e.touches[0].clientY : mouseY,
+                color: color,
+                size: paintSize
+            };
+            drawPoint({...newDrawData});
             Socket.emit('drawing-data', newDrawData);
-            prevX.current = e.pageX;
-            prevY.current = e.pageY;
         }
     }
 
     function handleEndDrawing(e) {
         const context = canvasRef.current.getContext('2d');
         setMouseDown(false);
-        context.stroke();
-        context.closePath();
-    }
-
-    function zoom() {
-        let X = canvasRef.current.width / 2; //Canvas coordinates
-        let Y = canvasRef.current.height / 2;
-        let x = X / canvasRef.current.width * widthView.current + xLeftView.current;  // View coordinates
-        let y = Y / canvasRef.current.height * heightView.current + yTopView.current;
-        widthView.current *= scale.current;
-        heightView.current *= scale.current;
-        if (widthView.current > widthViewOriginal.current || heightView.current > heightViewOriginal.current) {
-            widthView.current = widthViewOriginal.current;
-            heightView.current = heightViewOriginal.current;
-            x = widthView / 2;
-            y = heightView / 2;
-        }
-        xLeftView.current = x - widthView / 2;
-        yTopView.current = y - heightView / 2;
-        drawingData.forEach(point => {
-            point.moveTo.x *= scale.current;
-            point.moveTo.y *= scale.current;
-            point.lineTo.x *= scale.current;
-            point.lineTo.y *= scale.current;
-        })
 
     }
 
-    function handleZoomIn() {
+    function scaleUp() {
+    }
+
+    function scaleDown() {
+        handleZoom(.5);
+    }
+
+    function handleZoom(scale) {
         const context = canvasRef.current.getContext('2d');
-        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        scale.current = 1.5;
-        zoom();
-        redrawAllPoints();
-    }
-
-    function handleZoomOut() {
-        const context = canvasRef.current.getContext('2d');
-        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        scale.current = 2 / 3;
-        zoom();
-        redrawAllPoints();
+        context.strokeRect(0, 0, 50, 50);
+        // context.scale(scale, scale);
     }
 
     function showSuccessToast() {
@@ -225,14 +142,14 @@ function Canvas() {
                 onMouseLeave={() => setMouseDown(false)}
                 className="drawing-board"
                 ref={canvasRef}
-                onTouchStart={handleDrawPointMovement}
-                onTouchMove={handleStartMovementDrawing}
-                onMouseDown={handleDrawPointMovement}
+                onTouchStart={handleDrawingStart}
+                onTouchMove={handleDragTouch}
+                onMouseDown={handleDrawingStart}
                 onMouseUp={handleEndDrawing}
                 onTouchEnd={handleEndDrawing}
-                onMouseMove={handleStartMovementDrawing}
-                width={2000}
-                height={1500}
+                onMouseMove={handleDragTouch}
+                width={window.innerWidth / 2}
+                height={window.innerHeight / 2}
             >
                 Please update your browser.
             </canvas>
@@ -251,11 +168,12 @@ function Canvas() {
                 )}
                 <EraserTool setIsErasing={() => setColor('white')}/>
                 <Divider orientation="vertical" flexItem/>
-                <ZoomInTool zoomIn={handleZoomIn}/>
-                <ZoomOutTool zoomOut={handleZoomOut}/>
+                <ZoomInTool zoomIn={scaleUp}/>
+                <ZoomOutTool zoomOut={scaleDown}/>
                 <Divider orientation="vertical" flexItem/>
                 <ClearBoardTool clearBoard={clearBoard}/>
-                <ShareLinkBox showSuccessToast={showSuccessToast} text={"Copy this link to share and collaborate!"}/>
+                <ShareLinkBox showSuccessToast={showSuccessToast}
+                              text={"Copy this link to share and collaborate!"}/>
             </Toolbar>
             <Toolbar position='left' mouseDown={mouseDown}>
                 {colors.map(color => (
@@ -264,7 +182,7 @@ function Canvas() {
                             identifier={color}
                             color={color}
                             onClick={() => setColor(color)}
-                            size={30}/>
+                            size={50}/>
                     </React.Fragment>
                 ))}
             </Toolbar>
