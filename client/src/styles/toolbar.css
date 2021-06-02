@@ -30,8 +30,8 @@
     top: 0;
     left: 15px;
     height: 50vh;
-    max-height: 650px;
-    min-height: 500px;
+    max-height: 500px;
+    min-height: 400px;
     width: 75px;
     padding: 30px 10px 30px 10px;
 }

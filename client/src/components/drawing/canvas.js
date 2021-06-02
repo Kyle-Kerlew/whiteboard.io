@@ -93,30 +93,33 @@ function Canvas() {
         }
     }
 
+
+    function getMousePositionX(e) {
+        return e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    }
+
+    function getMousePositionY(e) {
+        return e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+    }
+
     function handleDrawingStart(e) {
         const context = canvasRef.current.getContext('2d');
-        const mouseX = ((e.clientX * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
-        const mouseY = ((e.clientY * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
+        const mouseX = ((getMousePositionX(e) * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
+        const mouseY = ((getMousePositionY(e) * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
         setMouseDown(true);
         context.beginPath();
-        if (e.type === 'touchmove') {
-            isMobile.current = true;
-            context.moveTo(e.touches[0].clientX, e.touches[0].clientY);
-        } else {
-            isMobile.current = false;
-            context.moveTo(mouseX, mouseY);
-        }
+        context.moveTo(mouseX, mouseY);
     }
 
     function handleDragTouch(e) {
         if (mouseDown) {
             const context = canvasRef.current.getContext('2d');
-            const mouseX = ((e.clientX * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
-            const mouseY = ((e.clientY * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
+            const mouseX = ((getMousePositionX(e) * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
+            const mouseY = ((getMousePositionY(e) * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
             const newDrawData = {
                 whiteboardId: whiteboardId,
-                x: e.type === "touchmove" ? e.touches[0].clientX * scale.current : mouseX,
-                y: e.type === "touchmove" ? e.touches[0].clientY * scale.current : mouseY,
+                x: mouseX,
+                y: mouseY,
                 color: color,
                 size: paintSize
             };
@@ -125,7 +128,7 @@ function Canvas() {
         }
     }
 
-    function handleEndDrawing(e) {
+    function handleEndDrawing() {
         setMouseDown(false);
     }
 

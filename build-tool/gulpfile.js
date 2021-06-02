@@ -33,7 +33,7 @@ function cleanClientBuild(cb) {
 }
 
 function cleanClientZip(cb) {
-    fs.rm(path.join(__dirname, '../', 'client.zip'), {recursive: true, force: true}, (err) => {
+    fs.rm(path.join(__dirname, '../', 'client.zipClient'), {recursive: true, force: true}, (err) => {
         if (err) {
             console.log("Zip file does not exist", err);
             cb();
@@ -44,7 +44,7 @@ function cleanClientZip(cb) {
     })
 }
 
-function zip(cb) {
+function zipClient(cb) {
     const clientFolder = path.join(__dirname, '..', 'client');
 
     const zip = new AdmZip();
@@ -61,10 +61,29 @@ function zip(cb) {
     });
 }
 
+function zipServer(cb) {
+    const serverFolder = path.join(__dirname, '..', 'server');
+
+    const zip = new AdmZip();
+    zip.addLocalFolder(path.join(serverFolder, '.ebextensions'), '/.ebextensions');
+    zip.addLocalFolder(path.join(serverFolder, './persistence'), '/persistence');
+    zip.addLocalFile(path.join(serverFolder, 'package.json'));
+    zip.addLocalFile(path.join(serverFolder, 'server.js'));
+    zip.addLocalFile(path.join(serverFolder, 'app.js'));
+    zip.writeZip(path.join(__dirname, '..', 'server.zip'), (err) => {
+        if (err) {
+            throw err;
+        }
+        cb();
+
+    });
+}
+
 function buildServer(cb) {
     //todo: minify code
     //todo: babel transpile code
-    //todo: zip files for deployment
+    //todo: zipClient files for deployment
+    cb();
 }
 
-exports.default = parallel(series(parallel(cleanClientBuild, cleanClientZip), buildClient, zip), buildServer);
+exports.default = parallel(series(parallel(cleanClientBuild, cleanClientZip), buildClient, zipClient), series(buildServer, zipServer));
