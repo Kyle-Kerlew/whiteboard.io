@@ -32,9 +32,21 @@ function Canvas() {
         context.putImageData(data, 0, 0);
     }
 
+    function handleScrollZoom(e) {
+        if (e.ctrlKey) {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                scaleUp();
+            } else {
+                scaleDown();
+            }
+        }
+    }
+
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('resize', handleResize);
+        window.addEventListener('wheel', handleScrollZoom, {passive: false});
         Socket.emit("load-data", {
             whiteboardId: whiteboardId
         });
@@ -43,6 +55,7 @@ function Canvas() {
         Socket.on("drawing-data-from-server", data => drawPoint(data));
         return () => window.removeEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('resize', handleResize);
+        return () => window.removeEventListener('wheel', handleScrollZoom);
     }, []);
 
     function redrawAllPoints(data) {
@@ -72,11 +85,11 @@ function Canvas() {
     function handleKeyDown(e) {
         if (e.ctrlKey && e.key === '=') {
             e.preventDefault(); //prevent browser from zooming normally
-            handleZoom(1.5);
+            scaleUp();
         }
         if (e.ctrlKey && e.key === '-') {
             e.preventDefault(); //prevent browser from zooming normally
-            handleZoom(.5);
+            scaleDown();
         }
     }
 
@@ -100,7 +113,6 @@ function Canvas() {
             const context = canvasRef.current.getContext('2d');
             const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
             const mouseY = (e.clientY - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
-            console.log("Mouse X, Mouse Y", mouseX, mouseY)
 
             const newDrawData = {
                 whiteboardId: whiteboardId,
