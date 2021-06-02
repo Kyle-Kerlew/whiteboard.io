@@ -19,3 +19,7 @@
     background: #555;
 }
 
+
+html, body {
+    overflow: hidden;
+}

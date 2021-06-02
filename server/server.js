@@ -12,6 +12,7 @@ const {mongodb} = require('./persistence/connections/mongodb');
  * Get port from environment and store in Express.
  */
 
+
 const port = process.env.NODE_ENV !== 'production' ? 3001 : 8080;
 app.set('port', port);
 app.use(compression());
