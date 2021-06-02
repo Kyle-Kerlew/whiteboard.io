@@ -81,8 +81,8 @@ function Canvas() {
 
     function handleDrawingStart(e) {
         const context = canvasRef.current.getContext('2d');
-        const mouseX = (e.clientX - context.canvas.offsetLeft) / scale.current;
-        const mouseY = (e.clientY - context.canvas.offsetTop) / scale.current;
+        const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
+        const mouseY = (e.clientY - context.canvas.offsetTop + window.scrollY) / scale.current;
         setMouseDown(true);
         context.beginPath();
         if (e.type === 'touchmove') {
@@ -96,8 +96,8 @@ function Canvas() {
 
     function handleDragTouch(e) {
         const context = canvasRef.current.getContext('2d');
-        const mouseX = (e.clientX - context.canvas.offsetLeft) / scale.current;
-        const mouseY = (e.clientY - context.canvas.offsetTop) / scale.current;
+        const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
+        const mouseY = (e.clientY - context.canvas.offsetTop + window.scrollY) / scale.current;
 
         if (mouseDown) {
             const newDrawData = {
@@ -136,11 +136,17 @@ function Canvas() {
         canvasCopy.width = originalWidth;
         canvasCopy.height = originalHeight;
         canvasCopy.getContext('2d').putImageData(data, 0, 0);
+        let destinationX = 0;
+        let destinationY = 0;
+        if (context.canvas.offsetLeft < 0 || context.canvas.offsetTop < 0) {
+            destinationX = -context.canvas.offsetLeft;
+            destinationY = -context.canvas.offsetTop;
+        }
 
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
         context.scale(scale.current, scale.current)
-        context.drawImage(canvasCopy, 0, 0, originalWidth, originalHeight);
+        context.drawImage(canvasCopy, destinationX, destinationY, originalWidth, originalHeight);
     }
 
     function showSuccessToast() {
