@@ -139,6 +139,7 @@ function Canvas() {
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
         context.canvas.left *= scale.current;
+        context.imageSmoothingEnabled = false; //prevent blurring when zooming back out
         context.scale(scale.current, scale.current);
         context.drawImage(canvasCopy, 0, 0);
     }
