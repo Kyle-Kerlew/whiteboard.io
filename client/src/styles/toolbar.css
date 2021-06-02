@@ -30,6 +30,8 @@
     top: 0;
     left: 15px;
     height: 50vh;
+    max-height: 650px;
+    min-height: 500px;
     width: 75px;
     padding: 30px 10px 30px 10px;
 }
@@ -45,7 +47,6 @@ svg, img {
 
 @keyframes fadeInFromComplete {
     0% {
-        display: none;
         opacity: 0;
     }
     100% {

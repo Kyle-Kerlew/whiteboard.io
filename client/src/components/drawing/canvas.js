@@ -27,8 +27,8 @@ function Canvas() {
     function handleResize() {
         const context = canvasRef.current.getContext('2d');
         const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
-        context.canvas.width = window.innerWidth / 2;
-        context.canvas.height = window.innerHeight / 2;
+        context.canvas.width = window.innerWidth;
+        context.canvas.height = window.innerHeight;
         context.putImageData(data, 0, 0);
     }
 
@@ -44,7 +44,7 @@ function Canvas() {
     }
 
     useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('resize', handleResize);
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
         Socket.emit("load-data", {
@@ -95,8 +95,8 @@ function Canvas() {
 
     function handleDrawingStart(e) {
         const context = canvasRef.current.getContext('2d');
-        const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
-        const mouseY = (e.clientY - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
+        const mouseX = ((e.clientX * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
+        const mouseY = ((e.clientY * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
         setMouseDown(true);
         context.beginPath();
         if (e.type === 'touchmove') {
@@ -111,13 +111,12 @@ function Canvas() {
     function handleDragTouch(e) {
         if (mouseDown) {
             const context = canvasRef.current.getContext('2d');
-            const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
-            const mouseY = (e.clientY - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
-
+            const mouseX = ((e.clientX * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
+            const mouseY = ((e.clientY * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
             const newDrawData = {
                 whiteboardId: whiteboardId,
-                x: e.type === "touchmove" ? e.touches[0].clientX : mouseX,
-                y: e.type === "touchmove" ? e.touches[0].clientY : mouseY,
+                x: e.type === "touchmove" ? e.touches[0].clientX * scale.current : mouseX,
+                y: e.type === "touchmove" ? e.touches[0].clientY * scale.current : mouseY,
                 color: color,
                 size: paintSize
             };
@@ -128,7 +127,6 @@ function Canvas() {
 
     function handleEndDrawing(e) {
         setMouseDown(false);
-
     }
 
     function scaleUp() {
@@ -176,8 +174,8 @@ function Canvas() {
                 onMouseUp={handleEndDrawing}
                 onTouchEnd={handleEndDrawing}
                 onMouseMove={handleDragTouch}
-                width={window.innerWidth / 2}
-                height={window.innerHeight / 2}
+                width={window.innerWidth}
+                height={window.innerHeight - 56}
             >
                 Please update your browser.
             </canvas>
