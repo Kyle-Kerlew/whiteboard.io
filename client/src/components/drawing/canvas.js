@@ -117,7 +117,7 @@ function Canvas() {
     }
 
     function scaleUp() {
-        scale.current *= 1.5;
+        scale.current *= 1.2;
         handleZoom();
     }
 
@@ -128,9 +128,14 @@ function Canvas() {
 
     function handleZoom() {
         const context = canvasRef.current.getContext('2d');
+        const originalWidth = context.canvas.width;
+        const originalHeight = context.canvas.height;
         const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
         const canvasCopy = document.createElement("canvas");
-        canvasCopy.getContext('2d').putImageData(data, 0, 0)
+        canvasCopy.width = originalWidth;
+        canvasCopy.height = originalHeight;
+        canvasCopy.getContext('2d').putImageData(data, 0, 0);
+
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
         context.drawImage(canvasCopy, 0, 0, context.canvas.width, context.canvas.height);
