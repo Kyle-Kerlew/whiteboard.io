@@ -18,16 +18,17 @@ function Canvas() {
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [color, setColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;
-    const [scale, setScale] = useState(1);
     const canvasRef = useRef();
+    const scale = useRef(1);
 
     const isMobile = useRef(false);
 
     function handleResize() {
-        canvasRef.current.width = window.innerWidth / 2;
-        canvasRef.current.height = window.innerHeight / 2;
-        /* redraw canvas*/
-
+        const context = canvasRef.current.getContext('2d');
+        const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
+        context.canvas.width = window.innerWidth / 2;
+        context.canvas.height = window.innerHeight / 2;
+        context.putImageData(data, 0, 0);
     }
 
     useEffect(() => {
@@ -40,12 +41,12 @@ function Canvas() {
         Socket.on("empty-page-from-server", () => clearBoard(false));
         Socket.on("drawing-data-from-server", data => drawPoint(data));
         return () => window.removeEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('resize', handleKeyDown);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     function redrawAllPoints(data) {
         const context = canvasRef.current.getContext('2d');
-        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         for (let i = 0; i < data.length; i++) {
             drawPoint({...data[i]});
         }
@@ -53,7 +54,7 @@ function Canvas() {
 
     function clearBoard(emitMessage) {
         const context = canvasRef.current.getContext('2d');
-        context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         emitMessage && Socket.emit("empty-page", whiteboardId);
     }
 
@@ -79,10 +80,11 @@ function Canvas() {
     }
 
     function handleDrawingStart(e) {
-        const mouseX = e.clientX - canvasRef.current.offsetLeft;
-        const mouseY = e.clientY - canvasRef.current.offsetTop;
         const context = canvasRef.current.getContext('2d');
+        const mouseX = (e.clientX - context.canvas.offsetLeft) / scale.current;
+        const mouseY = (e.clientY - context.canvas.offsetTop) / scale.current;
         setMouseDown(true);
+        context.beginPath();
         if (e.type === 'touchmove') {
             isMobile.current = true;
             context.moveTo(e.touches[0].clientX, e.touches[0].clientY);
@@ -93,13 +95,13 @@ function Canvas() {
     }
 
     function handleDragTouch(e) {
-        const mouseX = e.clientX - canvasRef.current.offsetLeft;
-        const mouseY = e.clientY - canvasRef.current.offsetTop;
+        const context = canvasRef.current.getContext('2d');
+        const mouseX = (e.clientX - context.canvas.offsetLeft) / scale.current;
+        const mouseY = (e.clientY - context.canvas.offsetTop) / scale.current;
+
         if (mouseDown) {
             const newDrawData = {
                 whiteboardId: whiteboardId,
-                // x: e.type === "touchmove" ? e.touches[0].clientX : e.clientX,
-                // y: e.type === "touchmove" ? e.touches[0].clientY : e.clientY,
                 x: e.type === "touchmove" ? e.touches[0].clientX : mouseX,
                 y: e.type === "touchmove" ? e.touches[0].clientY : mouseY,
                 color: color,
@@ -111,22 +113,27 @@ function Canvas() {
     }
 
     function handleEndDrawing(e) {
-        const context = canvasRef.current.getContext('2d');
         setMouseDown(false);
-
     }
 
     function scaleUp() {
+        scale.current *= 1.5;
+        handleZoom();
     }
 
     function scaleDown() {
-        handleZoom(.5);
+        scale.current *= .5;
+        handleZoom();
     }
 
-    function handleZoom(scale) {
+    function handleZoom() {
         const context = canvasRef.current.getContext('2d');
-        context.strokeRect(0, 0, 50, 50);
-        // context.scale(scale, scale);
+        const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
+        const canvasCopy = document.createElement("canvas");
+        canvasCopy.getContext('2d').putImageData(data, 0, 0)
+        context.canvas.width *= scale.current;
+        context.canvas.height *= scale.current;
+        context.drawImage(canvasCopy, 0, 0, context.canvas.width, context.canvas.height);
     }
 
     function showSuccessToast() {
