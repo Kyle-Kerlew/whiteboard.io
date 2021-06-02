@@ -11,6 +11,7 @@ import ZoomOutTool from "../toolbar/tools/zoomOutTool";
 import ClearBoardTool from "../toolbar/tools/clearBoardTool";
 import Circle from "../svg/circle";
 import {useRouteMatch} from "react-router-dom";
+import DownloadImageTool from "../toolbar/tools/downloadImageTool";
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
@@ -95,11 +96,12 @@ function Canvas() {
     }
 
     function handleDragTouch(e) {
-        const context = canvasRef.current.getContext('2d');
-        const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
-        const mouseY = (e.clientY - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
-
         if (mouseDown) {
+            const context = canvasRef.current.getContext('2d');
+            const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
+            const mouseY = (e.clientY - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
+            console.log("Mouse X, Mouse Y", mouseX, mouseY)
+
             const newDrawData = {
                 whiteboardId: whiteboardId,
                 x: e.type === "touchmove" ? e.touches[0].clientX : mouseX,
@@ -134,13 +136,12 @@ function Canvas() {
         const originalWidth = context.canvas.width;
         const originalHeight = context.canvas.height;
         const canvasCopy = document.createElement('canvas');
-        canvasCopy.height = originalHeight * scale.current;
-        canvasCopy.width = originalWidth * scale.current;
+        canvasCopy.height = originalHeight;
+        canvasCopy.width = originalWidth;
+        canvasCopy.getContext('2d').scale(scale.current, scale.current)
         canvasCopy.getContext('2d').putImageData(data, 0, 0);
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
-        context.scale(scale.current, scale.current);
-        context.imageSmoothingEnabled = false;
         context.drawImage(canvasCopy, 0, 0, context.canvas.width, context.canvas.height);
     }
 
@@ -181,14 +182,15 @@ function Canvas() {
                         </React.Fragment>
                     )
                 )}
-                <EraserTool setIsErasing={() => setColor('white')}/>
                 <Divider orientation="vertical" flexItem/>
+                <EraserTool setIsErasing={() => setColor('white')}/>
                 <ZoomInTool zoomIn={scaleUp}/>
                 <ZoomOutTool zoomOut={scaleDown}/>
-                <Divider orientation="vertical" flexItem/>
                 <ClearBoardTool clearBoard={clearBoard}/>
+                <Divider orientation="vertical" flexItem/>
                 <ShareLinkBox showSuccessToast={showSuccessToast}
                               text={"Copy this link to share and collaborate!"}/>
+                <DownloadImageTool getDownloadData={() => canvasRef.current.toDataURL("image/png")}/>
             </Toolbar>
             <Toolbar position='left' mouseDown={mouseDown}>
                 {colors.map(color => (
