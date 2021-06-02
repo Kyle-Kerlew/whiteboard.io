@@ -15,7 +15,7 @@ import {useRouteMatch} from "react-router-dom";
 
 function ShareLinkBox({text, showSuccessToast, width = "36px", height = "36px"}) {
     const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;
-    const baseurl = process.env.REACT_APP_BASE_URL;
+    const baseurl = `${process.env.REACT_APP_BASE_URL}/`;
     const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     function copyLink() {
