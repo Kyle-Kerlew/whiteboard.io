@@ -127,21 +127,21 @@ function Canvas() {
         handleZoom();
     }
 
+
     function handleZoom() {
         const context = canvasRef.current.getContext('2d');
         const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
-        const canvasCopy = document.createElement("canvas");
-        canvasCopy.width = context.canvas.width;
-        canvasCopy.height = context.canvas.height;
-        canvasCopy.getContext('2d').putImageData(data, 0, 0);
         const originalWidth = context.canvas.width;
         const originalHeight = context.canvas.height;
+        const canvasCopy = document.createElement('canvas');
+        canvasCopy.height = originalHeight * scale.current;
+        canvasCopy.width = originalWidth * scale.current;
+        canvasCopy.getContext('2d').putImageData(data, 0, 0);
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
-        context.canvas.left *= scale.current;
-        context.imageSmoothingEnabled = false; //prevent blurring when zooming back out
         context.scale(scale.current, scale.current);
-        context.drawImage(canvasCopy, 0, 0);
+        context.imageSmoothingEnabled = false;
+        context.drawImage(canvasCopy, 0, 0, context.canvas.width, context.canvas.height);
     }
 
     function showSuccessToast() {
