@@ -5,13 +5,14 @@ const path = require('path');
 const fs = require('fs');
 
 function buildClient(cb) {
-    exec("cd ../client && npm run build", (error, stdout, stderr) => {
+    exec("cd ../client && npm i && npm run build", (error, stdout, stderr) => {
         if (error) {
             console.log(`Error: ${error.message}`);
             return;
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
+            cb();
             return;
         }
         cb();
