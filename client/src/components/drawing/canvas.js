@@ -114,15 +114,16 @@ function Canvas() {
 
     function handleEndDrawing(e) {
         setMouseDown(false);
+
     }
 
     function scaleUp() {
-        scale.current *= 1.2;
+        scale.current = 1.25;
         handleZoom();
     }
 
     function scaleDown() {
-        scale.current *= .5;
+        scale.current = .8;
         handleZoom();
     }
 
@@ -138,7 +139,8 @@ function Canvas() {
 
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
-        context.drawImage(canvasCopy, 0, 0, context.canvas.width, context.canvas.height);
+        context.scale(scale.current, scale.current)
+        context.drawImage(canvasCopy, 0, 0, originalWidth, originalHeight);
     }
 
     function showSuccessToast() {
