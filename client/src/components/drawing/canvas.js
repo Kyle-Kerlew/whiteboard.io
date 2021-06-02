@@ -82,7 +82,7 @@ function Canvas() {
     function handleDrawingStart(e) {
         const context = canvasRef.current.getContext('2d');
         const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
-        const mouseY = (e.clientY - context.canvas.offsetTop + window.scrollY) / scale.current;
+        const mouseY = (e.clientY - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
         setMouseDown(true);
         context.beginPath();
         if (e.type === 'touchmove') {
@@ -97,7 +97,7 @@ function Canvas() {
     function handleDragTouch(e) {
         const context = canvasRef.current.getContext('2d');
         const mouseX = (e.clientX - context.canvas.offsetLeft + window.scrollX) / scale.current;
-        const mouseY = (e.clientY - context.canvas.offsetTop + window.scrollY) / scale.current;
+        const mouseY = (e.clientY - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
 
         if (mouseDown) {
             const newDrawData = {
@@ -129,24 +129,18 @@ function Canvas() {
 
     function handleZoom() {
         const context = canvasRef.current.getContext('2d');
-        const originalWidth = context.canvas.width;
-        const originalHeight = context.canvas.height;
         const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
         const canvasCopy = document.createElement("canvas");
-        canvasCopy.width = originalWidth;
-        canvasCopy.height = originalHeight;
+        canvasCopy.width = context.canvas.width;
+        canvasCopy.height = context.canvas.height;
         canvasCopy.getContext('2d').putImageData(data, 0, 0);
-        let destinationX = 0;
-        let destinationY = 0;
-        if (context.canvas.offsetLeft < 0 || context.canvas.offsetTop < 0) {
-            destinationX = -context.canvas.offsetLeft;
-            destinationY = -context.canvas.offsetTop;
-        }
-
+        const originalWidth = context.canvas.width;
+        const originalHeight = context.canvas.height;
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
-        context.scale(scale.current, scale.current)
-        context.drawImage(canvasCopy, destinationX, destinationY, originalWidth, originalHeight);
+        context.canvas.left *= scale.current;
+        context.scale(scale.current, scale.current);
+        context.drawImage(canvasCopy, 0, 0);
     }
 
     function showSuccessToast() {
@@ -157,7 +151,7 @@ function Canvas() {
     const colors = ['red', 'blue', 'green', 'yellow', 'black']
 
     return (
-        <div className="canvas-container">
+        <div id="canvas-container">
             <canvas
                 onMouseLeave={() => setMouseDown(false)}
                 className="drawing-board"
