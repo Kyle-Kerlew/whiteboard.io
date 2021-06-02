@@ -22,8 +22,6 @@ function Canvas() {
     const canvasRef = useRef();
     const scale = useRef(1);
 
-    const isMobile = useRef(false);
-
     function handleResize() {
         const context = canvasRef.current.getContext('2d');
         const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
@@ -43,7 +41,8 @@ function Canvas() {
         }
     }
 
-    useEffect(() => {
+     useEffect(() => {
+
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('resize', handleResize);
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
@@ -93,7 +92,6 @@ function Canvas() {
         }
     }
 
-
     function getMousePositionX(e) {
         return e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
     }
@@ -128,7 +126,7 @@ function Canvas() {
         }
     }
 
-    function handleEndDrawing() {
+    function handleEndDrawing(e) {
         setMouseDown(false);
     }
 
