@@ -1,0 +1,17 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    max-width: 400px;
+    margin: 25vh auto;
+}
+.form button {
+    margin: 25px auto;
+    width: 50%;
+}
+.form p {
+    text-align: center;
+}
+.container {
+    background-color: white;
+}
