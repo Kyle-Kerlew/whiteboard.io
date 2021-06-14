@@ -41,7 +41,7 @@ function Canvas() {
         }
     }
 
-     useEffect(() => {
+    useEffect(() => {
 
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('resize', handleResize);
@@ -52,9 +52,11 @@ function Canvas() {
         Socket.on("data-loaded", data => redrawAllPoints(data));
         Socket.on("empty-page-from-server", () => clearBoard(false));
         Socket.on("drawing-data-from-server", data => drawPoint(data));
-        return () => window.removeEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('resize', handleResize);
-        return () => window.removeEventListener('wheel', handleScrollZoom);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('wheel', handleScrollZoom);
+        }
     }, []);
 
     function redrawAllPoints(data) {
@@ -126,7 +128,7 @@ function Canvas() {
         }
     }
 
-    function handleEndDrawing(e) {
+    function handleEndDrawing() {
         setMouseDown(false);
     }
 
@@ -176,7 +178,7 @@ function Canvas() {
                 onTouchEnd={handleEndDrawing}
                 onMouseMove={handleDragTouch}
                 width={window.innerWidth}
-                height={window.innerHeight - 56}
+                height={window.innerHeight}
             >
                 Please update your browser.
             </canvas>

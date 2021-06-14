@@ -22,4 +22,7 @@
 
 html, body {
     overflow: hidden;
+    margin-top: 56px; /* margin to account for fixed navigation bar*/
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
