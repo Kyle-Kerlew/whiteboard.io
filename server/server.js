@@ -1,35 +1,18 @@
 #!/usr/bin/env node
-/**
- * Module dependencies.
- */
 
-const app = require('./app');
-const http = require('http');
+const server = require('./app');
 const {Server} = require("socket.io");
-const compression = require('compression');
 const {mongodb} = require('./persistence/connections/mongodb');
 /**
  * Get port from environment and store in Express.
  */
-
-
-const port = process.env.NODE_ENV !== 'production' ? 3001 : 8080;
-app.set('port', port);
-app.use(compression());
-
-/**
- * Create HTTP server.
- */
-
-const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : process.env.REACT_APP_URL,
         methods: ["GET"]
     },
     serveClient: false,
-
-})
+});
 
 async function connectToMongo() {
     await mongodb.run();
@@ -87,40 +70,4 @@ async function connectToMongo() {
 
 }
 
-void connectToMongo()
-
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
-    if (error.syscall !== 'listen') {
-        throw error;
-    }
-
-    const bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-            break;
-        default:
-            throw error;
-    }
-}
+void connectToMongo();
