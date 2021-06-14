@@ -1,9 +1,8 @@
 #canvas-container {
     background-color: gray;
     position: relative;
-    top: 56px;
     width: 100%;
-    height: calc(100% - 56px);
+    height: 100%;
     /*display: flex;*/
     /*justify-content: center;*/
     /*align-items: center;*/

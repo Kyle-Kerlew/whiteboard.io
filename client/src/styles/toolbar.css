@@ -9,6 +9,26 @@
     box-shadow: rgba(0, 0, 0, 0.19) 0 10px 20px, rgba(0, 0, 0, 0.23) 0 6px 6px;
 }
 
+@media only screen and (max-width: 1128px) {
+    img {
+        height: 2rem;
+        width: 2rem;
+    }
+    svg {
+        font-size: 2rem;
+    }
+
+}
+@media only screen and (max-device-width: 1128px) {
+    img {
+        height: 1rem;
+        width: 2rem;
+    }
+    .toolbar {
+
+    }
+}
+
 .bottom {
     margin-left: auto;
     margin-right: auto;
@@ -16,8 +36,6 @@
     left: 0;
     right: 0;
     width: 50vw;
-    max-width: 650px;
-    min-width: 500px;
     padding: 10px;
 }
 
@@ -54,11 +72,9 @@ svg, img {
     }
 }
 
-
 @keyframes fadeOutComplete {
     0% {
         opacity: 1;
-
     }
     100% {
         opacity: 0;
