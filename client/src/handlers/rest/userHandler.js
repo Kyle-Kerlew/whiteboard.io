@@ -1,14 +1,24 @@
-function createAccount(values) {
-    //make rest api call with axios
+import {axios} from '../../configuration/axios';
+
+
+async function createAccount(request) {
+    try {
+        await axios.post('/user/create-account', request);
+    } catch (e) {
+        throw e;
+    }
 }
 
-function signIn(values) {
-    //make rest api call with axios
+async function signIn(values) {
+    try {
+        await axios.post('/login', values);
+    } catch (e) {
+        throw e;
+    }
+
 }
 
-const UserHandler = {
-    createAccount: createAccount,
-    signIn: signIn
+export const UserHandler = {
+    createAccount,
+    signIn
 };
-
-export default UserHandler;

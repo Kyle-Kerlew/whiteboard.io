@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, TextField} from "@material-ui/core";
 import '../../styles/sign-in.css';
-import UserHandler from "../../handlers/rest/userHandler";
+import {UserHandler} from "../../handlers/rest/userHandler";
 
 function SignIn() {
     function handleSignIn(e) {
