@@ -6,7 +6,7 @@ const {mongodb} = require('./persistence/connections/mongodb');
 /**
  * Get port from environment and store in Express.
  */
-const io = new Server(server, {
+const socketIoServer = new Server(server, {
     cors: {
         origin: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : process.env.REACT_APP_URL,
         methods: ["GET"]
@@ -17,7 +17,7 @@ const io = new Server(server, {
 async function connectToMongo() {
     await mongodb.run();
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
-    io.on("connection", (socket => {
+    socketIoServer.on("connection", (socket => {
         socket.on("load-data", ({whiteboardId}) => {
             try {
                 socket.join(whiteboardId); //join a room for everyone in a whiteboard
