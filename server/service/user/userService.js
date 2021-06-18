@@ -30,12 +30,17 @@ async function findUserByUserId(userId) {
     const collection = mongodb.client.db('whiteboardio').collection('user');
     return UserPersistence.findUserById(collection, userId);
 }
+async function findUserBySession(token) {
+    const collection = mongodb.client.db('whiteboardio').collection('user');
+    return UserPersistence.findUserById(collection, token);
+}
 
 module.exports = {
     userService: {
         createAccount,
         findUserByEmail,
         findUserByUserId,
-        loginUser
+        loginUser,
+        findUserBySession,
     }
 }
