@@ -1,27 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const {userService} = require('../../service/user/userService');
-const {authenticationService} = require('../../service/authentication/authenticationService');
 const passport = require('../../configuration/passportConfig');
 
-const jwt = require('jsonwebtoken');
-
-router.post('/create-account', async function (req, res) {
+router.post('/create-account', passport.authenticate('local'), async function (req, res) {
     const response = await userService.createAccount(req.body);
-    res.status(response && response.error ? 400 : 201).send(response);
+    res.json(response);
 });
 
-router.post('/login', passport.authenticate('local', {
-}), async function (req, res) {
-    const response = await userService.loginUser(req.body);
-    res.send(response);
+router.post('/login', passport.authenticate('local'), async function (req, res) {
+    res.end();
 });
 
-router.get('/whiteboards', async function (req, res) {
+router.get('/list', passport.authenticate('cookie', {session: false}), async function (req, res) {
     res.json({message: "You're allowed to see this"});
 });
 
-router.delete('/delete', function (req, res) {
-    //TODO: API security, authorized users only
+router.delete('/delete', passport.authenticate('cookie'), function (req, res) {
 });
+
 module.exports = router;
