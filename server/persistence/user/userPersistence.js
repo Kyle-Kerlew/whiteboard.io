@@ -3,7 +3,6 @@ async function createUser(collection, user) {
         return await collection.insertOne(user);
     } catch (e) {
         console.log("Error inserting data", e);
-        throw "Error creating user";
     }
 }
 
@@ -22,19 +21,11 @@ async function findUserById(collection, userId) {
         console.log("Error finding user by id");
     }
 }
-async function findUserBySession(collection, sessionId) {
-    try {
-        return await collection.findOne({_id: userId});
-    } catch (e) {
-        console.log("Error finding user by id");
-    }
-}
 
 module.exports = {
     UserPersistence: {
         createUser,
         findUserByEmail,
         findUserById,
-        findUserBySession
     }
 }
