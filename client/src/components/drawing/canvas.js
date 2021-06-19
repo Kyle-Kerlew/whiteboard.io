@@ -38,29 +38,24 @@ function Canvas() {
         }
     }
 
-    async function setWhiteboardData() {
+    async function setWhiteboardData(callback) {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
         if (response.data && response.data.data) {
             draw(response.data.data);
-            setDrawingData(response.data.data);
+            setDrawingData(response.data.data, callback);
         }
     }
 
     useEffect(() => {
-        setWhiteboardData();
-        Socket.connect();
-
-        function handleResize() {
-            const context = canvasRef.current.getContext('2d');
-            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-            context.canvas.width = window.innerWidth;
-            context.canvas.height = window.innerHeight;
-            draw(applyScaleToData(drawingData), true);
-
+        function setStateCallback() {
+            window.addEventListener('resize', handleResize);
         }
 
+        setWhiteboardData(setStateCallback);
+        Socket.connect();
+
+
         window.addEventListener('keydown', handleKeyDown, {passive: false});
-        window.addEventListener('resize', handleResize);
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
 
         Socket.on("empty-page-from-server", () => clearBoard(false));
@@ -77,6 +72,15 @@ function Canvas() {
         const context = canvasRef.current.getContext('2d');
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         emitMessage && Socket.emit("empty-page", whiteboardId);
+    }
+
+    function handleResize() {
+        const context = canvasRef.current.getContext('2d');
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        context.canvas.width = window.innerWidth;
+        context.canvas.height = window.innerHeight;
+        draw(applyScaleToData(drawingData));
+
     }
 
     function handleKeyDown(e) {
