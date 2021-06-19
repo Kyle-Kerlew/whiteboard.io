@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Toolbar from "../toolbar/toolbar";
 import {Socket} from '../socket/socket';
 import ShareLinkBox from "../toolbar/tools/linkShareTool";
@@ -26,13 +26,6 @@ function Canvas() {
     const canvasRef = useRef();
     const scale = useRef(1);
 
-    function handleResize() {
-        const context = canvasRef.current.getContext('2d');
-        const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
-        context.canvas.width = window.innerWidth;
-        context.canvas.height = window.innerHeight;
-        context.putImageData(data, 0, 0);
-    }
 
     function handleScrollZoom(e) {
         if (e.ctrlKey) {
@@ -45,14 +38,28 @@ function Canvas() {
         }
     }
 
-    useEffect(async () => {
+    async function setWhiteboardData() {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
         if (response.data && response.data.data) {
             draw(response.data.data);
+            setDrawingData(response.data.data);
         }
+    }
+
+    useEffect(() => {
+        setWhiteboardData();
     }, []);
 
     useEffect(() => {
+
+        function handleResize() {
+            const context = canvasRef.current.getContext('2d');
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            context.canvas.width = window.innerWidth;
+            context.canvas.height = window.innerHeight;
+            draw(applyScaleToData(drawingData), true);
+
+        }
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('resize', handleResize);
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
@@ -148,7 +155,7 @@ function Canvas() {
         handleZoom();
     }
 
-    function draw(data, newData = true) {
+    function draw(data, zooming = false) {
         function drawPoint(x, y, colorToDraw, sizeToUse, moveTo) {
             const context = canvasRef.current.getContext('2d');
             context.lineJoin = 'round';
@@ -161,10 +168,6 @@ function Canvas() {
             }
             context.lineTo(x, y);
             context.stroke();
-        }
-
-        if (newData) {
-            setDrawingData(drawingData.concat(data));
         }
 
         if (_.isArray(data)) {
