@@ -13,12 +13,14 @@ import Circle from "../svg/circle";
 import {useRouteMatch} from "react-router-dom";
 import DownloadImageTool from "../toolbar/tools/downloadImageTool";
 import {WhiteboardController} from "../../handlers/rest/whiteboardController";
+import _ from 'lodash';
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
     const [mouseDown, setMouseDown] = useState(false);
     const [isToastVisible, setIsToastVisible] = useState(false);
-    const [color, setColor] = useState('black');
+    const [drawingData, setDrawingData] = useState([]);
+    const [markerColor, setMarkerColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;
     const canvasRef = useRef();
     const scale = useRef(1);
@@ -45,7 +47,9 @@ function Canvas() {
     useEffect(async () => {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
         if (response.data && response.data.data) {
-            redrawAllPoints(response.data.data);
+            draw(response.data.data);
+            setDrawingData(response.data.data);
+
         }
     }, []);
 
@@ -55,7 +59,7 @@ function Canvas() {
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
 
         Socket.on("empty-page-from-server", () => clearBoard(false));
-        Socket.on("drawing-data-from-server", data => drawPoint(data));
+        Socket.on("drawing-data-from-server", data => draw(data));
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('resize', handleResize);
@@ -63,28 +67,10 @@ function Canvas() {
         }
     }, []);
 
-    function redrawAllPoints(data) {
-        const context = canvasRef.current.getContext('2d');
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        for (const item of data) {
-            drawPoint({...(item)});
-        }
-    }
-
     function clearBoard(emitMessage) {
         const context = canvasRef.current.getContext('2d');
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         emitMessage && Socket.emit("empty-page", whiteboardId);
-    }
-
-    function drawPoint({x, y, color, size}) {
-        const context = canvasRef.current.getContext('2d');
-        context.lineJoin = 'round';
-        context.lineCap = 'round';
-        context.lineWidth = size;
-        context.strokeStyle = color;
-        context.lineTo(x, y);
-        context.stroke();
     }
 
     function handleKeyDown(e) {
@@ -124,10 +110,10 @@ function Canvas() {
                 whiteboardId: whiteboardId,
                 x: mouseX,
                 y: mouseY,
-                color: color,
+                color: markerColor,
                 size: paintSize
             };
-            drawPoint({...newDrawData});
+            draw({x: mouseX, y: mouseY, color: markerColor, size: paintSize});
             Socket.emit('drawing-data', newDrawData);
         }
     }
@@ -146,20 +132,44 @@ function Canvas() {
         handleZoom();
     }
 
+    function draw(data) {
+        function drawPoint(x, y, colorToDraw, sizeToUse) {
+            const context = canvasRef.current.getContext('2d');
+            context.lineJoin = 'round';
+            context.lineCap = 'round';
+            context.lineWidth = sizeToUse;
+            context.strokeStyle = colorToDraw;
+            context.lineTo(x, y);
+            context.stroke();
+            setDrawingData(drawingData.concat({x, y, color: colorToDraw, size: sizeToUse}));
+        }
+
+        if (_.isArray(data)) {
+            for (const item of data) {
+                drawPoint(item.x, item.y, item.color, item.size);
+                setDrawingData(drawingData.concat({x: item.x, y: item.y, color: item.color, size: item.size}));
+            }
+            return;
+        }
+        return drawPoint(data.x, data.y, data.color, data.size);
+        // window.requestAnimationFrame(draw);
+    }
+
 
     function handleZoom() {
         const context = canvasRef.current.getContext('2d');
-        const data = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
-        const originalWidth = context.canvas.width;
-        const originalHeight = context.canvas.height;
-        const canvasCopy = document.createElement('canvas');
-        canvasCopy.height = originalHeight;
-        canvasCopy.width = originalWidth;
-        canvasCopy.getContext('2d').scale(scale.current, scale.current)
-        canvasCopy.getContext('2d').putImageData(data, 0, 0);
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
-        context.drawImage(canvasCopy, 0, 0, context.canvas.width, context.canvas.height);
+        draw(applyScaleToData(drawingData));
+    }
+
+    function applyScaleToData(data) {
+        return data.map(item => {
+            item.x *= scale.current;
+            item.y *= scale.current;
+            return item;
+        });
     }
 
     function showSuccessToast() {
@@ -200,7 +210,7 @@ function Canvas() {
                     )
                 )}
                 <Divider orientation="vertical" flexItem/>
-                <EraserTool setIsErasing={() => setColor('white')}/>
+                <EraserTool setIsErasing={() => setMarkerColor('white')}/>
                 <ZoomInTool zoomIn={scaleUp}/>
                 <ZoomOutTool zoomOut={scaleDown}/>
                 <ClearBoardTool clearBoard={clearBoard}/>
@@ -215,7 +225,7 @@ function Canvas() {
                         <Circle
                             identifier={color}
                             color={color}
-                            onClick={() => setColor(color)}
+                            onClick={() => setMarkerColor(color)}
                             size={50}/>
                     </React.Fragment>
                 ))}
