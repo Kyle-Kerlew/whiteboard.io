@@ -17,6 +17,7 @@ import _ from 'lodash';
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
+    const [brushStartPos, setBrushStartPos] = useState();
     const [mouseDown, setMouseDown] = useState(false);
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [drawingData, setDrawingData] = useState([]);
@@ -47,8 +48,8 @@ function Canvas() {
     useEffect(async () => {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
         if (response.data && response.data.data) {
+            await setDrawingData(response.data.data);
             draw(response.data.data);
-            setDrawingData(response.data.data);
 
         }
     }, []);
@@ -99,6 +100,7 @@ function Canvas() {
         setMouseDown(true);
         context.beginPath();
         context.moveTo(mouseX, mouseY);
+        setBrushStartPos({x: mouseX, y: mouseY});
     }
 
     function handleDragTouch(e) {
@@ -111,14 +113,32 @@ function Canvas() {
                 x: mouseX,
                 y: mouseY,
                 color: markerColor,
-                size: paintSize
+                size: paintSize,
             };
-            draw({x: mouseX, y: mouseY, color: markerColor, size: paintSize});
+            if (brushStartPos) {
+                newDrawData.moveTo = brushStartPos;
+            }
+            draw(newDrawData);
             Socket.emit('drawing-data', newDrawData);
+            setBrushStartPos(undefined)
         }
     }
 
-    function handleEndDrawing() {
+    function handleEndDrawing(e) {
+        if (!mouseDown) {
+            const context = canvasRef.current.getContext('2d');
+            const mouseX = ((getMousePositionX(e) * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
+            const mouseY = ((getMousePositionY(e) * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
+            const newDrawData = {
+                whiteboardId: whiteboardId,
+                x: mouseX,
+                y: mouseY,
+                color: markerColor,
+                size: paintSize,
+            };
+            draw(newDrawData);
+            Socket.emit('drawing-data', newDrawData);
+        }
         setMouseDown(false);
     }
 
@@ -133,26 +153,28 @@ function Canvas() {
     }
 
     function draw(data) {
-        function drawPoint(x, y, colorToDraw, sizeToUse) {
+        function drawPoint(x, y, colorToDraw, sizeToUse, moveTo) {
             const context = canvasRef.current.getContext('2d');
             context.lineJoin = 'round';
             context.lineCap = 'round';
             context.lineWidth = sizeToUse;
             context.strokeStyle = colorToDraw;
+            if (moveTo) {
+                context.moveTo(moveTo.x, moveTo.y);
+                context.beginPath();
+            }
             context.lineTo(x, y);
             context.stroke();
-            setDrawingData(drawingData.concat({x, y, color: colorToDraw, size: sizeToUse}));
+            setDrawingData(drawingData.concat({x, y, color: colorToDraw, size: sizeToUse, moveTo}));
         }
 
         if (_.isArray(data)) {
             for (const item of data) {
-                drawPoint(item.x, item.y, item.color, item.size);
-                setDrawingData(drawingData.concat({x: item.x, y: item.y, color: item.color, size: item.size}));
+                drawPoint(item.x, item.y, item.color, item.size, item.moveTo);
             }
             return;
         }
-        return drawPoint(data.x, data.y, data.color, data.size);
-        // window.requestAnimationFrame(draw);
+        return drawPoint(data.x, data.y, data.color, data.size, data.moveTo);
     }
 
 
