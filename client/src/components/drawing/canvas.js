@@ -69,6 +69,7 @@ function Canvas() {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('wheel', handleScrollZoom);
+            Socket.disconnect();
         }
     }, []);
 
@@ -123,6 +124,7 @@ function Canvas() {
                 newDrawData.moveTo = brushStartPos;
             }
             draw(newDrawData);
+            setDrawingData(prevState => prevState.concat(newDrawData));
             Socket.emit('drawing-data', newDrawData);
             setBrushStartPos(undefined)
         }
@@ -140,6 +142,7 @@ function Canvas() {
             size: paintSize,
         };
         draw(newDrawData);
+        setDrawingData(prevState => prevState.concat(newDrawData));
         Socket.emit('drawing-data', newDrawData);
         setMouseDown(false);
     }
@@ -154,7 +157,7 @@ function Canvas() {
         handleZoom();
     }
 
-    function draw(data, zooming = false) {
+    function draw(data) {
         function drawPoint(x, y, colorToDraw, sizeToUse, moveTo) {
             const context = canvasRef.current.getContext('2d');
             context.lineJoin = 'round';
