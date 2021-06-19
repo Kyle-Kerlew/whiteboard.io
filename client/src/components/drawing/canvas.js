@@ -12,6 +12,7 @@ import ClearBoardTool from "../toolbar/tools/clearBoardTool";
 import Circle from "../svg/circle";
 import {useRouteMatch} from "react-router-dom";
 import DownloadImageTool from "../toolbar/tools/downloadImageTool";
+import {WhiteboardController} from "../../handlers/rest/whiteboardController";
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
@@ -41,15 +42,18 @@ function Canvas() {
         }
     }
 
-    useEffect(() => {
+    useEffect(async () => {
+        const response = await WhiteboardController.getWhiteboardById(whiteboardId);
+        if (response.data && response.data.data) {
+            redrawAllPoints(response.data.data);
+        }
+    }, []);
 
+    useEffect(() => {
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('resize', handleResize);
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
-        Socket.emit("load-data", {
-            whiteboardId: whiteboardId
-        });
-        Socket.on("data-loaded", data => redrawAllPoints(data));
+
         Socket.on("empty-page-from-server", () => clearBoard(false));
         Socket.on("drawing-data-from-server", data => drawPoint(data));
         return () => {
@@ -62,8 +66,8 @@ function Canvas() {
     function redrawAllPoints(data) {
         const context = canvasRef.current.getContext('2d');
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        for (let i = 0; i < data.length; i++) {
-            drawPoint({...data[i]});
+        for (const item of data) {
+            drawPoint({...(item)});
         }
     }
 

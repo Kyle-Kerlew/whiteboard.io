@@ -13,6 +13,8 @@
     "copy-to-clipboard": "^3.3.1",
     "formik": "^2.2.9",
     "gulp": "^4.0.2",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "normalize-url": "^6.0.1",
     "react": "^17.0.1",

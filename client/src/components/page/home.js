@@ -1,30 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import '../../styles/popover.css';
-import {v4 as uuidv4} from 'uuid';
 import {useHistory} from "react-router-dom";
-import {Socket} from '../socket/socket';
 import Button from 'react-bootstrap/Button';
 import {Container} from "react-bootstrap";
+import {WhiteboardController} from '../../handlers/rest/whiteboardController';
 
 function Home() {
     const history = useHistory();
     const [whiteboardCounter, setWhiteboardCounter] = useState();
 
-    function createNewWhiteboard() {
-        const whiteboardUuid = btoa(uuidv4());
-        history.push(`/${whiteboardUuid}`);
-        Socket.emit('create-whiteboard', {
-            whiteboardId: whiteboardUuid,
-            data: []
-        })
+    async function createNewWhiteboard() {
+        try {
+            const response = await WhiteboardController.createWhiteboard();
+            history.push(`/${response.data._id}`);
+        } catch (e) {
+            //todo: toast
+        }
     }
 
-
-    useEffect(() => {
-        Socket.emit("counterRequest", null);
-        Socket.on("counter", data => {
-            setWhiteboardCounter(data)
-        });
+    useEffect(async () => {
+        const result = await WhiteboardController.countWhiteboards();
+        setWhiteboardCounter(result.data.count);
     }, []);
 
     return (
