@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Toolbar from "../toolbar/toolbar";
-import {Socket} from '../socket/socket';
+import {Socket} from '../../configuration/socket';
 import ShareLinkBox from "../toolbar/tools/linkShareTool";
 import '../../styles/shareLinkBox.css';
 import {Divider, Snackbar} from "@material-ui/core";
@@ -48,9 +48,7 @@ function Canvas() {
 
     useEffect(() => {
         setWhiteboardData();
-    }, []);
-
-    useEffect(() => {
+        Socket.connect();
 
         function handleResize() {
             const context = canvasRef.current.getContext('2d');
@@ -60,6 +58,7 @@ function Canvas() {
             draw(applyScaleToData(drawingData), true);
 
         }
+
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('resize', handleResize);
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
