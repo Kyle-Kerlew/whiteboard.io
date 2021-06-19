@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, TextField} from "@material-ui/core";
-import {UserHandler} from "../../handlers/rest/userHandler";
+import {UserController} from "../../handlers/rest/userController";
 import {ErrorMessage, Formik} from "formik";
 import * as Yup from 'yup';
 
@@ -8,9 +8,9 @@ function CreateAccount() {
 
     async function handleCreateAccount(values) {
         delete values.matchingPassword; //TODO: find a better way to remove this field?
-        values.password = btoa(values.password);
+        values.password = btoa(values.password); //base64 encode
         try {
-            await UserHandler.createAccount(values);
+            await UserController.createAccount(values);
             //Move user to their documents page
         } catch (e) {
         }

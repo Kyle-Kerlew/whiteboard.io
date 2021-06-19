@@ -6,12 +6,8 @@ if (process.env.NODE_ENV !== 'production') {
 const uri = process.env.DB_URI;
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
-async function insert(doc, collection) {
-    try {
-        await collection.insertOne(doc);
-    } catch (e) {
-        console.log("Error inserting data", e)
-    }
+function insert(doc, collection) {
+    return collection.insertOne(doc);
 }
 
 async function update(fillQuery, updateQuery, collection) {
@@ -31,19 +27,11 @@ async function findAndUpdate(query, updateQuery, collection, options, callback) 
     }
 }
 
-async function drawingBoardsCount(collection) {
+function read(findQuery, collection) {
     try {
-        return await collection.countDocuments({});
+        return collection.findOne(findQuery);
     } catch (error) {
-        console.log("An error happened while counting entries in db", error);
-    }
-}
-
-async function read(findQuery, collection, callback) {
-    try {
-        return await collection.findOne(findQuery, callback);
-    } catch (error) {
-        console.log("An error happened while updating db", error);
+        console.log("An error happened while reading db", error);
     }
 }
 
@@ -61,7 +49,6 @@ module.exports = {
     mongodb: {
         insert,
         update,
-        drawingBoardsCount,
         findAndUpdate,
         read,
         client,
