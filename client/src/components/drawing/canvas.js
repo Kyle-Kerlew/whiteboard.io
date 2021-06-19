@@ -48,9 +48,7 @@ function Canvas() {
     useEffect(async () => {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
         if (response.data && response.data.data) {
-            await setDrawingData(response.data.data);
             draw(response.data.data);
-
         }
     }, []);
 
@@ -125,20 +123,18 @@ function Canvas() {
     }
 
     function handleEndDrawing(e) {
-        if (!mouseDown) {
-            const context = canvasRef.current.getContext('2d');
-            const mouseX = ((getMousePositionX(e) * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
-            const mouseY = ((getMousePositionY(e) * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
-            const newDrawData = {
-                whiteboardId: whiteboardId,
-                x: mouseX,
-                y: mouseY,
-                color: markerColor,
-                size: paintSize,
-            };
-            draw(newDrawData);
-            Socket.emit('drawing-data', newDrawData);
-        }
+        const context = canvasRef.current.getContext('2d');
+        const mouseX = ((getMousePositionX(e) * scale.current) - context.canvas.offsetLeft + window.scrollX) / scale.current;
+        const mouseY = ((getMousePositionY(e) * scale.current) - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
+        const newDrawData = {
+            whiteboardId: whiteboardId,
+            x: mouseX,
+            y: mouseY,
+            color: markerColor,
+            size: paintSize,
+        };
+        draw(newDrawData);
+        Socket.emit('drawing-data', newDrawData);
         setMouseDown(false);
     }
 
@@ -152,7 +148,7 @@ function Canvas() {
         handleZoom();
     }
 
-    function draw(data) {
+    function draw(data, newData = true) {
         function drawPoint(x, y, colorToDraw, sizeToUse, moveTo) {
             const context = canvasRef.current.getContext('2d');
             context.lineJoin = 'round';
@@ -165,7 +161,10 @@ function Canvas() {
             }
             context.lineTo(x, y);
             context.stroke();
-            setDrawingData(drawingData.concat({x, y, color: colorToDraw, size: sizeToUse, moveTo}));
+        }
+
+        if (newData) {
+            setDrawingData(drawingData.concat(data));
         }
 
         if (_.isArray(data)) {
@@ -174,7 +173,7 @@ function Canvas() {
             }
             return;
         }
-        return drawPoint(data.x, data.y, data.color, data.size, data.moveTo);
+        drawPoint(data.x, data.y, data.color, data.size, data.moveTo);
     }
 
 
@@ -183,7 +182,7 @@ function Canvas() {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
-        draw(applyScaleToData(drawingData));
+        draw(applyScaleToData(drawingData), false);
     }
 
     function applyScaleToData(data) {
