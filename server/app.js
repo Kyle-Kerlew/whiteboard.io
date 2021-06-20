@@ -22,7 +22,6 @@ expressServer.use(session({
     secret: 'test', //TODO: Change
     name: 'session-id',
     cookie: {
-        httpOnly: true, //prevent use of document.cookie object in client: limits ability to do CSRF attacks
         //    secure: true todo:https
         maxAge: 30000
     },
