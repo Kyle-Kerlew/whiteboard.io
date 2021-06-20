@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button, TextField} from "@material-ui/core";
 import '../../styles/sign-in.css';
 import {UserController} from "../../handlers/rest/userController";
 import {Formik} from "formik";
+import UserContext from "../context/userContext";
+import {useHistory} from "react-router-dom";
 
 function SignIn() {
-    async function handleSignIn(user) {
+
+    const {login} = useContext(UserContext);
+    const history = useHistory();
+
+    async function handleSignIn(formValues) {
         try {
-            user.password = btoa(user.password);
-            await UserController.signIn(user);
-            console.log("Successfully logged in.")
+            formValues.password = btoa(formValues.password);
+            await UserController.signIn(formValues);
+            login();
+            history.push('/');
         } catch (e) {
             console.log("Incorrect password.", e);
         }
@@ -18,13 +25,13 @@ function SignIn() {
     return (
         <div className="container">
             <Formik
-                initialValues={{email: '', password: ''}}
+                initialValues={{username: '', password: ''}}
                 onSubmit={handleSignIn}
             >
                 {({handleSubmit, values, errors, handleChange, onBlur, isSubmitting}) => (
                     <form className="form" onSubmit={handleSubmit}>
-                        <TextField type="email" value={values.email} onBlur={onBlur} onChange={handleChange}
-                                   name="email" label="Email"/>
+                        <TextField type="username" value={values.username} onBlur={onBlur} onChange={handleChange}
+                                   name="username" label="username"/>
                         <TextField type="password" value={values.password} onBlur={onBlur} onChange={handleChange}
                                    name="password" label="Password"/>
 

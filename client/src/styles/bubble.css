@@ -1,0 +1,8 @@
+.bubble {
+    border-radius: 50%; /*    Circe*/
+}
+
+.bubble .text {
+    text-align: center;
+    font-weight: bold;
+}
