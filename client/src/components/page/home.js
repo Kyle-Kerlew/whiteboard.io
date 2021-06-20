@@ -12,7 +12,7 @@ function Home() {
     async function createNewWhiteboard() {
         try {
             const response = await WhiteboardController.createWhiteboard();
-            history.push(`/${response.data._id}`);
+            history.push(`/boards/${response.data._id}`);
         } catch (e) {
             //todo: toast
         }

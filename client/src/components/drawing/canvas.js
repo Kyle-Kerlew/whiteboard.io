@@ -14,6 +14,7 @@ import {useRouteMatch} from "react-router-dom";
 import DownloadImageTool from "../toolbar/tools/downloadImageTool";
 import {WhiteboardController} from "../../handlers/rest/whiteboardController";
 import _ from 'lodash';
+import MarkerOptionsTool from "../toolbar/tools/markerOptionsTool";
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
@@ -26,8 +27,18 @@ function Canvas() {
     const canvasRef = useRef();
     const scale = useRef(1);
 
+    async function setWhiteboardData() {
+        const response = await WhiteboardController.getWhiteboardById(whiteboardId);
+        if (response.data && response.data.data) {
+            draw(response.data.data);
+            setDrawingData(response.data.data);
+        }
+    }
 
     function handleScrollZoom(e) {
+        if (e.origin !== process.env.REACT_APP_BASE_URL) {
+            return;
+        }
         if (e.ctrlKey) {
             e.preventDefault();
             if (e.deltaY < 0) {
@@ -38,25 +49,17 @@ function Canvas() {
         }
     }
 
-    async function setWhiteboardData(callback) {
-        const response = await WhiteboardController.getWhiteboardById(whiteboardId);
-        if (response.data && response.data.data) {
-            draw(response.data.data);
-            setDrawingData(response.data.data, callback);
-        }
-    }
+    useEffect(() => {
+        window.addEventListener('resize', handleResize); //dependent on drawingData state
+    }, [drawingData]);
+
 
     useEffect(() => {
-        function setStateCallback() {
-            window.addEventListener('resize', handleResize);
-        }
-
-        setWhiteboardData(setStateCallback);
+        setWhiteboardData();
         Socket.connect();
-
-
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
+
 
         Socket.on("empty-page-from-server", () => clearBoard(false));
         Socket.on("drawing-data-from-server", data => draw(data));
@@ -84,6 +87,9 @@ function Canvas() {
     }
 
     function handleKeyDown(e) {
+        if (e.origin !== process.env.REACT_APP_BASE_URL) {
+            return;
+        }
         if (e.ctrlKey && e.key === '=') {
             e.preventDefault(); //prevent browser from zooming normally
             scaleUp();
@@ -191,7 +197,7 @@ function Canvas() {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         context.canvas.width *= scale.current;
         context.canvas.height *= scale.current;
-        draw(applyScaleToData(drawingData), false);
+        draw(applyScaleToData(drawingData));
     }
 
     function applyScaleToData(data) {
@@ -233,12 +239,7 @@ function Canvas() {
                 </Alert>
             </Snackbar>}
             <Toolbar position='bottom' mouseDown={mouseDown}>
-                {paintSizes.map(size => (
-                        <React.Fragment key={size}>
-                            <Circle identifier={size} onClick={() => setPaintSize(size)} size={size}/>
-                        </React.Fragment>
-                    )
-                )}
+                <MarkerOptionsTool/>
                 <Divider orientation="vertical" flexItem/>
                 <EraserTool setIsErasing={() => setMarkerColor('white')}/>
                 <ZoomInTool zoomIn={scaleUp}/>

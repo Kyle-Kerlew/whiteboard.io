@@ -22,6 +22,7 @@ passport.use(new CookieStrategy({
     }));
 passport.use(new LocalStrategy(async function (email, password, done) {
     try {
+        console.log(email, password)
         const response = await authenticationService.verifyPassword({email, password});
         return done(null, response);
     } catch (e) {

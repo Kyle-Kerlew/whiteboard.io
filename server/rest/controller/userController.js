@@ -16,6 +16,13 @@ router.get('/list', passport.authenticate('cookie', {session: false}), async fun
     res.json({message: "You're allowed to see this"});
 });
 
+router.get('/user-detail', passport.authenticate('cookie', {session: false}), async function (req, res) {
+    console.log(req.session);
+    res.json({user: req.session});
+});
+
+router.get('/authenticated', passport.authenticate('cookie', {session: false}));
+
 router.delete('/delete', passport.authenticate('cookie'), function (req, res) {
 });
 
