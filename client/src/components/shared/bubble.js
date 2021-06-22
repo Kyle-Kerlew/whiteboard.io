@@ -1,7 +1,9 @@
-function Bubble({text}) {
+import '../../styles/bubble.css';
+
+function Bubble({text, color}) {
     return (
-        <div className='bubble'>
-            <p className='text'>{text}</p>
+        <div style={{backgroundColor: color}} className='bubble'>
+            <div className='text'>{text}</div>
         </div>
     )
 }
