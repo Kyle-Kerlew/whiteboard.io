@@ -11,7 +11,7 @@ async function createAccount(request) {
 async function listWhiteboards() {
     //TODO: Pageable/sortaable/filterable?
     try {
-        await axios.get('/user/boards/list');
+        await axios.get('/user/my-boards');
     } catch (e) {
         throw e;
     }
@@ -26,8 +26,18 @@ async function signIn(user) {
 
 }
 
+async function signOut() {
+    try {
+        await axios.get('/user/logout');
+    } catch (e) {
+        throw e;
+    }
+
+}
+
 export const UserController = {
     createAccount,
     signIn,
+    signOut,
     listWhiteboards
 };
