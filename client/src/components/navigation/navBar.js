@@ -1,19 +1,16 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {useLocation} from "react-router-dom";
 import useNavbar from "./useNavbar";
 import Nav from "react-bootstrap/Nav";
-import Bubble from "../shared/bubble";
 import UserContext from "../context/userContext";
+import ActiveUsers from "./activeUsers";
 
 function DrawingNavbar() {
     //todo: get context of how many people are working on this page
     const withDrawingNavbar = () => (
-        <div className='collaborators-container'>
-            <Bubble text={'test'}/>
-        </div>
+        <ActiveUsers/>
     );
-
-    const {Result} = useNavbar(withDrawingNavbar);
+    const {Result} = useNavbar(withDrawingNavbar, 'full-width');
     return Result;
 }
 

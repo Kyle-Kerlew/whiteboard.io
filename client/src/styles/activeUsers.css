@@ -1,0 +1,13 @@
+.users-container {
+    display: flex;
+    flex: 0 0 100%; /* Let it fill the entire space horizontally */
+    justify-content: flex-end;
+}
+
+.overflow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    height: 100%;
+}
