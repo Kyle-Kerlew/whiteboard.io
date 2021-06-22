@@ -7,24 +7,37 @@ import SignIn from "../page/signIn";
 import BoardList from "../drawing/boardList";
 import NavBar from "../navigation/navBar";
 import UserContext from "../context/userContext";
+import {UserController} from '../../handlers/rest/userController';
+
 function Router() {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState({
+        authenticated: false
+    });
+
+    function checkAuthentication() {
+        if (document.cookie.includes('session-id')) {
+            //todo: Is this a bad idea?
+            console.log("Authenticated call")
+            setUser(prevState => {
+                prevState.authenticated = true;
+                return prevState;
+            });
+        }
+    }
 
     function login() {
-        console.log("login worked")
         setUser({
-            user: {
-                isAuthenticated: true
-            }
+            authenticated: true
         });
     }
 
     function logout(authenticatedUser) {
-        setUser({user: {}});
+        setUser({authenticated: false});
+        UserController.signOut()
     }
 
     return (
-        <UserContext.Provider value={{user, login, logout}}>
+        <UserContext.Provider value={{user, login, logout, checkAuthentication}}>
             <NavBar/>
             <Switch>
                 <Route exact path="/" component={Home}/>
