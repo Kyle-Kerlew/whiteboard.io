@@ -12,7 +12,15 @@ router.post('/login', passport.authenticate('local'), async function (req, res) 
     res.end();
 });
 
-router.get('/list', passport.authenticate('cookie', {session: false}), async function (req, res) {
+router.post('/logout', passport.authenticate('cookie'), async function (req, res) {
+    req.logout();
+    req.session.destroy(() => {
+        res.clearCookie('session-id');
+        res.send();
+    })
+});
+
+router.get('/my-boards', passport.authenticate('cookie', {session: false}), async function (req, res) {
     res.json({message: "You're allowed to see this"});
 });
 
@@ -20,8 +28,6 @@ router.get('/user-detail', passport.authenticate('cookie', {session: false}), as
     console.log(req.session);
     res.json({user: req.session});
 });
-
-router.get('/authenticated', passport.authenticate('cookie', {session: false}));
 
 router.delete('/delete', passport.authenticate('cookie'), function (req, res) {
 });

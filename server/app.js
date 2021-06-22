@@ -22,10 +22,10 @@ expressServer.use(session({
     secret: 'test', //TODO: Change
     name: 'session-id',
     cookie: {
-        //    secure: true todo:https
+        httpOnly: false,
         maxAge: 30000
     },
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: true,
     store: MongoStore.create({
         mongoUrl: process.env.DB_URI || 'test',
@@ -37,7 +37,7 @@ expressServer.use(session({
 
 expressServer.use(passport.initialize());
 expressServer.use(passport.session());
-expressServer.use(cors());
+expressServer.use(cors({origin: "http://localhost:3000", credentials: true}));
 expressServer.use('/user', userController);
 expressServer.use('/whiteboard', whiteboardController);
 

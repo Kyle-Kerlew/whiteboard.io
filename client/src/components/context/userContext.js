@@ -1,6 +1,4 @@
 import {createContext} from "react";
 
-const UserContext = createContext({
-    user: {isAuthenticated: false}
-})
+const UserContext = createContext({authenticated: false})
 export default UserContext;
