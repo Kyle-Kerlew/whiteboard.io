@@ -3,7 +3,7 @@ import Toolbar from "../toolbar/toolbar";
 import {Socket} from '../../configuration/socket';
 import ShareLinkBox from "../toolbar/tools/linkShareTool";
 import '../../styles/shareLinkBox.css';
-import {Divider, Snackbar} from "@material-ui/core";
+import {Divider, Snackbar, TextField} from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import EraserTool from "../toolbar/tools/eraserTool";
 import ZoomInTool from "../toolbar/tools/zoomInTool";
@@ -14,7 +14,12 @@ import {useRouteMatch} from "react-router-dom";
 import DownloadImageTool from "../toolbar/tools/downloadImageTool";
 import {WhiteboardController} from "../../handlers/rest/whiteboardController";
 import _ from 'lodash';
+import {useSelector, useDispatch} from 'react-redux';
+import {addCollaborator, collaboratorsSlice, removeCollaborator} from "../../reducers/collaboratorsReducer";
 import MarkerOptionsTool from "../toolbar/tools/markerOptionsTool";
+import FocusDialogBox from "../shared/focusDialogBox";
+import {Formik} from "formik";
+import {UserController} from "../../handlers/rest/userController";
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
@@ -23,15 +28,24 @@ function Canvas() {
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [drawingData, setDrawingData] = useState([]);
     const [markerColor, setMarkerColor] = useState('black');
-    const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;
+    const {canvasId: whiteboardId} = useRouteMatch('/boards/:canvasId').params;
+    const user = useSelector(state => state.user.value);
     const canvasRef = useRef();
     const scale = useRef(1);
+    const dispatch = useDispatch();
+
 
     async function setWhiteboardData() {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
-        if (response.data && response.data.data) {
-            draw(response.data.data);
-            setDrawingData(response.data.data);
+        if (response.data) {
+            console.log("response reading whiteboard data", response);
+            response.data.collaborators.forEach(collaborator => {
+                dispatch(addCollaborator(collaborator));
+            });
+            if (response.data.data) {
+                draw(response.data.data);
+                setDrawingData(response.data.data);
+            }
         }
     }
 
@@ -54,15 +68,23 @@ function Canvas() {
     }, [drawingData]);
 
 
+    function initializeSocketListeners() {
+        Socket.connect();
+        Socket.emit("join", whiteboardId);
+        Socket.on("empty-page-from-server", () => clearBoard(false));
+        Socket.on("drawing-data-from-server", data => draw(data));
+        Socket.on("joined", data => dispatch(addCollaborator(data)));
+        Socket.on("left", data => dispatch(removeCollaborator(data)));
+    }
+
     useEffect(() => {
         setWhiteboardData();
-        Socket.connect();
+        if (user.isAuthenticated) {
+            initializeSocketListeners();
+        }
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
 
-
-        Socket.on("empty-page-from-server", () => clearBoard(false));
-        Socket.on("drawing-data-from-server", data => draw(data));
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('resize', handleResize);
@@ -200,6 +222,11 @@ function Canvas() {
         draw(applyScaleToData(drawingData));
     }
 
+    async function handleGuestSubmit(values) {
+        await UserController.createGuest(values);
+        initializeSocketListeners();
+    }
+
     function applyScaleToData(data) {
         return data.map(item => {
             item.x *= scale.current;
@@ -238,6 +265,24 @@ function Canvas() {
                     We've copied the link to your clipboard!
                 </Alert>
             </Snackbar>}
+            {!user.isAuthenticated &&
+            <Formik initialValues={{firstName: '', lastName: ''}} onSubmit={handleGuestSubmit}>
+                {({values, handleBlur, handleSubmit, handleChange, errors}) => (
+                    <FocusDialogBox buttonText={'Confirm'} text={"Let other collaborators know who you are!"}
+                                    isValid={!!(values.firstName && values.lastName)}
+                                    onSubmit={e => handleSubmit(e)}>
+                        <div className='form-container'>
+                            <TextField type="text" required name={"firstName"} onChange={handleChange}
+                                       value={values.firstName}
+                                       onBlur={handleBlur} label="First Name"/>
+                            <TextField required type="text" name={"lastName"} onChange={handleChange}
+                                       value={values.lastName}
+                                       onBlur={handleBlur} label="Last Name"/>
+                        </div>
+                    </FocusDialogBox>
+                )}
+            </Formik>
+            }
             <Toolbar position='bottom' mouseDown={mouseDown}>
                 <MarkerOptionsTool/>
                 <Divider orientation="vertical" flexItem/>

@@ -11,6 +11,8 @@ const cookieParser = require('cookie-parser')
 const handleConnection = require("./socket/socketHandler");
 const {mongodb} = require('./persistence/connections/mongodb');
 const {Server} = require("socket.io");
+const sharedSession = require('express-socket.io-session');
+const helmet = require("helmet");
 
 const expressServer = express();
 
@@ -18,7 +20,8 @@ expressServer.use(express.json());
 expressServer.use(express.urlencoded({extended: false}));
 expressServer.use(cookieParser());
 expressServer.use(compression());
-expressServer.use(session({
+expressServer.use(helmet());
+const sessionConfig = session({
     secret: 'test', //TODO: Change
     name: 'session-id',
     cookie: {
@@ -26,14 +29,16 @@ expressServer.use(session({
         maxAge: 30000
     },
     saveUninitialized: false,
-    resave: true,
+    resave: false,
     store: MongoStore.create({
-        mongoUrl: process.env.DB_URI || 'test',
+        mongoUrl: process.env.DB_URI,
         dbName: 'whiteboardio',
         collectionName: 'session',
         clientPromise: client
     })
-}));
+});
+
+expressServer.use(sessionConfig);
 
 expressServer.use(passport.initialize());
 expressServer.use(passport.session());
@@ -57,5 +62,7 @@ const socketIoServer = new Server(server, {
     },
     serveClient: false,
 });
-socketIoServer.on('connection', handleConnection)
+socketIoServer.on('connection', handleConnection);
+socketIoServer.use(sharedSession(sessionConfig));
+
 module.exports = server;
