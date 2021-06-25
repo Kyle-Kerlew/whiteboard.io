@@ -20,11 +20,9 @@ async function updateDrawingData(whiteboardId, data) {
 async function createWhiteboard(data = {}) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
     data._id = v4();
+    data.collaborators = [];
     await mongodb.insert(data, drawingCollection);
     return data;
-    // if (data && data.user) {
-    //     UserPersistence.findAndUpdate()
-    // }
 }
 
 function findWhiteboardById(whiteboardId) {
@@ -42,12 +40,30 @@ function countWhiteboards() {
     }
 }
 
+function removeCollaborator(whiteboardId, collaborator) {
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const findQuery = {_id: whiteboardId};
+    const removeQuery = {$pull: {collaborators: collaborator}};
+    return mongodb.update(findQuery, removeQuery, drawingCollection);
+
+}
+
+function addCollaborator(whiteboardId, collaborator) {
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const query = {_id: whiteboardId};
+    const updateQuery = {$push: {collaborators: collaborator}};
+    return mongodb.update(query, updateQuery, drawingCollection);
+
+}
+
 module.exports = {
     BoardPersistence: {
         findWhiteboardById,
         deleteWhiteboardDrawingData,
         updateDrawingData,
         countWhiteboards,
-        createWhiteboard
+        createWhiteboard,
+        removeCollaborator,
+        addCollaborator
     }
 }

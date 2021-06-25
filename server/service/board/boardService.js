@@ -12,12 +12,20 @@ function countWhiteboards() {
     return BoardPersistence.countWhiteboards();
 }
 
-function createWhiteboard(data) {
-    return BoardPersistence.createWhiteboard(data);
+function createWhiteboard() {
+    return BoardPersistence.createWhiteboard();
 }
 
 function updateDrawingData(whiteboardId, data) {
     return BoardPersistence.updateDrawingData(whiteboardId, data);
+}
+
+function addCollaborator(whiteboardId, collaborator) {
+    return BoardPersistence.addCollaborator(whiteboardId, collaborator);
+}
+
+function removeCollaborator(whiteboardId, collaborator) {
+    return BoardPersistence.removeCollaborator(whiteboardId, collaborator);
 }
 
 module.exports = {
@@ -26,6 +34,8 @@ module.exports = {
         deleteDrawingData,
         createWhiteboard,
         countWhiteboards,
-        updateDrawingData
+        updateDrawingData,
+        removeCollaborator,
+        addCollaborator
     }
 }

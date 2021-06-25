@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const CookieStrategy = require('passport-cookie');
 const {authenticationService} = require('../service/authentication/authenticationService');
 const {userService} = require('../service/user/userService');
-
+const CustomStrategy = require('passport-custom').Strategy;
 
 passport.use(new CookieStrategy({
         cookieName: 'session-id',
@@ -11,7 +11,7 @@ passport.use(new CookieStrategy({
     },
     async function (cookie, token, done) {
         try {
-            const user = await userService.findUserByEmail(cookie.session.passport.user);
+            const user = await userService.findUserByEmail(cookie.session.passport?.user.email);
             if (!user) {
                 return done(null, false);
             }
@@ -22,7 +22,6 @@ passport.use(new CookieStrategy({
     }));
 passport.use(new LocalStrategy(async function (email, password, done) {
     try {
-        console.log(email, password)
         const response = await authenticationService.verifyPassword({email, password});
         return done(null, response);
     } catch (e) {
@@ -31,13 +30,32 @@ passport.use(new LocalStrategy(async function (email, password, done) {
     }
 }));
 
+passport.use('local-guest', new CustomStrategy(function (req, done) {
+    try {
+        const user = {
+            ...req.body,
+            role: 'guest'
+        }
+        return done(null, user);
+    } catch (e) {
+        return done(e);
+
+    }
+}));
+
 passport.serializeUser(function (user, done) {
-    done(null, user.email);
+    const data = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+    }
+    done(null, data);
 });
 
-passport.deserializeUser(async function (email, done) {
+passport.deserializeUser(async function (user, done) {
     try {
-        const userEntity = await userService.findUserByEmail(email);
+        const userEntity = await userService.findUserByEmail(user.email);
         if (!userEntity) {
             return done('No user found', userEntity);
         }

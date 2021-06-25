@@ -1,12 +1,11 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {useLocation} from "react-router-dom";
 import useNavbar from "./useNavbar";
 import Nav from "react-bootstrap/Nav";
-import UserContext from "../context/userContext";
 import ActiveUsers from "./activeUsers";
+import {useSelector} from "react-redux";
 
 function DrawingNavbar() {
-    //todo: get context of how many people are working on this page
     const withDrawingNavbar = () => (
         <ActiveUsers/>
     );
@@ -15,13 +14,10 @@ function DrawingNavbar() {
 }
 
 function BrowsingNavbar() {
-    const {user, checkAuthentication} = useContext(UserContext);
-
-    checkAuthentication();
-
+    const user = useSelector(state => state.user.value);
     const withBrowsingNavbar = () => (
         <React.Fragment>
-            {user.authenticated ?
+            {user.isAuthenticated ?
                 <Nav.Link href="/my-boards">My Boards</Nav.Link>
                 :
                 <React.Fragment>
@@ -38,9 +34,7 @@ function BrowsingNavbar() {
 }
 
 function NavBar() {
-
     const location = useLocation();
-
     const Result = location.pathname.includes('/boards/') ? DrawingNavbar() : BrowsingNavbar();
 
     return (

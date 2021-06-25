@@ -69,7 +69,6 @@ function zipServer(cb) {
     zip.addLocalFolder(path.join(serverFolder, '.ebextensions'), '/.ebextensions');
     zip.addLocalFolder(path.join(serverFolder, './persistence'), '/persistence');
     zip.addLocalFile(path.join(serverFolder, 'package.json'));
-    zip.addLocalFile(path.join(serverFolder, 'server.js'));
     zip.addLocalFile(path.join(serverFolder, 'app.js'));
     zip.writeZip(path.join(__dirname, '..', 'server.zip'), (err) => {
         if (err) {

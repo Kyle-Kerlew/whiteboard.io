@@ -35,9 +35,19 @@ async function signOut() {
 
 }
 
+async function createGuest(user) {
+    try {
+        await axios.post('/user/guest', user);
+    } catch (e) {
+        throw e;
+    }
+
+}
+
 export const UserController = {
     createAccount,
     signIn,
     signOut,
-    listWhiteboards
+    listWhiteboards,
+    createGuest
 };

@@ -12,6 +12,7 @@ async function createAccount(user) {
     }
     user._id = v4();
     user.password = await hashPassword(user.password);
+    user.role = 'user'; //TODO: Enum?
     const userEntity = await UserPersistence.createUser(collection, user);
     delete userEntity.password;
     return userEntity;
@@ -30,17 +31,12 @@ async function findUserByUserId(userId) {
     const collection = mongodb.client.db('whiteboardio').collection('user');
     return UserPersistence.findUserById(collection, userId);
 }
-async function findUserBySession(token) {
-    const collection = mongodb.client.db('whiteboardio').collection('user');
-    return UserPersistence.findUserById(collection, token);
-}
 
 module.exports = {
     userService: {
         createAccount,
         findUserByEmail,
         findUserByUserId,
-        loginUser,
-        findUserBySession,
+        loginUser
     }
 }

@@ -1,21 +1,24 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Button, TextField} from "@material-ui/core";
 import '../../styles/sign-in.css';
 import {UserController} from "../../handlers/rest/userController";
 import {Formik} from "formik";
-import UserContext from "../context/userContext";
 import {useHistory} from "react-router-dom";
+import {useSelector, useDispatch} from 'react-redux';
+import {loginUser} from "../../reducers/userReducer";
 
 function SignIn() {
 
-    const {login} = useContext(UserContext);
+    const user = useSelector(state => state.user.value);
     const history = useHistory();
+    const dispatch = useDispatch();
+    console.log(user);
 
     async function handleSignIn(formValues) {
         try {
             formValues.password = btoa(formValues.password);
             await UserController.signIn(formValues);
-            login();
+            dispatch(loginUser());
             history.push('/');
         } catch (e) {
             console.log("Incorrect password.", e);

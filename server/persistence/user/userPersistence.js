@@ -26,6 +26,6 @@ module.exports = {
     UserPersistence: {
         createUser,
         findUserByEmail,
-        findUserById,
+        findUserById
     }
 }
