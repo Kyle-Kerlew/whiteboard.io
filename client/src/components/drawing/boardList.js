@@ -3,7 +3,7 @@ import {UserController} from '../../handlers/rest/userController';
 import '../../styles/boardList.css';
 
 function BoardList() {
-    const [boardList, setBoardList] = useState();
+    const [boardList, setBoardList] = useState([]);
 
     // grid display of boards user is a part of
     async function getBoards() {
@@ -17,7 +17,7 @@ function BoardList() {
 
     useEffect(() => {
         getBoards();
-    })
+    }, []);
 
     return (
         <React.Fragment>
