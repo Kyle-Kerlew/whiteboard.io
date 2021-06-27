@@ -12,7 +12,6 @@ const handleConnection = require("./socket/socketHandler");
 const {mongodb} = require('./persistence/connections/mongodb');
 const {Server} = require("socket.io");
 const sharedSession = require('express-socket.io-session');
-const helmet = require("helmet");
 
 const expressServer = express();
 
@@ -20,9 +19,8 @@ expressServer.use(express.json());
 expressServer.use(express.urlencoded({extended: false}));
 expressServer.use(cookieParser());
 expressServer.use(compression());
-expressServer.use(helmet());
 const sessionConfig = session({
-    secret: 'test', //TODO: Change
+    secret: process.env.SESSION_SECRET, //TODO: Change
     name: 'session-id',
     cookie: {
         httpOnly: false,

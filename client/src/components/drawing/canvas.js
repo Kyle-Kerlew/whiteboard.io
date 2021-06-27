@@ -15,11 +15,11 @@ import DownloadImageTool from "../toolbar/tools/downloadImageTool";
 import {WhiteboardController} from "../../handlers/rest/whiteboardController";
 import _ from 'lodash';
 import {useSelector, useDispatch} from 'react-redux';
-import {addCollaborator, collaboratorsSlice, removeCollaborator} from "../../reducers/collaboratorsReducer";
 import MarkerOptionsTool from "../toolbar/tools/markerOptionsTool";
 import FocusDialogBox from "../shared/focusDialogBox";
 import {Formik} from "formik";
 import {UserController} from "../../handlers/rest/userController";
+import {addCollaborator, removeCollaborator} from "../../reducers/collaboratorsReducer";
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
@@ -38,7 +38,7 @@ function Canvas() {
     async function setWhiteboardData() {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
         if (response.data) {
-            console.log("response reading whiteboard data", response);
+            console.log("Response data", response.data);
             response.data.collaborators.forEach(collaborator => {
                 dispatch(addCollaborator(collaborator));
             });

@@ -10,10 +10,8 @@ async function verifyPassword(user) {
     if (!validCredentials) {
         return {error: "Invalid credentials."}
     }
-    const authenticatedUser = userEntity;
-    return authenticatedUser;
+    return userEntity;
 }
-
 
 
 module.exports = {
