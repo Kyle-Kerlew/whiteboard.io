@@ -1,3 +1,4 @@
+const {BoardPersistence} = require("../../persistence/board/boardPersistence");
 const {hashPassword} = require("../../utils/hash");
 const {v4} = require('uuid');
 const {mongodb} = require("../../persistence/connections/mongodb");
@@ -18,13 +19,13 @@ async function createAccount(user) {
     return userEntity;
 }
 
-async function loginUser(user) {
-    console.log("What to do after user authorized?")
-}
-
-async function findUserByEmail(email) {
+function findUserByEmail(email) {
     const collection = mongodb.client.db('whiteboardio').collection('user');
     return UserPersistence.findUserByEmail(collection, email);
+}
+
+function findOwnedBoards(user) {
+    return BoardPersistence.findWhiteboardsByOwner(user);
 }
 
 async function findUserByUserId(userId) {
@@ -37,6 +38,6 @@ module.exports = {
         createAccount,
         findUserByEmail,
         findUserByUserId,
-        loginUser
+        findOwnedBoards
     }
 }

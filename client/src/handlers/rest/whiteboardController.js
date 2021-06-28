@@ -1,27 +1,17 @@
 import {axios} from '../../configuration/axios';
 
-function createWhiteboard() {
-    try {
-        return axios.post('/whiteboard/create');
-    } catch (e) {
-        throw e;
-    }
+async function createWhiteboard() {
+    const {data} = await axios.post('/whiteboard/create');
+    return data;
 }
 
 function countWhiteboards() {
-    try {
-        return axios.get('/whiteboard/count');
-    } catch (e) {
-        throw e;
-    }
+    return axios.get('/whiteboard/count');
 }
 
-function getWhiteboardById(whiteboardId) {
-    try {
-        return axios.get('/whiteboard/read/' + whiteboardId);
-    } catch (e) {
-        throw e;
-    }
+async function getWhiteboardById(whiteboardId) {
+    const {data} = await axios.get('/whiteboard/read/' + whiteboardId);
+    return data;
 }
 
 export const WhiteboardController = {

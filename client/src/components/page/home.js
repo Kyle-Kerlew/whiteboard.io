@@ -4,6 +4,7 @@ import {useHistory} from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import {Container} from "react-bootstrap";
 import {WhiteboardController} from '../../handlers/rest/whiteboardController';
+import {addCollaborator, setTitle} from "../../reducers/whiteboardReducer";
 
 function Home() {
     const history = useHistory();
@@ -12,7 +13,7 @@ function Home() {
     async function createNewWhiteboard() {
         try {
             const response = await WhiteboardController.createWhiteboard();
-            history.push(`/boards/${response.data._id}`);
+            history.push(`/boards/${response._id}`);
         } catch (e) {
             //todo: toast
         }

@@ -6,8 +6,9 @@ if (process.env.NODE_ENV !== 'production') {
 const uri = process.env.DB_URI;
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
-function insert(doc, collection) {
-    return collection.insertOne(doc);
+async function insertOne(doc, collection) {
+    const {ops} = await collection.insertOne(doc);
+    return {...ops[0]};
 }
 
 async function update(fillQuery, updateQuery, collection) {
@@ -21,15 +22,18 @@ async function update(fillQuery, updateQuery, collection) {
 async function findAndUpdate(query, updateQuery, collection, options, callback) {
     try {
         await collection.findOneAndUpdate(query, updateQuery, options, callback);
-
     } catch (error) {
         console.log("An error happened while updating db", error);
     }
 }
 
 function read(findQuery, collection) {
+    return collection.findOne(findQuery);
+}
+
+function findAll(findQuery, collection) {
     try {
-        return collection.findOne(findQuery);
+        return collection.find(findQuery);
     } catch (error) {
         console.log("An error happened while reading db", error);
     }
@@ -47,11 +51,12 @@ async function run() {
 
 module.exports = {
     mongodb: {
-        insert,
+        insertOne,
         update,
         findAndUpdate,
         read,
         client,
-        run
+        run,
+        findAll
     }
 }
