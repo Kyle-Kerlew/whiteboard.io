@@ -1,5 +1,5 @@
 const {mongodb} = require("../connections/mongodb");
-const {v4} = require('uuid');
+const {ObjectID} = require("mongodb");
 
 async function deleteWhiteboardDrawingData(whiteboardId) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
@@ -17,17 +17,20 @@ async function updateDrawingData(whiteboardId, data) {
     await mongodb.update(query, updateQuery, drawingCollection);
 }
 
-async function createWhiteboard(data = {}) {
+function createWhiteboard(whiteboard) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
-    data._id = v4();
-    data.collaborators = [];
-    await mongodb.insert(data, drawingCollection);
-    return data;
+    return mongodb.insertOne(whiteboard, drawingCollection);
 }
 
-function findWhiteboardById(whiteboardId) {
+async function findWhiteboardsByOwner(owner) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
-    const findQuery = {_id: whiteboardId};
+    const findQuery = {owner: owner};
+    return mongodb.findAll(findQuery, drawingCollection).toArray();
+}
+
+async function findWhiteboardById(whiteboardId) {
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const findQuery = {_id: new ObjectID(whiteboardId)};
     return mongodb.read(findQuery, drawingCollection);
 }
 
@@ -64,6 +67,7 @@ module.exports = {
         countWhiteboards,
         createWhiteboard,
         removeCollaborator,
-        addCollaborator
+        addCollaborator,
+        findWhiteboardsByOwner
     }
 }
