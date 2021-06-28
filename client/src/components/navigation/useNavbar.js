@@ -3,8 +3,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import "../../styles/navBar.css"
 
-const useNavbar = (NavigationOptionsComponent, style) => {
-    const Result = () => (
+function useNavbar(NavigationOptionsComponent, style) {
+    return (
         <Navbar bg="light" expand="lg" className={'fixed-top' + ` ${style}`}>
             <Navbar.Brand href="/">Whiteboard IO</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -14,9 +14,7 @@ const useNavbar = (NavigationOptionsComponent, style) => {
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-    );
-
-    return {Result}
-};
+    )
+}
 
 export default useNavbar;

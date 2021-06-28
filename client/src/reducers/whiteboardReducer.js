@@ -1,23 +1,27 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-export const collaboratorsSlice = createSlice(
+export const whiteboardSlice = createSlice(
     {
-        name: 'collaborators',
+        name: 'whiteboard',
         initialState: {
-            value: []
+            value: {
+                title: '',
+                collaborators: []
+            }
         },
         reducers: {
             addCollaborator: (state, action) => {
-                console.log("Adding collaborator", action.payload);
                 state.value = state.value.concat(action.payload);
-                console.log("Value after modifying", state.value)
             },
             removeCollaborator: (state, action) => {
                 const index = state.value.indexOf(action.payload);
                 state.value = state.value.splice(index, index);
+            },
+            editTitle: (state, action) => {
+                state.value.title = action.payload;
             }
         }
     });
-export const {addCollaborator, removeCollaborator} = collaboratorsSlice.actions;
+export const {addCollaborator, removeCollaborator, editTitle} = whiteboardSlice.actions;
 
-export default collaboratorsSlice.reducer;
+export default whiteboardSlice.reducer;

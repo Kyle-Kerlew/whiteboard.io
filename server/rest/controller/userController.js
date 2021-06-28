@@ -23,12 +23,12 @@ router.post('/logout', passport.authenticate('cookie'), function (req, res) {
     })
 });
 
-router.get('/my-boards', passport.authenticate('cookie', {session: false}), function (req, res) {
-    res.json({message: "You're allowed to see this"});
+router.get('/my-boards', passport.authenticate('cookie', {session: false}), async function (req, res) {
+    const boards = await userService.findOwnedBoards(req.session.passport.user.email);
+    res.json(boards);
 });
 
 router.get('/user-detail', passport.authenticate('cookie', {session: false}), function (req, res) {
-    console.log(req.session);
     res.json({user: req.session});
 });
 

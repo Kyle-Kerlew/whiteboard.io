@@ -1,13 +1,10 @@
 import Bubble from "../shared/bubble";
 import "../../styles/activeUsers.css";
 import React from 'react';
-import {useSelector} from 'react-redux';
 import _ from 'lodash';
 
-function ActiveUsers() {
+function ActiveUsers({collaborators}) {
 
-    const collaborators = useSelector(state => state.collaborators.value);
-    console.log("Collaborators received by the navigaation bar", collaborators);
     const colors = ['#7CC0EB', '#94EB65', '#EB4DEB', '#EBA23A'];
     const maxCircles = 4;
     const overflow = collaborators.length - maxCircles;
@@ -19,14 +16,25 @@ function ActiveUsers() {
         return selectedColor;
     }
 
+    function getOverflowUsers() {
+        if (overflow > 0) {
+            return collaborators.slice(collaborators.length - overflow);
+        }
+        return [];
+    }
+
+    const collaboratorInfo = {
+        collaborators: overflow > 0 ? collaborators.slice(0, collaborators.length - overflow) : collaborators,
+        overflowUsers: getOverflowUsers(),
+    }
     return (
         <div className='users-container'>
-            {(overflow > 0 ? collaborators.slice(collaborators.length - overflow, collaborators.length - 1) : collaborators).map(user => (
+            {collaboratorInfo.collaborators.map(user => (
                 <Bubble text={user.firstName.slice(0, 1) + user.lastName.slice(0, 1)} color={getRandomColor()}/>
             ))}
-            {overflow > 0 &&
-            <div className='overflow'>{`+ ${overflow} other${overflow > 1 ? 's' : ''}`}</div>
-            }
+            {collaboratorInfo.overflowUsers.length > 0 && collaboratorInfo.overflowUsers.map(overflowUser => (
+                <div key ={overflowUser.firstName} className='overflow'>{`+ ${overflow} other${overflow > 1 ? 's' : ''}`}</div>
+            ))}
         </div>
     )
 }

@@ -1,3 +1,4 @@
+const {v4} = require("uuid");
 const {BoardPersistence} = require('../../persistence/board/boardPersistence');
 
 function findWhiteboardById(whiteboardId) {
@@ -12,8 +13,19 @@ function countWhiteboards() {
     return BoardPersistence.countWhiteboards();
 }
 
-function createWhiteboard() {
-    return BoardPersistence.createWhiteboard();
+function createWhiteboard(user) {
+    if (!user) {
+        user = null;
+    }
+    const whiteboard = {};
+    whiteboard.collaborators = [];
+    whiteboard.title = user ? user + '\'s Whiteboard' : 'Guest Whiteboard';
+    whiteboard.owner = user;
+    return BoardPersistence.createWhiteboard(whiteboard);
+}
+
+function findWhiteboardByOwner(owner) {
+    return BoardPersistence.findWhiteboardsByOwner(owner);
 }
 
 function updateDrawingData(whiteboardId, data) {
@@ -36,6 +48,7 @@ module.exports = {
         countWhiteboards,
         updateDrawingData,
         removeCollaborator,
-        addCollaborator
+        addCollaborator,
+        findWhiteboardByOwner
     }
 }

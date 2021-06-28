@@ -1,47 +1,25 @@
 import {axios} from '../../configuration/axios';
 
-async function createAccount(request) {
-    try {
-        await axios.post('/user/create-account', request);
-    } catch (e) {
-        throw e;
-    }
+function createAccount(request) {
+    return axios.post('/user/create-account', request);
 }
 
 async function listWhiteboards() {
     //TODO: Pageable/sortaable/filterable?
-    try {
-        await axios.get('/user/my-boards');
-    } catch (e) {
-        throw e;
-    }
+    const {data} = await axios.get('/user/my-boards');
+    return data;
 }
 
-async function signIn(user) {
-    try {
-        await axios.post('/user/login', user);
-    } catch (e) {
-        throw e;
-    }
-
+function signIn(user) {
+    return axios.post('/user/login', user);
 }
 
-async function signOut() {
-    try {
-        await axios.get('/user/logout');
-    } catch (e) {
-        throw e;
-    }
-
+function signOut() {
+    return axios.get('/user/logout');
 }
 
-async function createGuest(user) {
-    try {
-        await axios.post('/user/guest', user);
-    } catch (e) {
-        throw e;
-    }
-
+function createGuest(user) {
+    return axios.post('/user/guest', user);
 }
 
 export const UserController = {

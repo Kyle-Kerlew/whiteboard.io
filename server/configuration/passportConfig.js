@@ -5,13 +5,13 @@ const {authenticationService} = require('../service/authentication/authenticatio
 const {userService} = require('../service/user/userService');
 const CustomStrategy = require('passport-custom').Strategy;
 
-passport.use(new CookieStrategy({
+passport.use('cookie', new CookieStrategy({
         cookieName: 'session-id',
         passReqToCallback: true
     },
-    async function (cookie, token, done) {
+    async function (req, token, done) {
         try {
-            const user = await userService.findUserByEmail(cookie.session.passport?.user.email);
+            const user = await userService.findUserByEmail(req.session.passport?.user.email);
             if (!user) {
                 return done(null, false);
             }
@@ -20,7 +20,7 @@ passport.use(new CookieStrategy({
             return done(e);
         }
     }));
-passport.use(new LocalStrategy(async function (email, password, done) {
+passport.use('local', new LocalStrategy(async function (email, password, done) {
     try {
         const response = await authenticationService.verifyPassword({email, password});
         return done(null, response);
@@ -57,7 +57,7 @@ passport.deserializeUser(async function (user, done) {
     try {
         const userEntity = await userService.findUserByEmail(user.email);
         if (!userEntity) {
-            return done('No user found', userEntity);
+            return done('No user found', null);
         }
         return done(null, userEntity);
     } catch (e) {

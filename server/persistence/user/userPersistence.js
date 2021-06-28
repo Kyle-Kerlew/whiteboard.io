@@ -8,7 +8,8 @@ async function createUser(collection, user) {
 
 async function findUserByEmail(collection, email) {
     try {
-        return await collection.findOne({email});
+        //todo: why is this running 6 times
+        return await collection.findOne({email: email});
     } catch (e) {
         console.log("Error finding user", e);
     }

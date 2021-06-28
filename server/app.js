@@ -12,6 +12,7 @@ const handleConnection = require("./socket/socketHandler");
 const {mongodb} = require('./persistence/connections/mongodb');
 const {Server} = require("socket.io");
 const sharedSession = require('express-socket.io-session');
+const helmet = require("helmet");
 
 const expressServer = express();
 
@@ -24,7 +25,7 @@ const sessionConfig = session({
     name: 'session-id',
     cookie: {
         httpOnly: false,
-        maxAge: 30000
+        maxAge: 1800000, //30 mins
     },
     saveUninitialized: false,
     resave: false,
@@ -37,7 +38,7 @@ const sessionConfig = session({
 });
 
 expressServer.use(sessionConfig);
-
+expressServer.use(helmet());
 expressServer.use(passport.initialize());
 expressServer.use(passport.session());
 expressServer.use(cors({origin: "http://localhost:3000", credentials: true}));

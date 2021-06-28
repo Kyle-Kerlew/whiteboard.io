@@ -19,7 +19,7 @@ import MarkerOptionsTool from "../toolbar/tools/markerOptionsTool";
 import FocusDialogBox from "../shared/focusDialogBox";
 import {Formik} from "formik";
 import {UserController} from "../../handlers/rest/userController";
-import {addCollaborator, removeCollaborator} from "../../reducers/collaboratorsReducer";
+import {addCollaborator, editTitle, removeCollaborator} from "../../reducers/whiteboardReducer";
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
@@ -37,14 +37,12 @@ function Canvas() {
 
     async function setWhiteboardData() {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
-        if (response.data) {
-            console.log("Response data", response.data);
-            response.data.collaborators.forEach(collaborator => {
-                dispatch(addCollaborator(collaborator));
-            });
-            if (response.data.data) {
-                draw(response.data.data);
-                setDrawingData(response.data.data);
+        if (response) {
+            response.collaborators.forEach(collaborator => dispatch(addCollaborator(collaborator)));
+            dispatch(editTitle(response.title));
+            if (response.data) {
+                draw(response.data);
+                setDrawingData(response.data);
             }
         }
     }

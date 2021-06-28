@@ -13,7 +13,7 @@ router.get('/count', async function (req, res) {
 });
 
 router.post('/create', async function (req, res) {
-    const response = await BoardService.createWhiteboard();
+    const response = await BoardService.createWhiteboard(req.session.passport?.user?.email);
     res.json(response); //mongodb response
 });
 
