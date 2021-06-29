@@ -4,8 +4,6 @@ import React from 'react';
 import _ from 'lodash';
 
 function ActiveUsers({collaborators}) {
-
-    console.log("Rerender", collaborators)
     const colors = ['#7CC0EB', '#94EB65', '#EB4DEB', '#EBA23A'];
     const maxCircles = 4;
     const overflow = collaborators.length - maxCircles;

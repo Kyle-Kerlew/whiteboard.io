@@ -15,7 +15,7 @@ function DrawingNavbar(props) {
             <Navbar.Text><ActiveUsers collaborators={props?.collaborators || []}/></Navbar.Text>
         </React.Fragment>
     );
-    return useNavbar(DrawingNavbarComponent);
+    return useNavbar(DrawingNavbarComponent, false);
 }
 
 const mapStateToProps = state => (state.whiteboard.value);
