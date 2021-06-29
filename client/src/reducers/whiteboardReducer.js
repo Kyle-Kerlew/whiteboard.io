@@ -11,11 +11,11 @@ export const whiteboardSlice = createSlice(
         },
         reducers: {
             addCollaborator: (state, action) => {
-                state.value = state.value.concat(action.payload);
+                state.value.collaborators = state.value.collaborators.concat(action.payload);
             },
             removeCollaborator: (state, action) => {
-                const index = state.value.indexOf(action.payload);
-                state.value = state.value.splice(index, index);
+                const index = state.value.collaborators.indexOf(action.payload);
+                state.value.collaborators = state.value.collaborators.splice(index, index);
             },
             editTitle: (state, action) => {
                 state.value.title = action.payload;
