@@ -2,16 +2,20 @@ import React from "react";
 import ActiveUsers from "./activeUsers";
 import useNavbar from "./useNavbar";
 import {connect} from "react-redux";
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from "react-bootstrap/Nav";
 
 function DrawingNavbar(props) {
-    console.log("props", props)
+    //todo: memoize?
     const DrawingNavbarComponent = () => (
-        <div className='toolbar-container'>
-            <h2>{props?.title || "Testing"}</h2>
-            <ActiveUsers collaborators={props?.collaborators || []}/>
-        </div>
+        <React.Fragment>
+            <Nav className='mr-auto'>
+                <Navbar.Text><h2>{props?.title}</h2></Navbar.Text>
+            </Nav>
+            <Navbar.Text><ActiveUsers collaborators={props?.collaborators || []}/></Navbar.Text>
+        </React.Fragment>
     );
-    return useNavbar(DrawingNavbarComponent, 'full-width');
+    return useNavbar(DrawingNavbarComponent);
 }
 
 const mapStateToProps = state => (state.whiteboard.value);

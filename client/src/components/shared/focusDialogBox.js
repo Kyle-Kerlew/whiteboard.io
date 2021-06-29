@@ -27,7 +27,6 @@ function FocusDialogBox({text, children, onSubmit, buttonText, isValid}) {
             <DialogActions>
                 <Button type="submit" onClick={() => {
                     onSubmit();
-                    console.log("is valid", isValid);
                     if (isValid) {
                         hidePopup();
                     }
