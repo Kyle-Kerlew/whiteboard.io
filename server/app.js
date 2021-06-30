@@ -24,7 +24,7 @@ const sessionConfig = session({
     secret: process.env.SESSION_SECRET, //TODO: Change
     name: 'session-id',
     cookie: {
-        httpOnly: false,
+        httpOnly: true,
         maxAge: 1800000, //30 mins
     },
     saveUninitialized: false,
@@ -41,7 +41,7 @@ expressServer.use(sessionConfig);
 expressServer.use(helmet());
 expressServer.use(passport.initialize());
 expressServer.use(passport.session());
-expressServer.use(cors({origin: "http://localhost:3000", credentials: true}));
+expressServer.use(cors({origin: "http://localhost:3000", methods: "*", credentials: true}));
 expressServer.use('/user', userController);
 expressServer.use('/whiteboard', whiteboardController);
 

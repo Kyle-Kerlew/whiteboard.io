@@ -22,11 +22,19 @@ async function findUserById(collection, userId) {
         console.log("Error finding user by id");
     }
 }
+async function findUserBySessionID(collection, sessionID) {
+    try {
+        return await collection.findOne({_id: sessionID});
+    } catch (e) {
+        console.log("Error finding user by session");
+    }
+}
 
 module.exports = {
     UserPersistence: {
         createUser,
         findUserByEmail,
-        findUserById
+        findUserById,
+        findUserBySessionID,
     }
 }

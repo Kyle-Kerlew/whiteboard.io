@@ -1,8 +1,9 @@
-const {v4} = require("uuid");
 const {BoardPersistence} = require('../../persistence/board/boardPersistence');
 
-function findWhiteboardById(whiteboardId) {
-    return BoardPersistence.findWhiteboardById(whiteboardId);
+async function findWhiteboardById(whiteboardId, user) {
+    const result = await BoardPersistence.findWhiteboardById(whiteboardId);
+    result.collaborators = result.collaborators.filter(collaborator => user?.email !== collaborator.email);
+    return result;
 }
 
 function deleteDrawingData(whiteboardId) {
@@ -17,10 +18,11 @@ function createWhiteboard(user) {
     if (!user) {
         user = null;
     }
-    const whiteboard = {};
-    whiteboard.collaborators = [];
-    whiteboard.title = user ? user + '\'s Whiteboard' : 'Guest Whiteboard';
-    whiteboard.owner = user;
+    const whiteboard = {
+        collaborators: user ? [user] : [],
+        title: user ? user.firstName + '\'s Whiteboard' : 'Guest Whiteboard',
+        owner: user?.email
+    };
     return BoardPersistence.createWhiteboard(whiteboard);
 }
 

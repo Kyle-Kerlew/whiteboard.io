@@ -76,8 +76,8 @@ function Canvas() {
     }
 
     useEffect(() => {
-        setWhiteboardData();
         if (user.isAuthenticated) {
+            setWhiteboardData();
             initializeSocketListeners();
         }
         window.addEventListener('keydown', handleKeyDown, {passive: false});
@@ -223,6 +223,7 @@ function Canvas() {
     async function handleGuestSubmit(values) {
         await UserController.createGuest(values);
         initializeSocketListeners();
+        await setWhiteboardData();
     }
 
     function applyScaleToData(data) {
@@ -264,10 +265,10 @@ function Canvas() {
                 </Alert>
             </Snackbar>}
             {!user.isAuthenticated &&
-            <Formik initialValues={{firstName: '', lastName: ''}} onSubmit={handleGuestSubmit}>
+            <Formik initialValues={{firstName: '', lastName: '', email: ''}} onSubmit={handleGuestSubmit}>
                 {({values, handleBlur, handleSubmit, handleChange, errors}) => (
                     <FocusDialogBox buttonText={'Confirm'} text={"Let other collaborators know who you are!"}
-                                    isValid={!!(values.firstName && values.lastName)}
+                                    isValid={!!(values.firstName && values.lastName && values.email)}
                                     onSubmit={e => handleSubmit(e)}>
                         <div className='form-container'>
                             <TextField type="text" required name={"firstName"} onChange={handleChange}
@@ -276,6 +277,9 @@ function Canvas() {
                             <TextField required type="text" name={"lastName"} onChange={handleChange}
                                        value={values.lastName}
                                        onBlur={handleBlur} label="Last Name"/>
+                            <TextField required type="email" name={"email"} onChange={handleChange}
+                                       value={values.email}
+                                       onBlur={handleBlur} label="Email"/>
                         </div>
                     </FocusDialogBox>
                 )}

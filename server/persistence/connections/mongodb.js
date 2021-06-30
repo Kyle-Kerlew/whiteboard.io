@@ -11,9 +11,9 @@ async function insertOne(doc, collection) {
     return {...ops[0]};
 }
 
-async function update(fillQuery, updateQuery, collection) {
+function update(findQuery, updateQuery, collection) {
     try {
-        await collection.updateOne(fillQuery, updateQuery);
+        return collection.updateOne(findQuery, updateQuery);
     } catch (error) {
         console.log("An error happened while updating db", error);
     }

@@ -9,7 +9,7 @@ router.post('/create-account', passport.authenticate('local'), async function (r
 });
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
-    res.end();
+    res.json(req.session.passport.user);
 });
 router.post('/guest', passport.authenticate('local-guest'), function (req, res) {
     res.end();
@@ -28,8 +28,8 @@ router.get('/my-boards', passport.authenticate('cookie', {session: false}), asyn
     res.json(boards);
 });
 
-router.get('/user-detail', passport.authenticate('cookie', {session: false}), function (req, res) {
-    res.json({user: req.session});
+router.get('/details', passport.authenticate('cookie', {session: false}), function (req, res) {
+    res.json({user: req.session.passport.user});
 });
 
 router.delete('/delete', passport.authenticate('cookie'), function (req, res) {
