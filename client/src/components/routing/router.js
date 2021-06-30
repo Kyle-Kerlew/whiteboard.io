@@ -16,7 +16,7 @@ function Router() {
     (async function isAuthenticated() {
         try {
             const response = await UserController.getUserDetailsByCookie();
-            dispatch(loginUser(response.email));
+            dispatch(loginUser(response.role));
         } catch (e) {
             dispatch(logoutUser());
         }

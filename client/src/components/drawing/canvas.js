@@ -20,6 +20,7 @@ import FocusDialogBox from "../shared/focusDialogBox";
 import {Formik} from "formik";
 import {UserController} from "../../handlers/rest/userController";
 import {addCollaborator, editTitle, removeCollaborator} from "../../reducers/whiteboardReducer";
+import {loginUser} from "../../reducers/userReducer";
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
@@ -33,7 +34,6 @@ function Canvas() {
     const canvasRef = useRef();
     const scale = useRef(1);
     const dispatch = useDispatch();
-
 
     async function setWhiteboardData() {
         const response = await WhiteboardController.getWhiteboardById(whiteboardId);
@@ -76,9 +76,9 @@ function Canvas() {
     }
 
     useEffect(() => {
-        if (user.isAuthenticated) {
-            setWhiteboardData();
+        if (user.role) {
             initializeSocketListeners();
+            setWhiteboardData();
         }
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
@@ -222,8 +222,7 @@ function Canvas() {
 
     async function handleGuestSubmit(values) {
         await UserController.createGuest(values);
-        initializeSocketListeners();
-        await setWhiteboardData();
+        dispatch(loginUser('guest'));
     }
 
     function applyScaleToData(data) {
@@ -264,26 +263,33 @@ function Canvas() {
                     We've copied the link to your clipboard!
                 </Alert>
             </Snackbar>}
-            {!user.isAuthenticated &&
-            <Formik initialValues={{firstName: '', lastName: '', email: ''}} onSubmit={handleGuestSubmit}>
-                {({values, handleBlur, handleSubmit, handleChange, errors}) => (
-                    <FocusDialogBox buttonText={'Confirm'} text={"Let other collaborators know who you are!"}
-                                    isValid={!!(values.firstName && values.lastName && values.email)}
-                                    onSubmit={e => handleSubmit(e)}>
-                        <div className='form-container'>
-                            <TextField type="text" required name={"firstName"} onChange={handleChange}
-                                       value={values.firstName}
-                                       onBlur={handleBlur} label="First Name"/>
-                            <TextField required type="text" name={"lastName"} onChange={handleChange}
-                                       value={values.lastName}
-                                       onBlur={handleBlur} label="Last Name"/>
-                            <TextField required type="email" name={"email"} onChange={handleChange}
-                                       value={values.email}
-                                       onBlur={handleBlur} label="Email"/>
-                        </div>
-                    </FocusDialogBox>
-                )}
-            </Formik>
+            <React.Fragment>
+                {!user.isLoadingUser &&
+                <React.Fragment>
+                    {!user.isAuthenticated && !user.role &&
+                    <Formik initialValues={{firstName: '', lastName: '', email: ''}} onSubmit={handleGuestSubmit}>
+                        {({values, handleBlur, handleSubmit, handleChange, errors}) => (
+                            <FocusDialogBox buttonText={'Confirm'} text={"Let other collaborators know who you are!"}
+                                            isValid={!!(values.firstName && values.lastName && values.email)}
+                                            onSubmit={e => handleSubmit(e)}>
+                                <div className='form-container'>
+                                    <TextField type="text" required name={"firstName"} onChange={handleChange}
+                                               value={values.firstName}
+                                               onBlur={handleBlur} label="First Name"/>
+                                    <TextField required type="text" name={"lastName"} onChange={handleChange}
+                                               value={values.lastName}
+                                               onBlur={handleBlur} label="Last Name"/>
+                                    <TextField required type="email" name={"email"} onChange={handleChange}
+                                               value={values.email}
+                                               onBlur={handleBlur} label="Email"/>
+                                </div>
+                            </FocusDialogBox>
+                        )}
+                    </Formik>
+                    }
+                </React.Fragment>
+                }
+            </React.Fragment>
             }
             <Toolbar position='bottom' mouseDown={mouseDown}>
                 <MarkerOptionsTool/>

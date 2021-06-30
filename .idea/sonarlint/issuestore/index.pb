@@ -7,8 +7,6 @@ M
 client/src/styles/sign-in.css,7\f\7f51a2f66534c78c1d1f3d34e100abab6083ca59
 M
 client/src/styles/toolbar.css,c\9\c9e4085ca6e2343b869ae81d24b1b160a2eb07ff
-O
-client/src/styles/boardList.css,6\a\6a63ebc74f5503c0a59b0d30bf9c88db4c258806
 V
 &client/src/resources/svg/link-icon.svg,5\2\526b52820f140fe0613d0e05bae2d5db4a8c9503
 W
@@ -139,8 +137,6 @@ V
 &client/src/components/shared/bubble.js,f\e\fed298a998b4c12a8fe7cb1c6ee28a2404757c6c
 R
 "client/src/components/page/home.js,c\a\caa41c621ea60b95b9e596e660b236f70aa33012
-Z
-*client/src/components/drawing/boardList.js,6\a\6a55fd18ef0ab5e59dee1894cfb5ac451dae4da8
 Q
 !client/src/configuration/store.js,5\c\5c41153cfa750957e7ecb4ef8daff01f2fecc882
 H
