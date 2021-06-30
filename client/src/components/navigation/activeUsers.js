@@ -2,6 +2,7 @@ import Bubble from "../shared/bubble";
 import "../../styles/activeUsers.css";
 import React from 'react';
 import _ from 'lodash';
+import {useSelector} from "react-redux";
 
 function ActiveUsers({collaborators}) {
     const colors = ['#7CC0EB', '#94EB65', '#EB4DEB', '#EBA23A'];
@@ -26,6 +27,8 @@ function ActiveUsers({collaborators}) {
         collaborators: overflow > 0 ? collaborators.slice(0, collaborators.length - overflow) : collaborators,
         overflowUsers: getOverflowUsers(),
     }
+
+    console.log("collaborators", collaborators);
     return (
         <div className='users-container'>
             {collaboratorInfo.collaborators.map(user => (

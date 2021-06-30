@@ -4,7 +4,7 @@ const {ObjectID} = require("mongodb");
 async function deleteWhiteboardDrawingData(whiteboardId) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
 
-    const fillQuery = {_id: whiteboardId};
+    const fillQuery = {_id: new ObjectID(whiteboardId)};
     const updateQuery = {$set: {data: []}};
     await mongodb.update(fillQuery, updateQuery, drawingCollection);
 }
@@ -12,7 +12,7 @@ async function deleteWhiteboardDrawingData(whiteboardId) {
 async function updateDrawingData(whiteboardId, data) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
 
-    const query = {_id: whiteboardId};
+    const query = {_id: new ObjectID(whiteboardId)};
     const updateQuery = {$push: {data: data}};
     await mongodb.update(query, updateQuery, drawingCollection);
 }
@@ -45,7 +45,7 @@ function countWhiteboards() {
 
 function removeCollaborator(whiteboardId, collaborator) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
-    const findQuery = {_id: whiteboardId};
+    const findQuery = {_id: new ObjectID(whiteboardId)};
     const removeQuery = {$pull: {collaborators: collaborator}};
     return mongodb.update(findQuery, removeQuery, drawingCollection);
 
@@ -53,10 +53,9 @@ function removeCollaborator(whiteboardId, collaborator) {
 
 function addCollaborator(whiteboardId, collaborator) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
-    const query = {_id: whiteboardId};
+    const findQuery = {_id: new ObjectID(whiteboardId)};
     const updateQuery = {$push: {collaborators: collaborator}};
-    return mongodb.update(query, updateQuery, drawingCollection);
-
+    return mongodb.update(findQuery, updateQuery, drawingCollection);
 }
 
 module.exports = {
