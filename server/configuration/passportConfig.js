@@ -11,7 +11,7 @@ passport.use('cookie', new CookieStrategy({
     },
     async function (req, token, done) {
         try {
-            const user = await userService.findUserByEmail(req.session.passport?.user.email);
+            const user = await userService.findUserBySession(req.sessionID);
             if (!user) {
                 return done(null, false);
             }
@@ -53,16 +53,15 @@ passport.serializeUser(function (user, done) {
     done(null, data);
 });
 
-passport.deserializeUser(async function (user, done) {
+passport.deserializeUser(async function (req, user, done) {
     try {
-        const userEntity = await userService.findUserByEmail(user.email);
+        const userEntity = await userService.findUserBySession(req.sessionID);
         if (!userEntity) {
-            return done('No user found', null);
+            return done('No user found for email', null);
         }
-        return done(null, userEntity);
+        done(null, userEntity);
     } catch (e) {
         return done(e);
     }
-
 });
 module.exports = passport;

@@ -3,7 +3,7 @@ const router = express.Router();
 const {BoardService} = require('../../service/board/boardService');
 
 router.get('/read/:whiteboardId', async function (req, res) {
-    const response = await BoardService.findWhiteboardById(req.params.whiteboardId);
+    const response = await BoardService.findWhiteboardById(req.params.whiteboardId, req.session.passport?.user);
     res.json(response);
 });
 
@@ -13,7 +13,7 @@ router.get('/count', async function (req, res) {
 });
 
 router.post('/create', async function (req, res) {
-    const response = await BoardService.createWhiteboard(req.session.passport?.user?.email);
+    const response = await BoardService.createWhiteboard(req.session.passport?.user);
     res.json(response); //mongodb response
 });
 

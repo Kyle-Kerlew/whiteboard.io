@@ -28,9 +28,14 @@ function findOwnedBoards(user) {
     return BoardPersistence.findWhiteboardsByOwner(user);
 }
 
-async function findUserByUserId(userId) {
+function findUserByUserId(userId) {
     const collection = mongodb.client.db('whiteboardio').collection('user');
     return UserPersistence.findUserById(collection, userId);
+}
+
+function findUserBySession(sessionID) {
+    const collection = mongodb.client.db('whiteboardio').collection('session');
+    return UserPersistence.findUserBySessionID(collection, sessionID);
 }
 
 module.exports = {
@@ -38,6 +43,7 @@ module.exports = {
         createAccount,
         findUserByEmail,
         findUserByUserId,
-        findOwnedBoards
+        findOwnedBoards,
+        findUserBySession,
     }
 }

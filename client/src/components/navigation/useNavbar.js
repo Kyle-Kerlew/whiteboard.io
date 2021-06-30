@@ -14,7 +14,6 @@ function useNavbar(NavigationOptionsComponent, collapse = true) {
                 :
                 <NavigationOptionsComponent/>
             }
-
         </Navbar>
     )
 }

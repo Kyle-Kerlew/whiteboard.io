@@ -22,10 +22,16 @@ function createGuest(user) {
     return axios.post('/user/guest', user);
 }
 
+async function getUserDetailsByCookie() {
+    const {data} = await axios.get('/user/details');
+    return data;
+}
+
 export const UserController = {
     createAccount,
     signIn,
     signOut,
     listWhiteboards,
-    createGuest
+    createGuest,
+    getUserDetailsByCookie
 };
