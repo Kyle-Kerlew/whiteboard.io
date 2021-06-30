@@ -29,7 +29,7 @@ router.get('/my-boards', passport.authenticate('cookie', {session: false}), asyn
 });
 
 router.get('/details', passport.authenticate('cookie', {session: false}), function (req, res) {
-    res.json({user: req.session.passport.user});
+    res.json(req.session.passport.user);
 });
 
 router.delete('/delete', passport.authenticate('cookie'), function (req, res) {

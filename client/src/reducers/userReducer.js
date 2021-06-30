@@ -7,17 +7,17 @@ export const userSlice = createSlice(
             value: {
                 isLoadingUser: true,
                 isAuthenticated: false,
-                email: ''
+                role: '',
             }
         },
         reducers: {
             loginUser: (state, action) => {
-                state.value.isAuthenticated = true;
-                state.value.email = action.payload;
+                state.value.isAuthenticated = action.payload !== 'guest';
+                state.value.role = action.payload;
             },
             logoutUser: state => {
                 state.value.isAuthenticated = false;
-                state.value.email = '';
+                state.value.role = '';
             },
             finishLoadingUser: state => {
                 state.value.isLoadingUser = false;

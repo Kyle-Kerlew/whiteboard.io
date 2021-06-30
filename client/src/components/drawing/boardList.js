@@ -30,7 +30,7 @@ function BoardList() {
                     (
                         <div className='item' key={board._id}>
                             <div className='item-title'>{board.title}</div>
-                            <ActiveUsers collaborators={board.collaborators}/>
+                            <ActiveUsers collaborators={[...board.collaborators]}/>
                         </div>
                     ))}
             </div>
