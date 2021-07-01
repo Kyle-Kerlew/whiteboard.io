@@ -13,7 +13,11 @@ import {useDispatch} from "react-redux";
 function Router() {
     const dispatch = useDispatch();
 
-    (async function isAuthenticated() {
+    useEffect(() => {
+        setAuthentication();
+    }, [])
+
+    async function setAuthentication() {
         try {
             const response = await UserController.getUserDetailsByCookie();
             dispatch(loginUser(response.role));
@@ -21,7 +25,7 @@ function Router() {
             dispatch(logoutUser());
         }
         dispatch(finishLoadingUser());
-    })();
+    }
     return (
         <React.Fragment>
             <NavBar/>
