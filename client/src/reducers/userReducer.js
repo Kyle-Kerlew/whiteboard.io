@@ -12,7 +12,6 @@ export const userSlice = createSlice(
         },
         reducers: {
             loginUser: (state, action) => {
-                console.log("logging in user as", action.payload)
                 state.value.isAuthenticated = action.payload !== 'guest';
                 state.value.role = action.payload;
             },
