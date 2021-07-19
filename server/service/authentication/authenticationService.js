@@ -4,11 +4,11 @@ const {userService} = require('../../service/user/userService');
 async function verifyPassword(user) {
     const userEntity = await userService.findUserByEmail(user.email);
     if (!userEntity) {
-        return {error: "Invalid credentials."}
+        return null;
     }
     const validCredentials = await doesPasswordMatch(user.password, userEntity.password);
     if (!validCredentials) {
-        return {error: "Invalid credentials."}
+        return null;
     }
     return userEntity;
 }

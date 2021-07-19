@@ -78,6 +78,7 @@ function Canvas() {
     }
 
     useEffect(() => {
+        console.log("User: ", user)
         if (user.role) {
             initializeSocketListeners();
             setWhiteboardData();

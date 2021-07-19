@@ -1,0 +1,29 @@
+
+Ljavascript:S1128"0Remove this unused import of 'PresentationIcon'.(ƒÉš
+Djavascript:S1128"(Remove this unused import of 'MenuList'.(›ÏÄí
+fjavascript:S1481"JRemove the declaration of the unused 'isPresentationMenuVisible' variable.(‰Äò®
+cjavascript:S1854"GRemove this useless assignment to variable "isPresentationMenuVisible".(‰Äò®
+ijavascript:S1481"MRemove the declaration of the unused 'setIsPresentationMenuVisible' variable.(‰Äò®
+fjavascript:S1854"JRemove this useless assignment to variable "setIsPresentationMenuVisible".(‰Äò®
+Qjavascript:S1481	"5Remove the declaration of the unused 'mode' variable.(ƒ×ë¡
+Njavascript:S1854	"2Remove this useless assignment to variable "mode".(ƒ×ë¡
+Tjavascript:S1481	"8Remove the declaration of the unused 'setMode' variable.(ƒ×ë¡
+Qjavascript:S1854	"5Remove this useless assignment to variable "setMode".(ƒ×ë¡
+jjavascript:S1481
+"NRemove the declaration of the unused 'presentationModeMenuAnchorRef' variable.(¬ßÓû
+gjavascript:S1854
+"KRemove this useless assignment to variable "presentationModeMenuAnchorRef".(¬ßÓû
+Sjavascript:S1128"0Remove this unused import of 'PresentationIcon'.(ƒÉš8”çÿ«/
+Djavascript:S1128"(Remove this unused import of 'MenuList'.(›ÏÄí
+mjavascript:S1481"JRemove the declaration of the unused 'isPresentationMenuVisible' variable.(‰Äò®8•çÿ«/
+jjavascript:S1854"GRemove this useless assignment to variable "isPresentationMenuVisible".(‰Äò®8•çÿ«/
+pjavascript:S1481"MRemove the declaration of the unused 'setIsPresentationMenuVisible' variable.(‰Äò®8•çÿ«/
+mjavascript:S1854"JRemove this useless assignment to variable "setIsPresentationMenuVisible".(‰Äò®8–çÿ«/
+Qjavascript:S1481	"5Remove the declaration of the unused 'mode' variable.(ƒ×ë¡
+Njavascript:S1854	"2Remove this useless assignment to variable "mode".(ƒ×ë¡
+[javascript:S1481	"8Remove the declaration of the unused 'setMode' variable.(ƒ×ë¡8–çÿ«/
+Xjavascript:S1854	"5Remove this useless assignment to variable "setMode".(ƒ×ë¡8–çÿ«/
+jjavascript:S1481
+"NRemove the declaration of the unused 'presentationModeMenuAnchorRef' variable.(¬ßÓû
+gjavascript:S1854
+"KRemove this useless assignment to variable "presentationModeMenuAnchorRef".(¬ßÓû

@@ -4,10 +4,12 @@ import {useHistory} from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import {Container} from "react-bootstrap";
 import {WhiteboardController} from '../../handlers/rest/whiteboardController';
-import {addCollaborator, setTitle} from "../../reducers/whiteboardReducer";
+import {Authentication as getAuthentication}  from "../shared/authentication";
+import {useDispatch} from "react-redux";
 
 function Home() {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [whiteboardCounter, setWhiteboardCounter] = useState();
 
     async function createNewWhiteboard() {
@@ -19,9 +21,14 @@ function Home() {
         }
     }
 
-    useEffect(async () => {
+    async function initializeData() {
         const result = await WhiteboardController.countWhiteboards();
         setWhiteboardCounter(result.data.count);
+        // await getAuthentication(dispatch)();
+    }
+
+    useEffect(() => {
+        initializeData();
     }, []);
 
     return (
