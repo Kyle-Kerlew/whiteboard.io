@@ -3,16 +3,19 @@ import {Button, TextField} from "@material-ui/core";
 import {UserController} from "../../handlers/rest/userController";
 import {ErrorMessage, Formik} from "formik";
 import * as Yup from 'yup';
+import {useHistory} from "react-router-dom";
 
 function CreateAccount() {
+    const history = useHistory();
 
     async function handleCreateAccount(values) {
         delete values.matchingPassword; //TODO: find a better way to remove this field?
         values.password = btoa(values.password); //base64 encode
         try {
             await UserController.createAccount(values);
-            //Move user to their documents page
+            history.push("/");
         } catch (e) {
+            console.log("Error");
         }
     }
 
