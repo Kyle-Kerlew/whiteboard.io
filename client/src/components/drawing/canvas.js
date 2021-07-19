@@ -15,12 +15,13 @@ import DownloadImageTool from "../toolbar/tools/downloadImageTool";
 import {WhiteboardController} from "../../handlers/rest/whiteboardController";
 import _ from 'lodash';
 import {useSelector, useDispatch} from 'react-redux';
-import MarkerOptionsTool from "../toolbar/tools/markerOptionsTool";
+import InputModesTool from "../toolbar/tools/inputModesTool";
 import FocusDialogBox from "../shared/focusDialogBox";
-import {Formik} from "formik";
+import {ErrorMessage, Formik} from "formik";
 import {UserController} from "../../handlers/rest/userController";
 import {addCollaborator, editTitle, removeCollaborator} from "../../reducers/whiteboardReducer";
 import {loginUser} from "../../reducers/userReducer";
+import * as Yup from "yup";
 
 function Canvas() {
     const [paintSize, setPaintSize] = useState(25);
@@ -30,6 +31,7 @@ function Canvas() {
     const [drawingData, setDrawingData] = useState([]);
     const [markerColor, setMarkerColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch('/boards/:canvasId').params;
+    const [mode, setMode] = useState();
     const user = useSelector(state => state.user.value);
     const canvasRef = useRef();
     const scale = useRef(1);
@@ -237,6 +239,17 @@ function Canvas() {
         setIsToastVisible(true);
     }
 
+    const SignInAsGuestSchema = Yup.object().shape({
+        firstName: Yup.string()
+            .min(2, 'First Name must be more than 1 character.')
+            .max(50, 'First Name must be less than 50 characters.')
+            .required('First name is required.'),
+        lastName: Yup.string()
+            .min(2, 'Last name must be more than 1 character.')
+            .max(50, 'Last name must be less than 50 characters.')
+            .required('Last name is required.'),
+        email: Yup.string().email('The email provided is invalid.').required('Email is required.'),
+    });
     const paintSizes = [5, 30, 55];
     const colors = ['red', 'blue', 'green', 'yellow', 'black']
 
@@ -267,21 +280,42 @@ function Canvas() {
                 {!user.isLoadingUser &&
                 <React.Fragment>
                     {!user.isAuthenticated && !user.role &&
-                    <Formik initialValues={{firstName: '', lastName: '', email: ''}} onSubmit={handleGuestSubmit}>
+                    <Formik
+                        validationSchema={SignInAsGuestSchema}
+                        initialValues={{firstName: '', lastName: '', email: ''}}
+                        onSubmit={handleGuestSubmit}>
                         {({values, handleBlur, handleSubmit, handleChange, errors}) => (
                             <FocusDialogBox buttonText={'Confirm'} text={"Let other collaborators know who you are!"}
                                             isValid={!!(values.firstName && values.lastName && values.email)}
                                             onSubmit={e => handleSubmit(e)}>
                                 <div className='form-container'>
-                                    <TextField type="text" required name={"firstName"} onChange={handleChange}
-                                               value={values.firstName}
-                                               onBlur={handleBlur} label="First Name"/>
-                                    <TextField required type="text" name={"lastName"} onChange={handleChange}
-                                               value={values.lastName}
-                                               onBlur={handleBlur} label="Last Name"/>
-                                    <TextField required type="email" name={"email"} onChange={handleChange}
-                                               value={values.email}
-                                               onBlur={handleBlur} label="Email"/>
+                                    <TextField
+                                        type="text"
+                                        required
+                                        name={"firstName"}
+                                        onChange={handleChange}
+                                        value={values.firstName}
+                                        onBlur={handleBlur}
+                                        label="First Name"/>
+                                    <ErrorMessage name="firstName"/>
+                                    <TextField
+                                        required
+                                        type="text"
+                                        name={"lastName"}
+                                        onChange={handleChange}
+                                        value={values.lastName}
+                                        onBlur={handleBlur}
+                                        label="Last Name"/>
+                                    <ErrorMessage name="lastName"/>
+                                    <TextField
+                                        required
+                                        type="email"
+                                        name={"email"}
+                                        onChange={handleChange}
+                                        value={values.email}
+                                        onBlur={handleBlur}
+                                        label="Email"/>
+                                    <ErrorMessage name="email"/>
                                 </div>
                             </FocusDialogBox>
                         )}
@@ -292,7 +326,11 @@ function Canvas() {
             </React.Fragment>
             }
             <Toolbar position='bottom' mouseDown={mouseDown}>
-                <MarkerOptionsTool/>
+                <InputModesTool handleMarkerClick={(e) => {
+                    //    setPaintSize(e.target.value);
+
+                }}
+                                handlePresentationClick={() => setMode(prev => prev === "Presentation" ? "Drawing" : "Presentation")}/>
                 <Divider orientation="vertical" flexItem/>
                 <EraserTool setIsErasing={() => setMarkerColor('white')}/>
                 <ZoomInTool zoomIn={scaleUp}/>
