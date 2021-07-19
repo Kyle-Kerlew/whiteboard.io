@@ -11,7 +11,7 @@ import {useDispatch} from "react-redux";
 
 function Router() {
     const dispatch = useDispatch();
-    const location = useLocation()
+    const location = useLocation();
 
     useEffect(() => {
         getAuthentication(dispatch)();

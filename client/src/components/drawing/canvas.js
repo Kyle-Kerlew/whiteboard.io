@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Toolbar from "../toolbar/toolbar";
 import {Socket} from '../../configuration/socket';
 import ShareLinkBox from "../toolbar/tools/linkShareTool";
@@ -78,11 +78,13 @@ function Canvas() {
     }
 
     useEffect(() => {
-        console.log("User: ", user)
-        if (user.role) {
+        if (!user.isLoadingUser && user.role) {
             initializeSocketListeners();
             setWhiteboardData();
         }
+    }, [user.isLoadingUser])
+    useEffect(() => {
+
         window.addEventListener('keydown', handleKeyDown, {passive: false});
         window.addEventListener('wheel', handleScrollZoom, {passive: false});
 
@@ -343,15 +345,16 @@ function Canvas() {
                 <DownloadImageTool getDownloadData={() => canvasRef.current.toDataURL("image/png")}/>
             </Toolbar>
             <Toolbar position='left' mouseDown={mouseDown}>
-                {colors.map(color => (
+                {
+                    colors.map(color =>
                     <React.Fragment key={color}>
-                        <Circle
-                            identifier={color}
-                            color={color}
-                            onClick={() => setMarkerColor(color)}
-                            size={50}/>
+                            <Circle
+                                identifier={color}
+                                color={color}
+                                onClick={() => setMarkerColor(color)}
+                                size={50}/>
                     </React.Fragment>
-                ))}
+                )}
             </Toolbar>
         </div>
     );
