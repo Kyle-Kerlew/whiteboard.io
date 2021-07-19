@@ -12,7 +12,9 @@ function FocusDialogBox({text, children, onSubmit, buttonText, isValid}) {
     const [isPopupVisible, setIsPopupVisible] = useState(true);
 
     function hidePopup() {
-        setIsPopupVisible(false);
+        if (isValid) {
+            setIsPopupVisible(false);
+        }
     }
 
     return (
@@ -22,14 +24,16 @@ function FocusDialogBox({text, children, onSubmit, buttonText, isValid}) {
                 <DialogContentText>
                     {text}
                 </DialogContentText>
-                {children}
+                <form onSubmit={onSubmit}>
+                    {children}
+                </form>
             </DialogContent>
             <DialogActions>
                 <Button type="submit" onClick={() => {
-                    onSubmit();
                     if (isValid) {
                         hidePopup();
                     }
+                    onSubmit();
                 }} color="primary">
                     {buttonText}
                 </Button>
