@@ -148,8 +148,6 @@ Q
 !client/src/styles/activeUsers.css,5\1\51464e64234c0839e4ec2728703d0cd8a09d6e4d
 X
 (client/src/reducers/whiteboardReducer.js,b\1\b158e7502f06c2392e53392148ae5fa321e3ab6a
-]
--client/src/components/navigation/useNavbar.js,2\2\2262b2658fc61da5c0c12b1e5c67be61dfb677fc
 Z
 *client/src/components/navigation/navBar.js,9\7\972a87e080a173b1dbe1485ccda0a3df7584baed
 `
@@ -170,8 +168,6 @@ Z
 *client/src/components/drawing/boardList.js,6\a\6a55fd18ef0ab5e59dee1894cfb5ac451dae4da8
 C
 client/src/index.js,7\6\76cbb38a5cef42611c7af13985f39248682f4aa1
-a
-1client/src/components/navigation/drawingNavbar.js,7\c\7cc2ceff41595842f1d6364bbad5f14ad654b91b
 V
 &client/src/components/shared/switch.js,a\c\ac5687d7917b1dd51cad77e4020d8a6be88bbaad
 L
@@ -184,10 +180,6 @@ X
 .client/src/components/shared/focusDialogBox.js,9\c\9c30033a2fdca24d44a7419b825c0ac80de4c3a9
 e
 5client/src/components/toolbar/tools/inputModesTool.js,8\0\8051f3366f883698b2d9a03c38a33b88a14eb20c
-W
-'client/src/components/drawing/canvas.js,2\d\2dfdf3f9247dbc1908f5eb6bfed676915fac7919
-R
-"client/src/reducers/userReducer.js,3\a\3af3e9d3f595ac02dfee7e96d822cc0e9c01d450
 ^
 .server/rest/controller/whiteboardController.js,4\c\4cd74eecca3c2a15c16ec0e5384816ff045000ef
 \
