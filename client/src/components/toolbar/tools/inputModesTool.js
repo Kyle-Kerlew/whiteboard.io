@@ -12,14 +12,6 @@ function InputModesTool({handlePresentationClick, handleMarkerClick, anchorEl, w
 
     return (
         <div>
-            <Menu anchorEl={document.getElementsByClassName('toolbar')[0]} open={isPresentationMenuVisible}
-                  onClose={() => setIsPresentationMenuVisible(false)}>
-                <MenuItem>{mode === "Presentation" ? "Presentation" : "Drawing"} </MenuItem>
-            </Menu>
-            <img width={width} height={height}
-                 onClick={() => setIsPresentationMenuVisible(true)}
-                 src={PresentationIcon}
-                 alt={"Modes"}/>
             <Menu anchorEl={document.getElementsByClassName('toolbar')[0]} open={istMarkerMenuVisible}
                   onClose={() => setMarkerMenuVisible(false)}>
                 {['small', 'medium', 'large'].map(size => <MenuItem>{size}</MenuItem>)}

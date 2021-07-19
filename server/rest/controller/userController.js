@@ -3,13 +3,20 @@ const router = express.Router();
 const {userService} = require('../../service/user/userService');
 const passport = require('../../configuration/passportConfig');
 
-router.post('/create-account', passport.authenticate('local'), async function (req, res) {
+router.post('/create-account', async function (req, res, next) {
+    const asciiPassword = req.body.password;
     const response = await userService.createAccount(req.body);
-    res.json(response);
+    if (response.error) {
+        return res.json(response).status(400);
+    } else {
+        req.body = {username: req.body.email, password: asciiPassword};
+        next();
+    }
+}, passport.authenticate('local'), function (req, res, next) {
+    res.end();
 });
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
-    res.json(req.session.passport.user);
 });
 router.post('/guest', passport.authenticate('local-guest'), function (req, res) {
     res.end();

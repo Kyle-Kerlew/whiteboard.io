@@ -1,0 +1,8 @@
+
+^javascript:S1481"=Remove the declaration of the unused 'setPaintSize' variable.(Áº½Óûÿÿÿÿ
+[javascript:S1854":Remove this useless assignment to variable "setPaintSize".(Áº½Óûÿÿÿÿ
+Vjavascript:S1481""5Remove the declaration of the unused 'mode' variable.(Ğ¿ª©ùÿÿÿÿ
+Sjavascript:S1854""2Remove this useless assignment to variable "mode".(Ğ¿ª©ùÿÿÿÿ
+]javascript:S1481ş";Remove the declaration of the unused 'paintSizes' variable.(äØÖúÿÿÿÿ
+Zjavascript:S1854ş"8Remove this useless assignment to variable "paintSizes".(äØÖúÿÿÿÿ
+;javascript:S125Ë"Remove this commented out code.(À¨
