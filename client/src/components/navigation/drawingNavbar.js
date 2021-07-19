@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from "react-bootstrap/Nav";
 import {NavDropdown} from "react-bootstrap";
+import Switch from "../shared/switch";
 
 function DrawingNavbar(props) {
     //todo: memoize?
