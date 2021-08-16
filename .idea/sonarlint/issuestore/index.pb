@@ -129,19 +129,12 @@ H
 client/package-lock.json,2\6\26a733df8ec5f9ebc34add7f3b884bb18c2b5048
 C
 client/package.json,a\d\ad8a30996233c30cdd545dbf5f18765b86e6bf64
-:
-
-.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 A
 client/.gitignore,e\3\e32ec5c998c4774d8d1bedd59740d14d940c90ec
 M
 collaborative-drawing-app.iml,7\a\7a46e9f601d0ba88b8bec2a491adc21e9a3b476a
 M
-client/src/styles/globals.css,f\f\ff8ddbb54db96e1d52f56c972a4405ae93a0e76b
-M
 client/src/styles/popover.css,0\5\0592c62feb94f99fa4f0d3866b9d2048574a7fa5
-R
-"client/src/styles/shareLinkBox.css,5\c\5c056eea921820382068d18e07941fc0cd0dcfa0
 T
 $client/src/styles/create-account.css,c\8\c8b43ade6ef8e6f2c89745683fcd0c761ce5c771
 Q
