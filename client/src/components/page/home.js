@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import '../../styles/popover.css';
+import React from 'react';
+import '../../styles/home.css';
 import {useHistory} from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import {Container} from "react-bootstrap";
 import {WhiteboardController} from '../../handlers/rest/whiteboardController';
+import Button from "../shared/button";
+import Line from "../shared/line";
+import ImageTextBox from "../shared/imageTextBox";
 
 function Home() {
     const history = useHistory();
-    const [whiteboardCounter, setWhiteboardCounter] = useState();
 
     async function createNewWhiteboard() {
         try {
@@ -18,30 +18,107 @@ function Home() {
         }
     }
 
-    async function initializeData() {
-        const result = await WhiteboardController.countWhiteboards();
-        setWhiteboardCounter(result.data.count);
-    }
-
-    useEffect(() => {
-        initializeData();
-    }, []);
-
     return (
-        <Container className={'flex-container'} fluid>
-            <h1 style={{fontSize: '60px', textAlign: 'center', verticalAlign: 'top'}}>Whiteboard IO</h1>
-            <p style={{fontSize: '18px', textAlign: 'center', maxWidth: '490px'}}>
-                Whiteboard IO is an open source tool for collaborative drawing in real time. It
-                simplifies planning, instructing, and documenting.
-            </p>
-            <Button onClick={createNewWhiteboard} style={{alignSelf: 'center'}} variant="primary" size="lg">Let's
-                Start</Button>
-
-            <div style={{fontSize: '60px', paddingTop: '50px', textAlign: 'center', maxWidth: '490px'}}>
-                {whiteboardCounter}
-                <p style={{fontSize: '18px', textAlign: 'center', maxWidth: '490px'}}>Whiteboards have been created.</p>
+        <div className={'flex-container'}>
+            <h1 style={{fontSize: '86px', textAlign: 'center', verticalAlign: 'top', color: '#151719'}}>Whiteboard
+                IO</h1>
+            <div className={'text-button-container'}>
+                <p style={{fontSize: '18px', textAlign: 'center', color: '#8A969F'}}>
+                    Whiteboard IO is an open source tool for collaborative drawing in real time. It
+                    simplifies planning, instructing, and documenting.
+                </p>
+                <div className={'button-row'}>
+                    <Button onClick={createNewWhiteboard} variant="primary" size="lg">Get
+                        Started</Button>
+                    <Button onClick={createNewWhiteboard} variant="secondary" size="lg">View on Github</Button>
+                </div>
             </div>
-        </Container>
+            <Line/>
+
+            <h1 style={{
+                fontSize: 56,
+                textAlign: 'center',
+                verticalAlign: 'top',
+                color: '#151719'
+            }}>
+                Build Up the Big Picture
+            </h1>
+            <div className={'text-button-container'}>
+                <p style={{fontSize: '18px', textAlign: 'center', color: '#8A969F'}}>
+                    Let Whiteboard help you visualize and collaborate in your next meeting, brainstorm session, or
+                    class!
+                </p>
+            </div>
+
+            <div className={'features'}>
+                <div className={'column'}>
+                    <h2>
+                        Easy to Use
+                    </h2>
+                    <p>Let Whiteboard help you visualize and collaborate in your next meeting, brainstorm session, or
+                        class!</p>
+                </div>
+
+                <div className={'column'}>
+                    <h2>
+                        Collaborate
+                    </h2>
+                    <p style={{flexGrow: 1, alignSelf: 'flex-end'}}>Whiteboard offers real-time updates so you can
+                        collaborate quickly and effectively.</p>
+                </div>
+                <div className={'column'}>
+                    <h2>
+                        Keep Organized
+                    </h2>
+                    <p>Whiteboard IO will keep track of all the projects you are a part of so you don’t have to!</p>
+                </div>
+            </div>
+            <Line/>
+
+            <h1 style={{
+                fontSize: 56,
+                textAlign: 'center',
+                verticalAlign: 'top',
+                color: '#151719'
+            }}>
+                A New Way of Brainstorming
+            </h1>
+            <div className={'text-button-container'}>
+                <p style={{fontSize: '18px', textAlign: 'center', color: '#8A969F'}}>
+                    In the age of being remote, Whiteboard can serve as an easy tool to help you be as close as
+                    ever!
+                </p>
+            </div>
+            <div
+                style={{display: 'flex', gap: '0 15px', justifyContent: 'center', alignItems: 'center'}}>
+                <div style={{flexDirection: 'column', minWidth: "50%"}}>
+                    <h3>Visualize Workflows</h3>
+                    <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
+                        visualize and collaborate in your next
+                        Let Whiteboard help you visualize and collaborate in your next
+                        meeting, brainstorm session, or
+                        class!</p>
+                </div>
+                <img src={'../../demo/Rectangle.png'} alt={"Image of app being used"}/>
+            </div>
+            <div
+                style={{display: 'flex', gap: '0 15px', justifyContent: 'center', alignItems: 'center'}}>
+                <img src={'../../demo/Rectangle.png'} alt={"Image of app being used"}/>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minWidth: '50%'
+                }}>
+                    <h3>Visualize Workflows</h3>
+                    <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
+                        visualize and collaborate in your next
+                        meeting, brainstorm session, or
+                        class!</p>
+                </div>
+            </div>
+        </div>
 
     )
 }

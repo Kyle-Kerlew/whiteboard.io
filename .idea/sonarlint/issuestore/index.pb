@@ -95,8 +95,6 @@ K
 client/README.md,3\1\31751a40848e21a3ce2e507e324ffd46e5b7b710
 @
 client/server.js,5\7\5721a0d275d3d75e2ae2f7f6f4216b0d461a2407
-S
-#client/.ebextensions/options.config,f\e\fe54e49e2d4d8cc9e93d2a2f774c503b9d76240a
 H
 client/webpack.config.js,d\b\db91159a4eecb54e3a284cf4001a94c2e39df366
 C
@@ -127,14 +125,10 @@ Q
 !client/src/configuration/store.js,5\c\5c41153cfa750957e7ecb4ef8daff01f2fecc882
 H
 client/package-lock.json,2\6\26a733df8ec5f9ebc34add7f3b884bb18c2b5048
-C
-client/package.json,a\d\ad8a30996233c30cdd545dbf5f18765b86e6bf64
 A
 client/.gitignore,e\3\e32ec5c998c4774d8d1bedd59740d14d940c90ec
 M
 collaborative-drawing-app.iml,7\a\7a46e9f601d0ba88b8bec2a491adc21e9a3b476a
-M
-client/src/styles/popover.css,0\5\0592c62feb94f99fa4f0d3866b9d2048574a7fa5
 T
 $client/src/styles/create-account.css,c\8\c8b43ade6ef8e6f2c89745683fcd0c761ce5c771
 Q
@@ -167,8 +161,6 @@ L
 client/src/styles/switch.css,1\2\12c931baf532478b7835199263f76d88e0e3bf8f
 ^
 .client/src/resources/svg/presentation-icon.svg,d\7\d77e259f6783731c6d8b6072626a2ce50e75b69e
-X
-(client/src/components/toolbar/toolbar.js,3\6\36b81b7235a097e7485d6bcc39bb3636912dfd3e
 ^
 .client/src/components/shared/focusDialogBox.js,9\c\9c30033a2fdca24d44a7419b825c0ac80de4c3a9
 e
@@ -179,3 +171,20 @@ e
 ,server/persistence/board/boardPersistence.js,a\b\ab828d37ba8a72ec3ad779bd4c4d0d744c53ea36
 Y
 )server/persistence/connections/mongodb.js,3\a\3a669249a6f8382bddcb9cf78aa6a0019f6893d1
+R
+"client/src/styles/shareLinkBox.css,5\c\5c056eea921820382068d18e07941fc0cd0dcfa0
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+C
+client/package.json,a\d\ad8a30996233c30cdd545dbf5f18765b86e6bf64
+V
+&client/src/components/shared/button.js,0\0\00335156bed54645f18e526831d6c727a9d4541d
+L
+client/src/styles/button.css,b\2\b2769bb51924eb7cf0b5b07cdd22785478c6b327
+J
+client/src/styles/line.css,9\3\939776ddb0fe28956e4427e79afc0fdb4e03757c
+T
+$client/src/components/shared/line.js,e\e\ee8aa9664043d30dc88dfa26aac912f142c566c3
+M
+client/src/styles/globals.css,f\f\ff8ddbb54db96e1d52f56c972a4405ae93a0e76b
