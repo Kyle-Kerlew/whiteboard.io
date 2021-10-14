@@ -4,7 +4,6 @@ import {useHistory} from "react-router-dom";
 import {WhiteboardController} from '../../handlers/rest/whiteboardController';
 import Button from "../shared/button";
 import Line from "../shared/line";
-import ImageTextBox from "../shared/imageTextBox";
 
 function Home() {
     const history = useHistory();
@@ -20,7 +19,7 @@ function Home() {
 
     return (
         <div className={'flex-container'}>
-            <h1 style={{fontSize: '86px', textAlign: 'center', verticalAlign: 'top', color: '#151719'}}>Whiteboard
+            <h1 style={{fontSize: '72px', textAlign: 'center', verticalAlign: 'top', color: '#151719'}}>Whiteboard
                 IO</h1>
             <div className={'text-button-container'}>
                 <p style={{fontSize: '18px', textAlign: 'center', color: '#8A969F'}}>
@@ -89,33 +88,43 @@ function Home() {
                     ever!
                 </p>
             </div>
-            <div
-                style={{display: 'flex', gap: '0 15px', justifyContent: 'center', alignItems: 'center'}}>
-                <div style={{flexDirection: 'column', minWidth: "50%"}}>
-                    <h3>Visualize Workflows</h3>
-                    <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
-                        visualize and collaborate in your next
-                        Let Whiteboard help you visualize and collaborate in your next
-                        meeting, brainstorm session, or
-                        class!</p>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '50px 0',
+            }}>
+                <div
+                    style={{display: 'flex', alignItems: 'center'}}>
+                    <div style={{flexDirection: 'column', flex: '1 1 50%'}}>
+                        <h3>Visualize Workflows</h3>
+                        <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
+                            visualize and collaborate in your next
+                            Let Whiteboard help you visualize and collaborate in your next
+                            meeting, brainstorm session, or
+                            class!</p>
+                    </div>
+                    <div style={{flex: '1 1 50%'}}>
+                        <img style={{maxWidth: '100%'}} src={'../../demo/Rectangle.png'}
+                             alt={"Image of app being used"}/>
+                    </div>
                 </div>
-                <img src={'../../demo/Rectangle.png'} alt={"Image of app being used"}/>
-            </div>
-            <div
-                style={{display: 'flex', gap: '0 15px', justifyContent: 'center', alignItems: 'center'}}>
-                <img src={'../../demo/Rectangle.png'} alt={"Image of app being used"}/>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minWidth: '50%'
-                }}>
-                    <h3>Visualize Workflows</h3>
-                    <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
-                        visualize and collaborate in your next
-                        meeting, brainstorm session, or
-                        class!</p>
+                <div
+                    style={{display: 'flex', alignItems: 'center'}}>
+                    <div style={{flex: '1 1 50%'}}>
+                        <img style={{maxWidth: '100%'}} src={'../../demo/Rectangle.png'}
+                             alt={"Image of app being used"}/>
+                    </div>
+                    <div style={{flexDirection: 'column', flex: '1 1 50%', textAlign: 'center'}}>
+                        <div style={{display: 'inline-block', textAlign: 'left'}}>
+                            <h3>Visualize Workflows</h3>
+                            <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
+                                visualize and collaborate in your next
+                                Let Whiteboard help you visualize and collaborate in your next
+                                meeting, brainstorm session, or
+                                class!</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
