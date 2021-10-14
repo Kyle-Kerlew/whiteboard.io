@@ -115,8 +115,6 @@ F
 build-tool/gulpfile.js,7\8\78b8462c70eb7afc39f627f244a6d8351496d1f4
 G
 client/build/index.html,d\6\d63b8338a90ef8eaa418445012fdf73752a56363
-H
-client/public/index.html,8\1\818a76598cddfc0ac5e6740251b5b4dc9ff67f2c
 ;
 server/.env,7\4\74c0224311d9cb9feca55cc2c27a2b847c0286e7
 V

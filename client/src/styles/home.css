@@ -1,7 +1,7 @@
 .flex-container {
     display: flex;
     flex-direction: column;
-    padding-top: 50px;
+    padding: 50px;
     height: 100%;
     align-items: center;
 }
@@ -21,12 +21,22 @@
     text-align: center;
 }
 
-.features {
-    display: flex;
-    min-width: 762px;
-    max-width: 1200px;
+@media screen and (min-width: 800px) {
+    .features {
+        display: flex;
+        min-width: 762px;
+        max-width: 1200px;
+    }
 }
 
+@media screen and (max-width: 800px) {
+    .features {
+        display: flex;
+        flex-direction: column;
+        gap: 40px 0;
+        max-width: 300px;
+    }
+}
 .button-row {
     padding-top: 50px;
     width: 100%;
