@@ -4,6 +4,7 @@ import {useHistory} from "react-router-dom";
 import {WhiteboardController} from '../../handlers/rest/whiteboardController';
 import Button from "../shared/button";
 import Line from "../shared/line";
+import EasyToUseIcon from '../../resources/svg/easy-to-use-icon.svg';
 
 function Home() {
     const history = useHistory();
@@ -29,7 +30,8 @@ function Home() {
                 <div className={'button-row'}>
                     <Button onClick={createNewWhiteboard} variant="primary" size="lg">Get
                         Started</Button>
-                    <Button onClick={createNewWhiteboard} variant="secondary" size="lg">View on Github</Button>
+                    <Button onClick={() => window.open("https://github.com/Kyle-Kerlew/whiteboard.io")}
+                            variant="secondary" size="lg">View Github</Button>
                 </div>
             </div>
             <Line/>
@@ -51,6 +53,7 @@ function Home() {
 
             <div className={'features'}>
                 <div className={'column'}>
+                    <img alt={"Easy to use"} width={50} height={50} src={EasyToUseIcon}/>
                     <h2>
                         Easy to Use
                     </h2>
@@ -59,6 +62,7 @@ function Home() {
                 </div>
 
                 <div className={'column'}>
+                    <img alt={"Easy to use"} width={50} height={50} src={EasyToUseIcon}/>
                     <h2>
                         Collaborate
                     </h2>
@@ -66,6 +70,7 @@ function Home() {
                         collaborate quickly and effectively.</p>
                 </div>
                 <div className={'column'}>
+                    <img alt={"Easy to use"} width={50} height={50} src={EasyToUseIcon}/>
                     <h2>
                         Keep Organized
                     </h2>
