@@ -94,7 +94,7 @@ function Home() {
                 gap: '50px 0',
             }}>
                 <div
-                    style={{display: 'flex', alignItems: 'center'}}>
+                    style={{display: 'flex', alignItems: 'center', gap: '0 35px'}}>
                     <div style={{flexDirection: 'column', flex: '1 1 50%'}}>
                         <h3>Visualize Workflows</h3>
                         <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
@@ -109,22 +109,19 @@ function Home() {
                     </div>
                 </div>
                 <div
-                    style={{display: 'flex', alignItems: 'center'}}>
+                    style={{display: 'flex', alignItems: 'center', gap: '0 35px'}}>
                     <div style={{flex: '1 1 50%'}}>
                         <img style={{maxWidth: '100%'}} src={'../../demo/Rectangle.png'}
                              alt={"Image of app being used"}/>
                     </div>
-                    <div style={{flexDirection: 'column', flex: '1 1 50%', textAlign: 'center'}}>
-                        <div style={{display: 'inline-block', textAlign: 'left'}}>
-                            <h3>Visualize Workflows</h3>
-                            <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
-                                visualize and collaborate in your next
-                                Let Whiteboard help you visualize and collaborate in your next
-                                meeting, brainstorm session, or
-                                class!</p>
-                        </div>
+                    <div style={{flexDirection: 'column', flex: '1 1 50%'}}>
+                        <h3>Visualize Workflows</h3>
+                        <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
+                            visualize and collaborate in your next
+                            Let Whiteboard help you visualize and collaborate in your next
+                            meeting, brainstorm session, or
+                            class!</p>
                     </div>
-
                 </div>
             </div>
         </div>
