@@ -7,22 +7,8 @@ M
 client/src/styles/sign-in.css,7\f\7f51a2f66534c78c1d1f3d34e100abab6083ca59
 M
 client/src/styles/toolbar.css,c\9\c9e4085ca6e2343b869ae81d24b1b160a2eb07ff
-V
-&client/src/resources/svg/link-icon.svg,5\2\526b52820f140fe0613d0e05bae2d5db4a8c9503
-W
-'client/src/resources/svg/cross-icon.svg,f\f\ff0baf2bd6bb5006331da6f60e092dd6a0541b1d
 X
 (client/src/resources/svg/circle-icon.svg,0\3\03878b24f08cda722e5c27da4082df1e3d66ed51
-X
-(client/src/resources/svg/eraser-icon.svg,d\d\dd75d51c27ab9399935a9e043f3198e41e33d42d
-X
-(client/src/resources/svg/marker-icon.svg,6\9\69d83aec295d715995716e83346794136e4633bc
-Y
-)client/src/resources/svg/zoom-in-icon.svg,f\3\f33b31b1f9c26c1a66a8b1bf09c13388369a8289
-Z
-*client/src/resources/svg/download-icon.svg,c\4\c4868eb6876ce2c7631403b60398da18a46cff39
-Z
-*client/src/resources/svg/zoom-out-icon.svg,c\7\c7dd654f3eebd28a10abf7cbae4b73e39ea39222
 `
 0client/src/resources/svg/new-whiteboard-icon.svg,e\2\e27c2afc15fe2c293e0713685a2d7e47edbe63a4
 S
@@ -37,8 +23,6 @@ d
 4client/src/components/toolbar/tools/linkShareTool.js,a\a\aa60fcefe0cd5acb6a24e5cf0a252666d75c4097
 e
 5client/src/components/toolbar/tools/clearBoardTool.js,d\d\dd0856cf98e9e95319004f84770c2baa7527f26f
-h
-8client/src/components/toolbar/tools/downloadImageTool.js,5\8\581351fa36759af38a657cd52b35fd8ab2026a3e
 R
 "client/src/configuration/socket.js,6\5\65635667ab5423463cd2ab1f3c25b7118cb7e6cd
 H
@@ -157,8 +141,6 @@ V
 &client/src/components/shared/switch.js,a\c\ac5687d7917b1dd51cad77e4020d8a6be88bbaad
 L
 client/src/styles/switch.css,1\2\12c931baf532478b7835199263f76d88e0e3bf8f
-^
-.client/src/resources/svg/presentation-icon.svg,d\7\d77e259f6783731c6d8b6072626a2ce50e75b69e
 ^
 .client/src/components/shared/focusDialogBox.js,9\c\9c30033a2fdca24d44a7419b825c0ac80de4c3a9
 e
