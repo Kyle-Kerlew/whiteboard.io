@@ -3,7 +3,7 @@ import MarkerIcon from "../../../resources/svg/marker-icon.svg";
 import PresentationIcon from "../../../resources/svg/presentation-icon.svg";
 import {Menu, MenuItem, MenuList} from "@material-ui/core";
 
-function InputModesTool({handlePresentationClick, handleMarkerClick, anchorEl, width = "36px", height = "36px"}) {
+function InputModesTool({handlePresentationClick, handleMarkerClick, anchorEl}) {
     const [isPresentationMenuVisible, setIsPresentationMenuVisible] = useState(false);
     const [istMarkerMenuVisible, setMarkerMenuVisible] = useState(false);
     const [mode, setMode] = useState("Drawing");
@@ -16,9 +16,12 @@ function InputModesTool({handlePresentationClick, handleMarkerClick, anchorEl, w
                   onClose={() => setMarkerMenuVisible(false)}>
                 {['small', 'medium', 'large'].map(size => <MenuItem>{size}</MenuItem>)}
             </Menu>
-            <img ref={markerMenuAnchorRef} width={width} height={height} onClick={() => setMarkerMenuVisible(true)}
-                 src={MarkerIcon}
-                 alt={"Marker Options"}/>
+            <img
+                ref={markerMenuAnchorRef}
+                onClick={() => setMarkerMenuVisible(true)}
+                src={MarkerIcon}
+                alt={"Marker Options"}
+            />
         </div>
     )
 }
