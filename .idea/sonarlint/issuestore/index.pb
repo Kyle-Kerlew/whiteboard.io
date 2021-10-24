@@ -5,24 +5,12 @@ L
 client/src/styles/bubble.css,1\6\16498de7d0fe93885fb90c163690d524f5d0c1df
 M
 client/src/styles/sign-in.css,7\f\7f51a2f66534c78c1d1f3d34e100abab6083ca59
-M
-client/src/styles/toolbar.css,c\9\c9e4085ca6e2343b869ae81d24b1b160a2eb07ff
 X
 (client/src/resources/svg/circle-icon.svg,0\3\03878b24f08cda722e5c27da4082df1e3d66ed51
 `
 0client/src/resources/svg/new-whiteboard-icon.svg,e\2\e27c2afc15fe2c293e0713685a2d7e47edbe63a4
 S
 #client/src/components/svg/circle.js,d\c\dc46590cb693b6831bae18605a298998719f2680
-a
-1client/src/components/toolbar/tools/eraserTool.js,9\8\9807926ce90806987d859e4e59c4fbff6949d069
-a
-1client/src/components/toolbar/tools/zoomInTool.js,7\b\7b3a323a469c8957d45e3165a42d94629f79f257
-b
-2client/src/components/toolbar/tools/zoomOutTool.js,8\8\8886e92591052879ae12df94f396c79e4e6e7b61
-d
-4client/src/components/toolbar/tools/linkShareTool.js,a\a\aa60fcefe0cd5acb6a24e5cf0a252666d75c4097
-e
-5client/src/components/toolbar/tools/clearBoardTool.js,d\d\dd0856cf98e9e95319004f84770c2baa7527f26f
 R
 "client/src/configuration/socket.js,6\5\65635667ab5423463cd2ab1f3c25b7118cb7e6cd
 H
@@ -143,8 +131,6 @@ L
 client/src/styles/switch.css,1\2\12c931baf532478b7835199263f76d88e0e3bf8f
 ^
 .client/src/components/shared/focusDialogBox.js,9\c\9c30033a2fdca24d44a7419b825c0ac80de4c3a9
-e
-5client/src/components/toolbar/tools/inputModesTool.js,8\0\8051f3366f883698b2d9a03c38a33b88a14eb20c
 ^
 .server/rest/controller/whiteboardController.js,4\c\4cd74eecca3c2a15c16ec0e5384816ff045000ef
 \
@@ -158,13 +144,27 @@ R
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 C
 client/package.json,a\d\ad8a30996233c30cdd545dbf5f18765b86e6bf64
-V
-&client/src/components/shared/button.js,0\0\00335156bed54645f18e526831d6c727a9d4541d
-L
-client/src/styles/button.css,b\2\b2769bb51924eb7cf0b5b07cdd22785478c6b327
-J
-client/src/styles/line.css,9\3\939776ddb0fe28956e4427e79afc0fdb4e03757c
 T
 $client/src/components/shared/line.js,e\e\ee8aa9664043d30dc88dfa26aac912f142c566c3
 M
 client/src/styles/globals.css,f\f\ff8ddbb54db96e1d52f56c972a4405ae93a0e76b
+H
+client/public/index.html,8\1\818a76598cddfc0ac5e6740251b5b4dc9ff67f2c
+R
+"client/src/styles/imageTextBox.css,9\6\96f1cff274de6b88b36d16d04ad1871497c37bcc
+\
+,client/src/components/shared/imageTextBox.js,e\9\e9a75ab325a935ad9adc8f23b1f205967ce9efcd
+X
+(client/src/resources/svg/eraser-icon.svg,d\d\dd75d51c27ab9399935a9e043f3198e41e33d42d
+Z
+*client/src/resources/svg/download-icon.svg,c\4\c4868eb6876ce2c7631403b60398da18a46cff39
+X
+(client/src/resources/svg/marker-icon.svg,6\9\69d83aec295d715995716e83346794136e4633bc
+^
+.client/src/resources/svg/presentation-icon.svg,d\7\d77e259f6783731c6d8b6072626a2ce50e75b69e
+Z
+*client/src/resources/svg/zoom-out-icon.svg,c\7\c7dd654f3eebd28a10abf7cbae4b73e39ea39222
+V
+&client/src/resources/svg/link-icon.svg,5\2\526b52820f140fe0613d0e05bae2d5db4a8c9503
+]
+-client/src/resources/svg/easy-to-use-icon.svg,c\3\c35ac6912de7ea3f29385dddfc04324554097774

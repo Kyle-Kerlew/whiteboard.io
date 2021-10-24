@@ -13,7 +13,7 @@ import copy from "copy-to-clipboard";
 import LinkIcon from "../../../resources/svg/link-icon.svg";
 import {useRouteMatch} from "react-router-dom";
 
-function ShareLinkBox({text, showSuccessToast, width = "36px", height = "36px"}) {
+function ShareLinkBox({text, showSuccessToast}) {
     const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;
     const baseurl = `${process.env.REACT_APP_BASE_URL}/`;
     const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -33,7 +33,7 @@ function ShareLinkBox({text, showSuccessToast, width = "36px", height = "36px"})
 
     return (
         <div>
-            <img width={width} height={height} onClick={showPopup} src={LinkIcon} alt="Get Share Link"/>
+            <img onClick={showPopup} src={LinkIcon} alt="Get Share Link"/>
             <Dialog open={isPopupVisible} onClose={hidePopup} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Share With Your Friends!</DialogTitle>
                 <DialogContent>
