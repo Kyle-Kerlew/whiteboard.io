@@ -1,11 +1,12 @@
 .button {
     border-radius: 100px;
     border: none;
-    font-size: 1.5rem;
-    width: 200px;
-    height: 65px;
+    min-height: 35px;
     color: #ECEDED;
-    font-weight: bold;
+}
+
+.grow {
+    flex: 1 1 50%;
 }
 
 .primary {

@@ -20,18 +20,26 @@ function Home() {
 
     return (
         <div className={'flex-container'}>
-            <h1 style={{fontSize: '72px', textAlign: 'center', verticalAlign: 'top', color: '#151719'}}>Whiteboard
-                IO</h1>
-            <div className={'text-button-container'}>
-                <p style={{fontSize: '18px', textAlign: 'center', color: '#8A969F'}}>
-                    Whiteboard IO is an open source tool for collaborative drawing in real time. It
-                    simplifies planning, instructing, and documenting.
-                </p>
-                <div className={'button-row'}>
-                    <Button onClick={createNewWhiteboard} variant="primary" size="lg">Get
-                        Started</Button>
-                    <Button onClick={() => window.open("https://github.com/Kyle-Kerlew/whiteboard.io")}
-                            variant="secondary" size="lg">View Github</Button>
+            <div style={{display: 'flex', alignItems: 'center', gap: '0 35px'}}>
+                <div style={{flexDirection: 'column', flex: '1 1 50%'}}>
+                    <h6>Whiteboard IO</h6>
+                    <div className={'text-button-container'}>
+                        <p style={{fontSize: '16px', textAlign: 'left', color: '#8A969F'}}>
+                            Whiteboard IO is an open source tool for collaborative drawing in real time. It
+                            simplifies planning, instructing, and documenting.
+                        </p>
+                        <div className={'button-row'}>
+                            <Button grow onClick={createNewWhiteboard}>Get
+                                Started</Button>
+                            <Button grow onClick={() => window.open("https://github.com/Kyle-Kerlew/whiteboard.io")}
+                                    variant="secondary">View Github</Button>
+                        </div>
+                    </div>
+                </div>
+                <div style={{flex: '1 1 50%'}}>
+                    <img style={{maxWidth: '100%', minWidth: '200px', minHeight: '285px'}}
+                         src={'../../demo/Rectangle.png'}
+                         alt={"Image of app being used"}/>
                 </div>
             </div>
             <Line/>
@@ -109,23 +117,28 @@ function Home() {
                             class!</p>
                     </div>
                     <div style={{flex: '1 1 50%'}}>
-                        <img style={{maxWidth: '100%'}} src={'../../demo/Rectangle.png'}
+                        <img style={{maxWidth: '100%', minWidth: '285px', minHeight: '285px'}}
+                             src={'../../demo/Rectangle.png'}
                              alt={"Image of app being used"}/>
                     </div>
                 </div>
                 <div
                     style={{display: 'flex', alignItems: 'center', gap: '0 35px'}}>
                     <div style={{flex: '1 1 50%'}}>
-                        <img style={{maxWidth: '100%'}} src={'../../demo/Rectangle.png'}
+                        <img style={{maxWidth: '100%', minWidth: '285px', minHeight: '285px'}}
+                             src={'../../demo/Rectangle.png'}
                              alt={"Image of app being used"}/>
                     </div>
-                    <div style={{flexDirection: 'column', flex: '1 1 50%'}}>
+                    <div style={{flexDirection: 'column', flex: '1 1 50%', textAlign: 'center'}}>
                         <h3>Visualize Workflows</h3>
-                        <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
-                            visualize and collaborate in your next
-                            Let Whiteboard help you visualize and collaborate in your next
-                            meeting, brainstorm session, or
-                            class!</p>
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                            <p style={{color: '#8A969F', textAlign: 'center', maxWidth: '350px'}}>Let Whiteboard help
+                                you
+                                visualize and collaborate in your next
+                                Let Whiteboard help you visualize and collaborate in your next
+                                meeting, brainstorm session, or
+                                class!</p>
+                        </div>
                     </div>
                 </div>
             </div>
