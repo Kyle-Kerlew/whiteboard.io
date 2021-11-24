@@ -48,7 +48,7 @@ function Home() {
                 fontSize: 56,
                 textAlign: 'center',
                 verticalAlign: 'top',
-                color: '#151719'
+                color: '#151719',
             }}>
                 Build Up the Big Picture
             </h1>
@@ -62,26 +62,26 @@ function Home() {
             <div className={'features'}>
                 <div className={'column'}>
                     <img alt={"Easy to use"} width={50} height={50} src={EasyToUseIcon}/>
-                    <h2>
+                    <h4>
                         Easy to Use
-                    </h2>
+                    </h4>
                     <p>Let Whiteboard help you visualize and collaborate in your next meeting, brainstorm session, or
                         class!</p>
                 </div>
 
                 <div className={'column'}>
                     <img alt={"Easy to use"} width={50} height={50} src={EasyToUseIcon}/>
-                    <h2>
+                    <h4>
                         Collaborate
-                    </h2>
+                    </h4>
                     <p style={{flexGrow: 1, alignSelf: 'flex-end'}}>Whiteboard offers real-time updates so you can
                         collaborate quickly and effectively.</p>
                 </div>
                 <div className={'column'}>
                     <img alt={"Easy to use"} width={50} height={50} src={EasyToUseIcon}/>
-                    <h2>
+                    <h4>
                         Keep Organized
-                    </h2>
+                    </h4>
                     <p>Whiteboard IO will keep track of all the projects you are a part of so you don’t have to!</p>
                 </div>
             </div>
@@ -109,7 +109,7 @@ function Home() {
                 <div
                     style={{display: 'flex', alignItems: 'center', gap: '0 35px'}}>
                     <div style={{flexDirection: 'column', flex: '1 1 50%'}}>
-                        <h3>Visualize Workflows</h3>
+                        <h4>Visualize Workflows</h4>
                         <p style={{color: '#8A969F', textAlign: 'left', maxWidth: '350px'}}>Let Whiteboard help you
                             visualize and collaborate in your next
                             Let Whiteboard help you visualize and collaborate in your next
@@ -130,7 +130,7 @@ function Home() {
                              alt={"Image of app being used"}/>
                     </div>
                     <div style={{flexDirection: 'column', flex: '1 1 50%', textAlign: 'center'}}>
-                        <h3>Visualize Workflows</h3>
+                        <h4>Visualize Workflows</h4>
                         <div style={{display: 'flex', justifyContent: 'center'}}>
                             <p style={{color: '#8A969F', textAlign: 'center', maxWidth: '350px'}}>Let Whiteboard help
                                 you

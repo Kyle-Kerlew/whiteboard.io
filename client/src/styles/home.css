@@ -10,7 +10,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 330px;
+    max-width: 500px;
+    padding: 15px 0 25px 0;
 }
 
 .column {
@@ -25,10 +26,22 @@
         display: flex;
         min-width: 762px;
         max-width: 1200px;
+
     }
 
     .column {
         width: 450px;
+    }
+
+    .column > h4 {
+        padding: 15px 0;
+        margin: unset;
+
+    }
+
+    .column > p {
+        margin: unset;
+
     }
 }
 
@@ -39,12 +52,29 @@
         gap: 40px 0;
         max-width: 300px;
     }
+
+    .column > h4 {
+        padding: 15px 0;
+    }
+
+    .column > h4, p {
+        margin: unset;
+    }
 }
 
 .button-row {
     width: 100%;
     display: flex;
-    gap: 0 25px;
+    gap: 0 10%;
+}
+
+.button-row > button {
+    min-width: 120px;
+    max-width: 200px;
+}
+
+.button-row > .secondary {
+    margin-left: auto;
 }
 
 .content {
