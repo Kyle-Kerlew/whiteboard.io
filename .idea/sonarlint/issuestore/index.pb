@@ -5,12 +5,8 @@ L
 client/src/styles/bubble.css,1\6\16498de7d0fe93885fb90c163690d524f5d0c1df
 M
 client/src/styles/sign-in.css,7\f\7f51a2f66534c78c1d1f3d34e100abab6083ca59
-X
-(client/src/resources/svg/circle-icon.svg,0\3\03878b24f08cda722e5c27da4082df1e3d66ed51
 `
 0client/src/resources/svg/new-whiteboard-icon.svg,e\2\e27c2afc15fe2c293e0713685a2d7e47edbe63a4
-S
-#client/src/components/svg/circle.js,d\c\dc46590cb693b6831bae18605a298998719f2680
 R
 "client/src/configuration/socket.js,6\5\65635667ab5423463cd2ab1f3c25b7118cb7e6cd
 H
@@ -168,3 +164,31 @@ V
 &client/src/resources/svg/link-icon.svg,5\2\526b52820f140fe0613d0e05bae2d5db4a8c9503
 ]
 -client/src/resources/svg/easy-to-use-icon.svg,c\3\c35ac6912de7ea3f29385dddfc04324554097774
+L
+client/src/styles/button.css,b\2\b2769bb51924eb7cf0b5b07cdd22785478c6b327
+V
+&client/src/components/shared/button.js,0\0\00335156bed54645f18e526831d6c727a9d4541d
+W
+'client/src/resources/svg/cross-icon.svg,f\f\ff0baf2bd6bb5006331da6f60e092dd6a0541b1d
+Y
+)client/src/resources/svg/zoom-in-icon.svg,f\3\f33b31b1f9c26c1a66a8b1bf09c13388369a8289
+e
+5client/src/components/toolbar/tools/clearBoardTool.js,d\d\dd0856cf98e9e95319004f84770c2baa7527f26f
+h
+8client/src/components/toolbar/tools/downloadImageTool.js,5\8\581351fa36759af38a657cd52b35fd8ab2026a3e
+a
+1client/src/components/toolbar/tools/eraserTool.js,9\8\9807926ce90806987d859e4e59c4fbff6949d069
+e
+5client/src/components/toolbar/tools/inputModesTool.js,8\0\8051f3366f883698b2d9a03c38a33b88a14eb20c
+d
+4client/src/components/toolbar/tools/linkShareTool.js,a\a\aa60fcefe0cd5acb6a24e5cf0a252666d75c4097
+a
+1client/src/components/toolbar/tools/zoomInTool.js,7\b\7b3a323a469c8957d45e3165a42d94629f79f257
+b
+2client/src/components/toolbar/tools/zoomOutTool.js,8\8\8886e92591052879ae12df94f396c79e4e6e7b61
+J
+client/src/styles/line.css,9\3\939776ddb0fe28956e4427e79afc0fdb4e03757c
+W
+'client/src/components/drawing/canvas.js,2\d\2dfdf3f9247dbc1908f5eb6bfed676915fac7919
+S
+#client/src/components/svg/circle.js,d\c\dc46590cb693b6831bae18605a298998719f2680
