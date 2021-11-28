@@ -14,8 +14,8 @@ function BrowsingNavbar() {
                     <Nav.Link href="/my-boards">My Boards</Nav.Link>
                     :
                     <React.Fragment>
-                        <Nav.Link href="/sign-in">Sign In</Nav.Link>
-                        <Nav.Link href="/create-account">Create Account</Nav.Link>
+                            <Nav.Link href="/sign-in">Sign In</Nav.Link>
+                            <Nav.Link href="/create-account">Create Account</Nav.Link>
                     </React.Fragment>
                 }
 
@@ -23,7 +23,7 @@ function BrowsingNavbar() {
             }
         </React.Fragment>
     )
-    return useNavbar(BrowserNavComponent);
+    return useNavbar(BrowserNavComponent, false);
 
 }
 

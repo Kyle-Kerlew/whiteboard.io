@@ -8,6 +8,7 @@ import BoardList from "../drawing/boardList";
 import NavBar from "../navigation/navBar";
 import {Authentication as getAuthentication} from "../shared/authentication";
 import {useDispatch} from "react-redux";
+import Footer from "../shared/footer";
 
 function Router() {
     const dispatch = useDispatch();

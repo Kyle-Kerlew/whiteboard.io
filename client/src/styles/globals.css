@@ -26,3 +26,12 @@ html, body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.navbar {
+    display: flex;
+    padding: 0.5rem 50px !important;
+}
+
+.navbar > .nav-link {
+    align-self: flex-end !important;
+}

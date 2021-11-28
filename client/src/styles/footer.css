@@ -1,0 +1,32 @@
+.footer {
+    display: flex;
+    flex-basis: 50%;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.navigation {
+    display: flex;
+    width: 100%;
+    list-style: none;
+    justify-content: center;
+}
+
+.navigation > ul {
+    list-style: none;
+    margin: unset;
+    padding: unset;
+    display: flex;
+    flex-direction: column;
+    gap: 10px 0;
+    text-align: right;
+
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
