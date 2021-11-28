@@ -13,8 +13,6 @@ H
 client/src/setupTests.js,f\c\fc416b10d67abdccb473df59c1e7b983edf7079c
 M
 client/src/reportWebVitals.js,3\0\307646c86e17847863da2accf732e0e327b71be7
-Z
-*client/build/static/js/2.700439ba.chunk.js,3\d\3d50e14fc7c25cb13e9a1e10dfb9a16537b787c3
 ]
 -client/build/static/js/main.37e3a4c9.chunk.js,c\a\ca8df75422ce21ef44f5cdc622fb48e8b6a5dd30
 ^
@@ -101,8 +99,6 @@ Q
 !client/src/styles/activeUsers.css,5\1\51464e64234c0839e4ec2728703d0cd8a09d6e4d
 X
 (client/src/reducers/whiteboardReducer.js,b\1\b158e7502f06c2392e53392148ae5fa321e3ab6a
-Z
-*client/src/components/navigation/navBar.js,9\7\972a87e080a173b1dbe1485ccda0a3df7584baed
 `
 0client/src/handlers/rest/whiteboardController.js,1\b\1bfe6035416975ae15e1a627a4375ca399cf88ae
 =
@@ -111,16 +107,12 @@ N
 server/socket/socketHandler.js,3\f\3f9d4b4126eff8b54a9fa78f8690200d0d019fe9
 T
 $server/service/board/boardService.js,5\1\515b4393951d5ccc5e2e131179c91df1f7fcd489
-b
-2client/src/components/navigation/browsingNavbar.js,b\d\bd8e9401e7532933977c8b4dac0f38ad01d4f961
 _
 /client/src/components/navigation/activeUsers.js,d\5\d591c06270502ad69220798c1252dd430114b84d
 O
 client/src/styles/boardList.css,6\a\6a63ebc74f5503c0a59b0d30bf9c88db4c258806
 Z
 *client/src/components/drawing/boardList.js,6\a\6a55fd18ef0ab5e59dee1894cfb5ac451dae4da8
-C
-client/src/index.js,7\6\76cbb38a5cef42611c7af13985f39248682f4aa1
 V
 &client/src/components/shared/switch.js,a\c\ac5687d7917b1dd51cad77e4020d8a6be88bbaad
 L
@@ -142,8 +134,6 @@ C
 client/package.json,a\d\ad8a30996233c30cdd545dbf5f18765b86e6bf64
 T
 $client/src/components/shared/line.js,e\e\ee8aa9664043d30dc88dfa26aac912f142c566c3
-M
-client/src/styles/globals.css,f\f\ff8ddbb54db96e1d52f56c972a4405ae93a0e76b
 H
 client/public/index.html,8\1\818a76598cddfc0ac5e6740251b5b4dc9ff67f2c
 R
@@ -188,7 +178,7 @@ b
 2client/src/components/toolbar/tools/zoomOutTool.js,8\8\8886e92591052879ae12df94f396c79e4e6e7b61
 J
 client/src/styles/line.css,9\3\939776ddb0fe28956e4427e79afc0fdb4e03757c
-W
-'client/src/components/drawing/canvas.js,2\d\2dfdf3f9247dbc1908f5eb6bfed676915fac7919
-S
-#client/src/components/svg/circle.js,d\c\dc46590cb693b6831bae18605a298998719f2680
+M
+client/src/styles/toolbar.css,c\9\c9e4085ca6e2343b869ae81d24b1b160a2eb07ff
+X
+(client/src/components/toolbar/toolbar.js,3\6\36b81b7235a097e7485d6bcc39bb3636912dfd3e

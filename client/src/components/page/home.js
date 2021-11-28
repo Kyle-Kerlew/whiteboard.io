@@ -5,6 +5,7 @@ import {WhiteboardController} from '../../handlers/rest/whiteboardController';
 import Button from "../shared/button";
 import Line from "../shared/line";
 import EasyToUseIcon from '../../resources/svg/easy-to-use-icon.svg';
+import Footer from "../shared/footer";
 
 function Home() {
     const history = useHistory();
@@ -142,6 +143,8 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <Line/>
+            <Footer/>
         </div>
 
     )
