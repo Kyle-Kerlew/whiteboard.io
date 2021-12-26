@@ -4,8 +4,25 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'eslint-config-canonical',
+    'plugin:react/recommended',
+    'canonical',
   ],
+  overrides: [
+    {
+      extends: [
+        'canonical/react',
+        'canonical/jsx-a11y',
+      ],
+      files: '*.js',
+    },
+    {
+      extends: [
+        'canonical/json',
+      ],
+      files: '*.json',
+    },
+  ],
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -16,5 +33,6 @@ module.exports = {
   plugins: [
     'react',
   ],
+  root: true,
   rules: {},
 };
