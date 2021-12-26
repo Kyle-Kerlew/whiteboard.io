@@ -10,11 +10,28 @@ function InputModesTool({handlePresentationClick, handleMarkerClick, anchorEl}) 
     const presentationModeMenuAnchorRef = useRef();
     const markerMenuAnchorRef = useRef();
 
+    function getSizeInt(sizeString) {
+        switch (sizeString) {
+            case 'Small':
+                return 5;
+            case 'Medium':
+                return 30;
+            case 'Large':
+                return 55;
+            default:
+                return 30;
+        }
+    }
+
     return (
         <div>
             <Menu anchorEl={document.getElementsByClassName('toolbar')[0]} open={istMarkerMenuVisible}
                   onClose={() => setMarkerMenuVisible(false)}>
-                {['small', 'medium', 'large'].map(size => <MenuItem>{size}</MenuItem>)}
+                {['Small', 'Medium', 'Large'].map(size => <MenuItem
+                    onClick={e => {
+                        handleMarkerClick(getSizeInt(size));
+                        setMarkerMenuVisible(false);
+                    }}>{size}</MenuItem>)}
             </Menu>
             <img
                 ref={markerMenuAnchorRef}
