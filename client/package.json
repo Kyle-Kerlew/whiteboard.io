@@ -11,11 +11,10 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "babel": "^6.23.0",
-    "babel-eslint": "^10.1.0",
     "bootstrap": "^4.6.0",
     "connected-react-router": "^6.9.1",
     "copy-to-clipboard": "^3.3.1",
-    "eslint": "^8.5.0",
+    "eslint-config-canonical": "^33.0.0",
     "formik": "^2.2.9",
     "gulp": "^4.0.2",
     "js-cookie": "^2.2.1",
@@ -61,7 +60,6 @@
   "devDependencies": {
     "@babel/preset-react": "^7.16.5",
     "@material-ui/icons": "^4.11.2",
-    "babel-cli": "^6.26.0",
-    "eslint-config-canonical": "^33.0.0"
+    "babel-cli": "^6.26.0"
   }
 }
