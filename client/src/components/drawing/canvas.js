@@ -22,15 +22,17 @@ import {UserController} from "../../handlers/rest/userController";
 import {addCollaborator, editTitle, removeCollaborator} from "../../reducers/whiteboardReducer";
 import {loginUser} from "../../reducers/userReducer";
 import * as Yup from "yup";
+import ShapeTool from "../toolbar/tools/shapeTool";
 
 function Canvas() {
-    const [paintSize, setPaintSize] = useState(25);
+    const [paintSize, setPaintSize] = useState(30);
     const [brushStartPos, setBrushStartPos] = useState();
     const [mouseDown, setMouseDown] = useState(false);
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [drawingData, setDrawingData] = useState([]);
     const [markerColor, setMarkerColor] = useState('black');
     const {canvasId: whiteboardId} = useRouteMatch('/boards/:canvasId').params;
+    const [shape, setShape] = useState(null);
     const [mode, setMode] = useState();
     const user = useSelector(state => state.user.value);
     const canvasRef = useRef();
@@ -329,17 +331,15 @@ function Canvas() {
             </React.Fragment>
             }
             <Toolbar position='bottom' mouseDown={mouseDown}>
-                <InputModesTool handleMarkerClick={(e) => {
-                    //    setPaintSize(e.target.value);
-
-                }}
+                <InputModesTool handleMarkerClick={value => setPaintSize(value)}
                                 handlePresentationClick={() => setMode(prev => prev === "Presentation" ? "Drawing" : "Presentation")}/>
-                <Divider orientation="vertical" flexItem/>
+                <ShapeTool handleChange={option => setShape(option)}/>
                 <EraserTool setIsErasing={() => setMarkerColor('white')}/>
+                <Divider orientation="vertical" flexItem/>
                 <ZoomInTool zoomIn={scaleUp}/>
                 <ZoomOutTool zoomOut={scaleDown}/>
-                <ClearBoardTool clearBoard={clearBoard}/>
                 <Divider orientation="vertical" flexItem/>
+                <ClearBoardTool clearBoard={clearBoard}/>
                 <ShareLinkBox showSuccessToast={showSuccessToast}
                               text={"Copy this link to share and collaborate!"}/>
                 <DownloadImageTool getDownloadData={() => canvasRef.current.toDataURL("image/png")}/>
