@@ -1,26 +1,55 @@
-import {Menu, MenuItem,} from '@mui/material';
-import React, {useRef, useState,} from 'react';
+import {
+  Button,
+  ClickAwayListener,
+  Grow,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+  Stack,
+} from '@mui/material';
+import React, {useState,} from 'react';
 import MarkerIcon from '../../../resources/svg/marker-icon.svg';
 
 const InputModesTool = ({
-  handlePresentationClick,
   handleMarkerClick,
-  anchorEl,
 }) => {
   const [
-    isPresentationMenuVisible,
-    setIsPresentationMenuVisible,
+    open,
+    setOpen,
   ] = useState(false);
   const [
-    istMarkerMenuVisible,
-    setMarkerMenuVisible,
-  ] = useState(false);
-  const [
-    mode,
-    setMode,
-  ] = useState('Drawing');
-  const presentationModeMenuAnchorRef = useRef();
-  const markerMenuAnchorRef = useRef();
+    anchorElement,
+    setAnchorElement,
+  ] = useState(null);
+
+  function handleListKeyDown (event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    } else if (event.key === 'Escape') {
+      setOpen(false);
+    }
+  }
+
+  const handleAwayClick = () => {
+    setOpen(false);
+  };
+
+  const handleClick = (event) => {
+    setOpen((previouslyOpen) => {
+      if (event) {
+        setAnchorElement(event.currentTarget);
+      }
+
+      return !previouslyOpen;
+    });
+  };
+
+  function handleOptionSelect (shape) {
+    handleMarkerClick(shape);
+    setOpen(false);
+  }
 
   function getSizeInt (sizeString) {
     switch (sizeString) {
@@ -35,30 +64,76 @@ const InputModesTool = ({
     }
   }
 
+  const sizes = [
+    'Small',
+    'Medium',
+    'Large',
+  ];
+
   return (
-    <div>
-      <Menu
-        anchorEl={document.querySelectorAll('.toolbar')[0]} onClose={() => setMarkerMenuVisible(false)}
-        open={istMarkerMenuVisible}
-      >
-        {[
-          'Small',
-          'Medium',
-          'Large',
-        ].map((size) => <MenuItem key={size}
-          onClick={() => {
-            handleMarkerClick(getSizeInt(size));
-            setMarkerMenuVisible(false);
-          }}
-        >{size}</MenuItem>)}
-      </Menu>
-      <img
-        alt='Marker Options'
-        onClick={() => setMarkerMenuVisible(true)}
-        ref={markerMenuAnchorRef}
-        src={MarkerIcon}
-      />
-    </div>
+    <Stack direction='row' spacing={2}>
+      <div>
+        <Button
+          aria-controls={open ?
+            'composition-menu' :
+            undefined}
+          aria-expanded={open ?
+            'true' :
+            undefined}
+          aria-haspopup='true'
+          id='composition-button'
+          onClick={handleClick}
+          ref={anchorElement}
+        >
+          <img
+            alt='Marker Options'
+            src={MarkerIcon}
+          />
+        </Button>
+        <Popper
+          anchorEl={anchorElement}
+          disablePortal
+          open={open}
+          placement='bottom-start'
+          transition
+        >
+          {({
+            TransitionProps,
+            placement,
+          }) => <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === 'bottom-start' ?
+                  'left top' :
+                  'left bottom',
+            }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={handleAwayClick}>
+                <MenuList
+                  aria-labelledby='composition-button'
+                  autoFocusItem={open}
+                  id='composition-menu'
+                  onKeyDown={handleListKeyDown}
+                >
+                  {sizes.map((size) => {
+                    return (
+                      <MenuItem
+                        key={size}
+                        onClick={() => handleOptionSelect(getSizeInt(size))}
+                      >
+                        {size}
+                      </MenuItem>
+                    );
+                  })}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>}
+        </Popper>
+      </div>
+    </Stack>
   );
 };
 
