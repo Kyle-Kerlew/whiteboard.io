@@ -314,7 +314,6 @@ const Canvas = () => {
     }
 
     if (_.isArray(data)) {
-      const context = canvasRef.current.getContext('2d');
       for (const item of data) {
         drawPoint(item.x, item.y, item.color, item.size, item.moveTo);
       }
@@ -331,6 +330,7 @@ const Canvas = () => {
     context.canvas.width *= scale.current;
     context.canvas.height *= scale.current;
     draw(applyScaleToData(drawingData));
+    context.beginPath()
   }
 
   async function handleGuestSubmit (values) {
@@ -342,6 +342,10 @@ const Canvas = () => {
     return data.map((item) => {
       item.x *= scale.current;
       item.y *= scale.current;
+      if (item.moveTo) {
+        item.moveTo.x *= scale.current;
+        item.moveTo.y *= scale.current;
+      }
       return item;
     });
   }
@@ -459,7 +463,6 @@ const Canvas = () => {
               </FocusDialogBox>}
             </Formik>}
         </>}
-      }
       <Toolbar mouseDown={mouseDown} position='bottom'>
         <InputModesTool
           handleMarkerClick={(value) => setPaintSize(value)}
