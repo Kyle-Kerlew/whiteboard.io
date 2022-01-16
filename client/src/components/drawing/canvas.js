@@ -210,10 +210,11 @@ const Canvas = () => {
       if (firstStroke) {
         newDrawData.moveTo = {
           x: mouseX,
-          y: mouseY
+          y: mouseY,
         };
         setFirstStroke(false);
       }
+
       switch (shape) {
       case Shapes.LINE:
         if (lineStartPoint.current) {
@@ -263,22 +264,13 @@ const Canvas = () => {
 
     switch (shape) {
     case Shapes.LINE:
+      newDrawData.moveTo = {
+        x: lineStartPoint.current.x,
+        y: lineStartPoint.current.y,
+      };
+
       (async () => {
-        await setDrawingData((previousState) => {
-          return previousState.concat([
-            {
-              color: markerColor,
-              moveTo: {
-                x: lineStartPoint.current.x,
-                y: lineStartPoint.current.y,
-              },
-              size: paintSize,
-              whiteboardId,
-              x: mouseX,
-              y: mouseY,
-            },
-          ]);
-        });
+        await setDrawingData((previousState) => previousState.concat(newDrawData));
         lineStartPoint.current = null;
         setShape(null);
         context.beginPath();
@@ -292,7 +284,7 @@ const Canvas = () => {
     }
 
     setMouseDown(false);
-    // Socket.emit('drawing-data', newDrawData);
+    Socket.emit('drawing-data', newDrawData);
   }
 
   function scaleUp () {
