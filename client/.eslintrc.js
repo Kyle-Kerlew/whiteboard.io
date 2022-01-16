@@ -4,7 +4,6 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'plugin:react/recommended',
     'canonical',
   ],
   overrides: [
@@ -34,5 +33,9 @@ module.exports = {
     'react',
   ],
   root: true,
-  rules: {},
+  rules: {
+    'arrow-body-style': 'off',
+    'func-style': 'off',
+    'unicorn/numeric-separators-style': 'off',
+  },
 };

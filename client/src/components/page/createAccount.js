@@ -1,9 +1,9 @@
+import {Button, TextField} from '@mui/material';
+import {ErrorMessage, Formik} from 'formik';
 import React from 'react';
-import {Button, TextField} from "@material-ui/core";
-import {UserController} from "../../handlers/rest/userController";
-import {ErrorMessage, Formik} from "formik";
+import {useHistory} from 'react-router-dom';
 import * as Yup from 'yup';
-import {useHistory} from "react-router-dom";
+import {UserController} from '../../handlers/rest/userController';
 
 function CreateAccount() {
     const history = useHistory();
