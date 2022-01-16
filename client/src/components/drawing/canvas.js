@@ -346,6 +346,7 @@ const Canvas = () => {
         item.moveTo.x *= scale.current;
         item.moveTo.y *= scale.current;
       }
+
       return item;
     });
   }
@@ -466,9 +467,6 @@ const Canvas = () => {
       <Toolbar mouseDown={mouseDown} position='bottom'>
         <InputModesTool
           handleMarkerClick={(value) => setPaintSize(value)}
-          handlePresentationClick={() => setMode((previous) => (previous === 'Presentation' ?
-            'Drawing' :
-            'Presentation'))}
         />
         <ShapeTool handleChange={(option) => setShape(option)} />
         <EraserTool setIsErasing={() => setMarkerColor('white')} />
