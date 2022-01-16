@@ -63,6 +63,11 @@ const Canvas = () => {
     mode,
     setMode,
   ] = useState();
+
+  const [
+    firstStroke,
+    setFirstStroke,
+  ] = useState(false);
   const user = useSelector((state) => state.user.value);
   const canvasRef = useRef();
   const scale = useRef(1);
@@ -184,19 +189,9 @@ const Canvas = () => {
     const mouseX = (getMousePositionX(e) * scale.current - context.canvas.offsetLeft + window.scrollX) / scale.current;
     const mouseY = (getMousePositionY(e) * scale.current - context.canvas.offsetTop - 56 + window.scrollY) / scale.current;
     setMouseDown(true);
+    setFirstStroke(true);
     context.beginPath();
     context.moveTo(mouseX, mouseY);
-    setDrawingData((previousState) => previousState.concat({
-      color: markerColor,
-      moveTo: {
-        mouseX,
-        mouseY,
-      },
-      size: paintSize,
-      whiteboardId,
-      x: mouseX,
-      y: mouseY,
-    }));
   }
 
   function handleDragTouch (e) {
@@ -212,6 +207,13 @@ const Canvas = () => {
         y: mouseY,
       };
 
+      if (firstStroke) {
+        newDrawData.moveTo = {
+          x: mouseX,
+          y: mouseY
+        };
+        setFirstStroke(false);
+      }
       switch (shape) {
       case Shapes.LINE:
         if (lineStartPoint.current) {
