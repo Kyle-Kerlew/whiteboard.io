@@ -1,5 +1,3 @@
-import React, {useState} from 'react';
-import '../../../styles/shareLinkBox.css';
 import {
     Dialog,
     DialogActions,
@@ -7,11 +5,13 @@ import {
     DialogContentText,
     DialogTitle,
     TextField
-} from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import copy from "copy-to-clipboard";
-import LinkIcon from "../../../resources/svg/link-icon.svg";
-import {useRouteMatch} from "react-router-dom";
+} from '@mui/material';
+import Button from '@mui/material/Button';
+import copy from 'copy-to-clipboard';
+import React, {useState} from 'react';
+import {useRouteMatch} from 'react-router-dom';
+import LinkIcon from '../../../resources/svg/link-icon.svg';
+import '../../../styles/shareLinkBox.css';
 
 function ShareLinkBox({text, showSuccessToast}) {
     const {canvasId: whiteboardId} = useRouteMatch('/:canvasId').params;

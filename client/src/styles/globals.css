@@ -20,7 +20,7 @@
 }
 
 
-html, body {
+html {
     overflow-x: hidden;
     margin-top: 56px; /* margin to account for fixed navigation bar*/
     -webkit-font-smoothing: antialiased;
