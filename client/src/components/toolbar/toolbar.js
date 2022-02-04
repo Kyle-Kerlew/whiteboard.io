@@ -1,32 +1,49 @@
-import React, {useRef} from 'react';
+import React, {
+  useRef,
+} from 'react';
 import '../../styles/toolbar.css';
 
-const Toolbar = ({mouseDown, children, position = 'bottom'}) => {
-    const toolbarRef = useRef();
+const Toolbar = ({
+  isMouseDown,
+  children,
+  position = 'bottom',
+}) => {
+  const toolbarRef = useRef();
 
-    function getStyle() {
-        if (mouseDown) {
-            setTimeout(() => {
-                if (toolbarRef.current.style.opacity === "0") {
-                    toolbarRef.current.style.display = "none";
-                }
-            }, 250);
-            return {opacity: 0, animation: 'fadeOutComplete .5s forwards'};
+  function getStyle () {
+    if (isMouseDown) {
+      setTimeout(() => {
+        if (toolbarRef.current.style.opacity === '0') {
+          toolbarRef.current.style.display = 'none';
         }
-        if (toolbarRef.current) {
-            toolbarRef.current.style.display = "flex";
-            return {opacity: 1, animation: 'fadeInFromComplete .5s forwards'};
-        }
+      }, 250);
+      return {
+        animation: 'fadeOutComplete .5s forwards',
+        opacity: 0,
+      };
     }
 
-    return (
-        <div ref={toolbarRef}
-             style={getStyle()}
-             className={['toolbar', position].join(' ')}
-        >
-            {children}
-        </div>
-    )
-}
+    if (toolbarRef.current) {
+      toolbarRef.current.style.display = 'flex';
+      return {
+        animation: 'fadeInFromComplete .5s forwards',
+        opacity: 1,
+      };
+    }
+  }
+
+  return (
+    <div
+      className={[
+        'toolbar',
+        position,
+      ].join(' ')}
+      ref={toolbarRef}
+      style={getStyle()}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default Toolbar;

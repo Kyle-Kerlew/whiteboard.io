@@ -37,5 +37,6 @@ module.exports = {
     'arrow-body-style': 'off',
     'func-style': 'off',
     'unicorn/numeric-separators-style': 'off',
+    'canonical/id-match': 'off',
   },
 };
