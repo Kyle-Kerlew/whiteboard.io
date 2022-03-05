@@ -113,10 +113,10 @@ export class DrawingEngine {
     this._scale = scale;
   }
 
-  clearBoard (whiteboardId, emitMessage) {
+  clearBoard (emitMessage) {
     const context = this.canvasContext;
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    emitMessage && Socket.emit('empty-page', whiteboardId);
+    emitMessage && Socket.emit('empty-page', this.whiteboardId);
   }
 
   handleResize (drawingData) {
@@ -172,7 +172,6 @@ export class DrawingEngine {
       const context = this.canvasContext;
       const mouseX = (this.getMousePositionX(event) * this.scale - context.canvas.offsetLeft + window.scrollX) / this.scale;
       const mouseY = (this.getMousePositionY(event) * this.scale - context.canvas.offsetTop - 56 + window.scrollY) / this.scale;
-      console.log('Current marker color', this.markerColor);
       const newDrawData = {
         color: this.markerColor,
         size: this.paintSize,
@@ -243,12 +242,10 @@ export class DrawingEngine {
         y: this.lineStartPoint.y,
       };
 
-      (async () => {
-        await this.drawingData.concat(newDrawData);
-        this.lineStartPoint = null;
-        this.shape = null;
-        context.beginPath();
-      })();
+      this.drawingData = this.drawingData.concat(newDrawData);
+      this.lineStartPoint = null;
+      this.shape = null;
+      context.beginPath();
 
       break;
     default:

@@ -1,16 +1,18 @@
 import React from 'react';
-import CrossIcon from "../../../resources/svg/cross-icon.svg";
+import CrossIcon from '../../../resources/svg/cross-icon.svg';
 
-function ClearBoardTool({clearBoard}) {
-    function handleOnClick() {
-        clearBoard(true);
-    }
+const ClearBoardTool = ({
+  clearBoard,
+}) => {
+  function handleOnClick () {
+    clearBoard(true);
+  }
 
-    return (
-        <div>
-            <img onClick={handleOnClick} src={CrossIcon} alt={"Clear Board"}/>
-        </div>
-    )
-}
+  return (
+    <div>
+      <img alt='Clear Board' onClick={handleOnClick} src={CrossIcon} />
+    </div>
+  );
+};
 
 export default ClearBoardTool;

@@ -247,10 +247,10 @@ const Canvas = () => {
             </Formik>}
         </>}
       <Toolbar isMouseDown={canvasMouseDown} position='bottom'>
+        <ShapeTool handleChange={(option) => drawingEngine.current.shape = option} />
         <InputModesTool
           handleMarkerClick={(value) => drawingEngine.current.paintSize = value}
         />
-        <ShapeTool handleChange={(option) => drawingEngine.current.shape = option} />
         <EraserTool setIsErasing={() => drawingEngine.current.markerColor = 'white'} />
         <Divider flexItem orientation='vertical' />
         <ZoomInTool zoomIn={drawingEngine.current.scaleUp} />
