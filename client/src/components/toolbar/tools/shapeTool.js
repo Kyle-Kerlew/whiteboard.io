@@ -8,7 +8,9 @@ import {
   Popper,
   Stack,
 } from '@mui/material';
-import React, {useState,} from 'react';
+import React, {
+  useState,
+} from 'react';
 import Shapes from '../../../types/Shapes';
 
 const ShapeTool = ({
@@ -34,7 +36,7 @@ const ShapeTool = ({
 
   const handleAwayClick = () => {
     setOpen(false);
-  }
+  };
 
   const handleClick = (event) => {
     setOpen((previouslyOpen) => {
@@ -52,8 +54,12 @@ const ShapeTool = ({
   }
 
   return (
-    <Stack direction="row" spacing={2}>
-      <div>
+    <Stack direction='row' height='36px' spacing={2} width='36px'>
+      <div style={{
+        height: '36px',
+        width: '36px',
+      }}
+      >
         <Button
           aria-controls={open ?
             'composition-menu' :
@@ -61,10 +67,16 @@ const ShapeTool = ({
           aria-expanded={open ?
             'true' :
             undefined}
-          aria-haspopup="true"
-          id="composition-button"
+          aria-haspopup='true'
+          id='composition-button'
           onClick={handleClick}
           ref={anchorElement}
+          style={{
+            height: '36px',
+            minWidth: '36px',
+            padding: 'unset',
+            width: '36px',
+          }}
         >
           <div style={{
             border: '3px solid black',
@@ -78,7 +90,7 @@ const ShapeTool = ({
           anchorEl={anchorElement}
           disablePortal
           open={open}
-          placement="bottom-start"
+          placement='bottom-start'
           transition
         >
           {({
@@ -96,9 +108,9 @@ const ShapeTool = ({
             <Paper>
               <ClickAwayListener onClickAway={handleAwayClick}>
                 <MenuList
-                  aria-labelledby="composition-button"
+                  aria-labelledby='composition-button'
                   autoFocusItem={open}
-                  id="composition-menu"
+                  id='composition-menu'
                   onKeyDown={handleListKeyDown}
                 >
                   {Object.values(Shapes)
@@ -106,7 +118,8 @@ const ShapeTool = ({
                       return (
                         <MenuItem
                           key={shape}
-                          onClick={() => handleOptionSelect(shape)}>
+                          onClick={() => handleOptionSelect(shape)}
+                        >
                           {shape}
                         </MenuItem>
                       );
