@@ -8,7 +8,9 @@ import {
   Popper,
   Stack,
 } from '@mui/material';
-import React, {useState,} from 'react';
+import React, {
+  useState,
+} from 'react';
 import MarkerIcon from '../../../resources/svg/marker-icon.svg';
 
 const InputModesTool = ({
@@ -71,8 +73,12 @@ const InputModesTool = ({
   ];
 
   return (
-    <Stack direction='row' spacing={2}>
-      <div>
+    <Stack direction='row' height={32} pacing={2} width={32}>
+      <div style={{
+        height: '36px',
+        width: '36px',
+      }}
+      >
         <Button
           aria-controls={open ?
             'composition-menu' :
@@ -81,13 +87,22 @@ const InputModesTool = ({
             'true' :
             undefined}
           aria-haspopup='true'
+          fullWidth={false}
           id='composition-button'
           onClick={handleClick}
           ref={anchorElement}
+          style={{
+            height: '36px',
+            minWidth: '36px',
+            padding: 'unset',
+            width: '36px',
+          }}
         >
           <img
             alt='Marker Options'
+            height='36px'
             src={MarkerIcon}
+            width='36px'
           />
         </Button>
         <Popper
