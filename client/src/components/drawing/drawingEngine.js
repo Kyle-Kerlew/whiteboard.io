@@ -115,8 +115,9 @@ export class DrawingEngine {
 
   clearBoard (emitMessage) {
     const context = this.canvasContext;
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    this.drawingData = [];
     emitMessage && Socket.emit('empty-page', this.whiteboardId);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   }
 
   handleResize (drawingData) {
@@ -161,13 +162,12 @@ export class DrawingEngine {
     const context = this.canvasContext;
     const mouseX = (this.getMousePositionX(event) * this.scale - context.canvas.offsetLeft + window.scrollX) / this.scale;
     const mouseY = (this.getMousePositionY(event) * this.scale - context.canvas.offsetTop - 56 + window.scrollY) / this.scale;
-    this.isMouseDown = true;
     this.isFirstStroke = true;
     context.beginPath();
     context.moveTo(mouseX, mouseY);
   }
 
-  handleDragTouch (event) {
+  handleDragTouch (event, shape) {
     if (this.isMouseDown) {
       const context = this.canvasContext;
       const mouseX = (this.getMousePositionX(event) * this.scale - context.canvas.offsetLeft + window.scrollX) / this.scale;
@@ -188,7 +188,7 @@ export class DrawingEngine {
         this.isFirstStroke = false;
       }
 
-      switch (this.shape) {
+      switch (shape) {
       case Shapes.LINE:
         if (this.lineStartPoint) {
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -223,7 +223,7 @@ export class DrawingEngine {
     context.stroke();
   }
 
-  handleEndDrawing (event) {
+  handleEndDrawing (event, shape) {
     const context = this.canvasContext;
     const mouseX = (this.getMousePositionX(event) * this.scale - context.canvas.offsetLeft + window.scrollX) / this.scale;
     const mouseY = (this.getMousePositionY(event) * this.scale - context.canvas.offsetTop - 56 + window.scrollY) / this.scale;
@@ -235,7 +235,7 @@ export class DrawingEngine {
       y: mouseY,
     };
 
-    switch (this.shape) {
+    switch (shape) {
     case Shapes.LINE:
       newDrawData.moveTo = {
         x: this.lineStartPoint.x,

@@ -21,9 +21,6 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 import {
-  Socket,
-} from '../../configuration/socket';
-import {
   UserController,
 } from '../../handlers/rest/userController';
 import {
@@ -35,7 +32,6 @@ import {
 import {
   addCollaborator,
   editTitle,
-  removeCollaborator,
 } from '../../reducers/whiteboardReducer';
 import '../../styles/shareLinkBox.css';
 import SignInAsGuestSchema from '../schema/SignInAsGuest.yup';
@@ -54,6 +50,9 @@ import ZoomOutTool from '../toolbar/tools/zoomOutTool';
 import {
   DrawingEngine,
 } from './drawingEngine';
+import {
+  SocketEngine,
+} from './socketEngine';
 
 const Canvas = () => {
   const [
@@ -66,7 +65,13 @@ const Canvas = () => {
     setCanvasMouseDown,
   ] = useState(false);
 
+  const [
+    shape,
+    setShape,
+  ] = useState(undefined);
+
   const drawingEngine = useRef({});
+  const socketEngine = useRef({});
   const {
     canvasId: whiteboardId,
   } = useRouteMatch('/boards/:canvasId').params;
@@ -74,6 +79,7 @@ const Canvas = () => {
   const user = useSelector((state) => state.user.value);
   const canvasRef = useRef();
   const dispatch = useDispatch();
+
   async function setWhiteboardData () {
     const response = await WhiteboardController.getWhiteboardById(whiteboardId);
     if (response) {
@@ -111,16 +117,8 @@ const Canvas = () => {
     drawingEngine.current.drawingData,
   ]);
 
-  function initializeSocketListeners () {
-    Socket.connect();
-    Socket.emit('join', whiteboardId);
-    Socket.on('empty-page-from-server', () => drawingEngine.current.clearBoard(false));
-    Socket.on('drawing-data-from-server', (data) => drawingEngine.current.draw(data));
-    Socket.on('joined', (data) => dispatch(addCollaborator(data)));
-    Socket.on('left', (data) => dispatch(removeCollaborator(data)));
-  }
-
   useEffect(() => {
+    socketEngine.current = new SocketEngine();
     drawingEngine.current = new DrawingEngine(
       {
         canvasContext: canvasRef.current.getContext('2d'),
@@ -128,27 +126,37 @@ const Canvas = () => {
         whiteboardId,
       },
     );
+    socketEngine.current.drawingEngine = drawingEngine.current;
+    drawingEngine.current.socketEngine = socketEngine.current;
 
     if (!user.isLoadingUser && user.role) {
-      initializeSocketListeners();
+      socketEngine.current.initializeSocketListeners(whiteboardId);
       setWhiteboardData();
     }
   }, [
     user.isLoadingUser,
   ]);
-  useEffect(() => {
+
+  function attachWindowListeners () {
     window.addEventListener('keydown', drawingEngine.current.handleKeyDown, {
       passive: false,
     });
     window.addEventListener('wheel', handleScrollZoom, {
       passive: false,
     });
+  }
 
+  function removeWindowListeners () {
+    window.removeEventListener('keydown', drawingEngine.current.handleKeyDown);
+    window.removeEventListener('resize', drawingEngine.current.handleResize);
+    window.removeEventListener('wheel', handleScrollZoom);
+  }
+
+  useEffect(() => {
+    attachWindowListeners();
     return () => {
-      window.removeEventListener('keydown', drawingEngine.current.handleKeyDown);
-      window.removeEventListener('resize', drawingEngine.current.handleResize);
-      window.removeEventListener('wheel', handleScrollZoom);
-      Socket.disconnect();
+      removeWindowListeners();
+      socketEngine.current.disconnect();
     };
   }, []);
 
@@ -166,10 +174,13 @@ const Canvas = () => {
       <canvas
         className='drawing-board'
         height={window.innerHeight}
-        onMouseDown={drawingEngine.current.handleDrawingStart}
+        onMouseDown={(event) => {
+          drawingEngine.current.isMouseDown = true;
+          drawingEngine.current.handleDrawingStart(event);
+        }}
         onMouseLeave={() => drawingEngine.current.isMouseDown = false}
-        onMouseMove={drawingEngine.current.handleDragTouch}
-        onMouseUp={drawingEngine.current.handleEndDrawing}
+        onMouseMove={(event) => drawingEngine.current.handleDragTouch(event, shape)}
+        onMouseUp={(event) => drawingEngine.current.handleEndDrawing(event, shape)}
         onTouchEnd={drawingEngine.current.handleEndDrawing}
         onTouchMove={drawingEngine.current.handleDragTouch}
         onTouchStart={drawingEngine.current.handleDrawingStart}
@@ -247,7 +258,7 @@ const Canvas = () => {
             </Formik>}
         </>}
       <Toolbar isMouseDown={canvasMouseDown} position='bottom'>
-        <ShapeTool handleChange={(option) => drawingEngine.current.shape = option} />
+        <ShapeTool handleChange={setShape} />
         <InputModesTool
           handleMarkerClick={(value) => drawingEngine.current.paintSize = value}
         />

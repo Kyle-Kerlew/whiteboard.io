@@ -1,3 +1,4 @@
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -21,15 +22,19 @@
 
 
 html {
+    scroll-snap-type: y mandatory;
     overflow-x: hidden;
     margin-top: 56px; /* margin to account for fixed navigation bar*/
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
+.snap {
+    block-size: 100vh;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+}
 .navbar {
     display: flex;
-    padding: 0.5rem 50px !important;
 }
 
 .navbar > .nav-link {

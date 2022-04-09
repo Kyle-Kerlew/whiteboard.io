@@ -1,15 +1,17 @@
 import React from 'react';
-import {useLocation} from "react-router-dom";
-import DrawingNavbar from "./drawingNavbar";
-import BrowsingNavbar from "./browsingNavbar";
+import {
+  useLocation,
+} from 'react-router-dom';
+import BrowsingNavbar from './browsingNavbar';
+import DrawingNavbar from './drawingNavbar';
 
-function NavBar() {
-    const location = useLocation();
-    const Result = location.pathname.includes('/boards/') ? DrawingNavbar : BrowsingNavbar;
+const NavBar = () => {
+  const location = useLocation();
+  const Result = location.pathname.includes('/boards/') ? DrawingNavbar : BrowsingNavbar;
 
-    return (
-        <Result/>
-    )
-}
+  return (
+    <Result />
+  );
+};
 
 export default NavBar;
