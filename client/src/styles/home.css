@@ -1,17 +1,26 @@
 .flex-container {
     display: flex;
     flex-direction: column;
-    padding: 50px;
+    padding-top: 50px;
     height: 100%;
-    align-items: center;
+}
+
+.line-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
 }
 
 .text-button-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 500px;
     padding: 15px 0 25px 0;
+}
+
+.text-button-container > p {
+    max-width: 500px;
 }
 
 .column {
