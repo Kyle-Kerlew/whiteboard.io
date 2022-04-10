@@ -1,13 +1,8 @@
 import {
   Divider,
   Snackbar,
-  TextField,
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
-import {
-  ErrorMessage,
-  Formik,
-} from 'formik';
 import React, {
   useEffect,
   useRef,
@@ -36,7 +31,7 @@ import {
 import '../../styles/shareLinkBox.css';
 import SignInAsGuestSchema from '../schema/SignInAsGuest.yup';
 import COLORS from '../shared/constants/colors';
-import FocusDialogBox from '../shared/focusDialogBox';
+import GuestModalForm from '../shared/guestModalForm';
 import Circle from '../svg/circle';
 import Toolbar from '../toolbar/toolbar';
 import ClearBoardTool from '../toolbar/tools/clearBoardTool';
@@ -118,6 +113,8 @@ const Canvas = () => {
   ]);
 
   useEffect(() => {
+    console.log('reinitializing socket and drawing engines');
+    debugger;
     socketEngine.current = new SocketEngine();
     drawingEngine.current = new DrawingEngine(
       {
@@ -202,60 +199,7 @@ const Canvas = () => {
       {!user.isLoadingUser &&
         <>
           {!user.isAuthenticated && !user.role &&
-            <Formik
-              initialValues={{
-                email: '',
-                firstName: '',
-                lastName: '',
-              }}
-              onSubmit={handleGuestSubmit}
-              validationSchema={SignInAsGuestSchema}
-            >
-              {({
-                values,
-                handleBlur,
-                handleSubmit,
-                handleChange,
-              }) => <FocusDialogBox
-                buttonText='Confirm'
-                isValid={Boolean(values.firstName && values.lastName && values.email)}
-                onSubmit={(event) => handleSubmit(event)}
-                text='Let other collaborators know who you are!'
-              >
-                <div className='form-container'>
-                  <TextField
-                    label='First Name'
-                    name='firstName'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    required
-                    type='text'
-                    value={values.firstName}
-                  />
-                  <ErrorMessage name='firstName' />
-                  <TextField
-                    label='Last Name'
-                    name='lastName'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    required
-                    type='text'
-                    value={values.lastName}
-                  />
-                  <ErrorMessage name='lastName' />
-                  <TextField
-                    label='Email'
-                    name='email'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    required
-                    type='email'
-                    value={values.email}
-                  />
-                  <ErrorMessage name='email' />
-                </div>
-              </FocusDialogBox>}
-            </Formik>}
+            <GuestModalForm handleFormSubmit={handleGuestSubmit} schema={SignInAsGuestSchema} />}
         </>}
       <Toolbar isMouseDown={canvasMouseDown} position='bottom'>
         <ShapeTool handleChange={setShape} />
