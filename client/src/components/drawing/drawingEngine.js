@@ -17,10 +17,7 @@ function bindAll (target) {
 export class DrawingEngine {
   constructor (props) {
     this._canvasContext = props.canvasContext;
-    this._lineStartPoint = {
-      x: 0,
-      y: 0,
-    };
+    this._shapeStartPoint = undefined;
     this._shape = props.shape;
     this._paintSize = 25;
     this._markerColor = props.markerColor || 'black';
@@ -65,12 +62,12 @@ export class DrawingEngine {
     this._canvasContext = canvasContext;
   }
 
-  get lineStartPoint () {
-    return this._lineStartPoint;
+  get shapeStartPoint () {
+    return this._shapeStartPoint;
   }
 
-  set lineStartPoint (lineStartPoint) {
-    this._lineStartPoint = lineStartPoint;
+  set shapeStartPoint (lineStartPoint) {
+    this._shapeStartPoint = lineStartPoint;
   }
 
   get shape () {
@@ -116,16 +113,19 @@ export class DrawingEngine {
   clearBoard (emitMessage) {
     const context = this.canvasContext;
     this.drawingData = [];
-    emitMessage && Socket.emit('empty-page', this.whiteboardId);
+    if (emitMessage) {
+      Socket.emit('empty-page', this.whiteboardId);
+    }
+
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   }
 
-  handleResize (drawingData) {
+  handleResize () {
     const context = this.canvasContext;
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.canvas.width = window.innerWidth;
     context.canvas.height = window.innerHeight;
-    this.draw(this.applyScaleToData(drawingData));
+    this.draw(this.applyScaleToData());
   }
 
   handleKeyDown (event) {
@@ -190,13 +190,27 @@ export class DrawingEngine {
 
       switch (shape) {
       case Shapes.LINE:
-        if (this.lineStartPoint) {
+        if (this.shapeStartPoint) {
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-          this.drawLine(this.lineStartPoint.x, this.lineStartPoint.y, mouseX, mouseY);
+          this.drawLine(this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
           context.beginPath();
           this.draw(this.drawingData);
         } else {
-          this.lineStartPoint = {
+          this.shapeStartPoint = {
+            x: mouseX,
+            y: mouseY,
+          };
+        }
+
+        break;
+      case Shapes.SQUARE:
+        if (this.shapeStartPoint) {
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+          this.drawSquare(this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
+          context.beginPath();
+          this.draw(this.drawingData);
+        } else {
+          this.shapeStartPoint = {
             x: mouseX,
             y: mouseY,
           };
@@ -229,6 +243,7 @@ export class DrawingEngine {
     const mouseY = (this.getMousePositionY(event) * this.scale - context.canvas.offsetTop - 56 + window.scrollY) / this.scale;
     const newDrawData = {
       color: this.markerColor,
+      shape,
       size: this.paintSize,
       whiteboardId: this.whiteboardId,
       x: mouseX,
@@ -237,14 +252,19 @@ export class DrawingEngine {
 
     switch (shape) {
     case Shapes.LINE:
+    case Shapes.SQUARE:
+      // if (this.shapeStartPoint === undefined) {
+      //   debugger;
+      // }
+
       newDrawData.moveTo = {
-        x: this.lineStartPoint.x,
-        y: this.lineStartPoint.y,
+        x: this.shapeStartPoint ? this.shapeStartPoint.x : newDrawData.x,
+        y: this.shapeStartPoint ? this.shapeStartPoint.y : newDrawData.y,
       };
 
       this.drawingData = this.drawingData.concat(newDrawData);
-      this.lineStartPoint = null;
-      this.shape = null;
+      this.shapeStartPoint = undefined;
+      this.shape = undefined;
       context.beginPath();
 
       break;
@@ -268,7 +288,7 @@ export class DrawingEngine {
     this.handleZoom();
   }
 
-  drawPoint (x, y, colorToDraw, sizeToUse, moveTo) {
+  drawPoint (x, y, colorToDraw, sizeToUse, moveTo, shape) {
     const context = this.canvasContext;
     context.lineJoin = 'round';
     context.lineCap = 'round';
@@ -279,33 +299,38 @@ export class DrawingEngine {
       context.moveTo(moveTo.x, moveTo.y);
     }
 
-    context.lineTo(x, y);
+    if (shape === Shapes.SQUARE) {
+      context.strokeRect(moveTo.x, moveTo.y, x - moveTo.x, y - moveTo.y);
+    } else {
+      context.lineTo(x, y);
+    }
+
     context.stroke();
   }
 
-  draw (data, canvas) {
+  draw (data) {
     if (_.isArray(data)) {
       for (const item of data) {
-        this.drawPoint(item.x, item.y, item.color, item.size, item.moveTo, canvas);
+        this.drawPoint(item.x, item.y, item.color, item.size, item.moveTo, item.shape);
       }
 
       return;
     }
 
-    this.drawPoint(data.x, data.y, data.color, data.size, data.moveTo, canvas);
+    this.drawPoint(data.x, data.y, data.color, data.size, data.moveTo, data.shape);
   }
 
-  handleZoom (drawingData) {
+  handleZoom () {
     const context = this.canvasContext;
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.canvas.width *= this.scale;
     context.canvas.height *= this.scale;
-    this.draw(this.applyScaleToData(drawingData));
+    this.draw(this.applyScaleToData());
     context.beginPath();
   }
 
-  applyScaleToData (data) {
-    return data.map((item) => {
+  applyScaleToData () {
+    return this.drawingData.map((item) => {
       item.x *= this.scale;
       item.y *= this.scale;
       if (item.moveTo) {
@@ -315,5 +340,16 @@ export class DrawingEngine {
 
       return item;
     });
+  }
+
+  drawSquare (startX, startY, currentX, currentY) {
+    const context = this.canvasContext;
+    context.lineJoin = 'round';
+    context.lineCap = 'round';
+    context.lineWidth = this.paintSize;
+    context.strokeStyle = this.markerColor;
+    context.moveTo(startX, startY);
+    context.strokeRect(startX, startY, currentX - startX, currentY - startY);
+    context.stroke();
   }
 }

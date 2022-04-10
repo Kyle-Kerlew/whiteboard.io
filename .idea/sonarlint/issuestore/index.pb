@@ -15,8 +15,6 @@ H
 client/public/robots.txt,b\d\bd6eb45ab686cf67dd2d7534b5cf1e4a1e8cc874
 @
 client/README.md,3\1\31751a40848e21a3ce2e507e324ffd46e5b7b710
-@
-client/server.js,5\7\5721a0d275d3d75e2ae2f7f6f4216b0d461a2407
 C
 server/package.json,5\4\54e8f14248f674b305c14bde70fadbe1da1edb31
 S
@@ -53,8 +51,6 @@ L
 .server/rest/controller/whiteboardController.js,4\c\4cd74eecca3c2a15c16ec0e5384816ff045000ef
 \
 ,server/persistence/board/boardPersistence.js,a\b\ab828d37ba8a72ec3ad779bd4c4d0d744c53ea36
-R
-"client/src/styles/shareLinkBox.css,5\c\5c056eea921820382068d18e07941fc0cd0dcfa0
 T
 $client/src/components/shared/line.js,e\e\ee8aa9664043d30dc88dfa26aac912f142c566c3
 R
@@ -109,8 +105,6 @@ d
 4client/src/components/toolbar/tools/linkShareTool.js,a\a\aa60fcefe0cd5acb6a24e5cf0a252666d75c4097
 a
 1client/src/components/schema/SignInAsGuest.yup.js,b\0\b0516eb53ca427c101a0e086dc63c6048a8069c6
-X
-(client/src/components/toolbar/toolbar.js,3\6\36b81b7235a097e7485d6bcc39bb3636912dfd3e
 `
 0client/src/components/shared/constants/colors.js,1\f\1f13b6843b294cb72173f4e94838d6ed9bd3c6ec
 C
@@ -135,8 +129,6 @@ Q
 !client/src/configuration/store.js,5\c\5c41153cfa750957e7ecb4ef8daff01f2fecc882
 ]
 -client/src/components/drawing/socketEngine.js,e\3\e3102349e1a9ecb9e590aa6cfed5cdb3f871d4e7
-W
-'client/src/components/drawing/canvas.js,2\d\2dfdf3f9247dbc1908f5eb6bfed676915fac7919
 V
 &client/src/components/svg/internet.svg,2\4\24841601d91f9eecdc3e91df9fa5723bc8ab5c5e
 V
@@ -153,8 +145,6 @@ b
 2client/src/components/navigation/browsingNavbar.js,b\d\bd8e9401e7532933977c8b4dac0f38ad01d4f961
 Z
 *client/src/components/navigation/navBar.js,9\7\972a87e080a173b1dbe1485ccda0a3df7584baed
-W
-'client/src/components/routing/router.js,3\d\3d69d53d87b86b91bab06687b9fbdc9f1f894a25
 ]
 -client/src/components/navigation/useNavbar.js,2\2\2262b2658fc61da5c0c12b1e5c67be61dfb677fc
 H
@@ -163,8 +153,6 @@ H
 -client/src/resources/svg/easy-to-use-icon.svg,c\3\c35ac6912de7ea3f29385dddfc04324554097774
 Q
 !client/src/resources/svg/load.svg,a\1\a1ac155f688fed7b8e0fb4b083417615fd45ef3a
-C
-client/src/index.js,7\6\76cbb38a5cef42611c7af13985f39248682f4aa1
 O
 client/src/styles/boardList.css,6\a\6a63ebc74f5503c0a59b0d30bf9c88db4c258806
 U
