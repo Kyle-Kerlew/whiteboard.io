@@ -115,11 +115,12 @@ export class DrawingEngine {
 
   clearBoard (emitMessage) {
     const context = this.canvasContext;
-    this.drawingData = [];
+    delete this.drawingData;
     if (emitMessage) {
       Socket.emit('empty-page', this.whiteboardId);
     }
 
+    this.drawingData = [];
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   }
 
@@ -195,7 +196,6 @@ export class DrawingEngine {
       case Shapes.LINE:
         if (this.shapeStartPoint) {
           if (!this.canvasPic) {
-            console.log('Creating canvas pic');
             const canvasPic = new Image();
             canvasPic.src = document.querySelector('#canvas').toDataURL();
             this.canvasPic = canvasPic;
@@ -205,7 +205,7 @@ export class DrawingEngine {
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
           this.drawLine(this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
           context.drawImage(this.canvasPic, 0, 0);
-          // this.draw(this.drawingData);
+          this.draw(this.drawingData);
         } else {
           this.shapeStartPoint = {
             x: mouseX,
