@@ -202,10 +202,10 @@ export class DrawingEngine {
           }
 
           context.beginPath();
+          // This causes a very unfortunate flashing
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-          this.drawLine(this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
           context.drawImage(this.canvasPic, 0, 0);
-          this.draw(this.drawingData);
+          this.drawLine(this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
         } else {
           this.shapeStartPoint = {
             x: mouseX,
@@ -273,6 +273,7 @@ export class DrawingEngine {
       this.drawingData = this.drawingData.concat(newDrawData);
       this.shapeStartPoint = undefined;
       this.shape = undefined;
+      this.canvasPic = undefined;
       context.beginPath();
 
       break;

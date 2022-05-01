@@ -119,8 +119,6 @@ X
 (client/src/reducers/whiteboardReducer.js,b\1\b158e7502f06c2392e53392148ae5fa321e3ab6a
 Q
 !client/src/configuration/store.js,5\c\5c41153cfa750957e7ecb4ef8daff01f2fecc882
-]
--client/src/components/drawing/socketEngine.js,e\3\e3102349e1a9ecb9e590aa6cfed5cdb3f871d4e7
 V
 &client/src/components/svg/internet.svg,2\4\24841601d91f9eecdc3e91df9fa5723bc8ab5c5e
 V
@@ -175,3 +173,5 @@ Y
 ,server/persistence/board/boardPersistence.js,a\b\ab828d37ba8a72ec3ad779bd4c4d0d744c53ea36
 U
 %client/src/configuration/constants.js,b\7\b7ef099665c377faa523a0890daf30e3abac9bdf
+]
+-client/src/components/drawing/socketEngine.js,e\3\e3102349e1a9ecb9e590aa6cfed5cdb3f871d4e7
