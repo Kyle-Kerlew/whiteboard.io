@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import * as Constants from '../../configuration/constants';
 import {
   Socket,
 } from '../../configuration/socket';
@@ -15,6 +16,8 @@ function bindAll (target) {
 }
 
 export class DrawingEngine {
+  canvasPic;
+
   constructor (props) {
     this._canvasContext = props.canvasContext;
     this._shapeStartPoint = undefined;
@@ -191,10 +194,18 @@ export class DrawingEngine {
       switch (shape) {
       case Shapes.LINE:
         if (this.shapeStartPoint) {
+          if (!this.canvasPic) {
+            console.log('Creating canvas pic');
+            const canvasPic = new Image();
+            canvasPic.src = document.querySelector('#canvas').toDataURL();
+            this.canvasPic = canvasPic;
+          }
+
+          context.beginPath();
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
           this.drawLine(this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
-          context.beginPath();
-          this.draw(this.drawingData);
+          context.drawImage(this.canvasPic, 0, 0);
+          // this.draw(this.drawingData);
         } else {
           this.shapeStartPoint = {
             x: mouseX,
@@ -253,9 +264,6 @@ export class DrawingEngine {
     switch (shape) {
     case Shapes.LINE:
     case Shapes.SQUARE:
-      // if (this.shapeStartPoint === undefined) {
-      //   debugger;
-      // }
 
       newDrawData.moveTo = {
         x: this.shapeStartPoint ? this.shapeStartPoint.x : newDrawData.x,
@@ -288,12 +296,16 @@ export class DrawingEngine {
     this.handleZoom();
   }
 
-  drawPoint (x, y, colorToDraw, sizeToUse, moveTo, shape) {
+  drawPoint (x, y, colorToDraw, sizeToUse, moveTo, shape, array = false) {
     const context = this.canvasContext;
     context.lineJoin = 'round';
     context.lineCap = 'round';
     context.lineWidth = sizeToUse;
     context.strokeStyle = colorToDraw;
+    if (moveTo && array) {
+      context.stroke();
+    }
+
     if (moveTo) {
       context.beginPath();
       context.moveTo(moveTo.x, moveTo.y);
@@ -305,7 +317,9 @@ export class DrawingEngine {
       context.lineTo(x, y);
     }
 
-    context.stroke();
+    if (!array) {
+      context.stroke();
+    }
   }
 
   draw (data) {

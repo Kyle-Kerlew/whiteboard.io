@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import React, {
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -113,18 +114,18 @@ const Canvas = () => {
   ]);
 
   useEffect(() => {
-    console.log('reinitializing socket and drawing engines');
-    debugger;
-    socketEngine.current = new SocketEngine();
-    drawingEngine.current = new DrawingEngine(
-      {
-        canvasContext: canvasRef.current.getContext('2d'),
-        setCanvasMouseDown,
-        whiteboardId,
-      },
-    );
-    socketEngine.current.drawingEngine = drawingEngine.current;
-    drawingEngine.current.socketEngine = socketEngine.current;
+    if (drawingEngine && drawingEngine !== {}) {
+      socketEngine.current = new SocketEngine();
+      drawingEngine.current = new DrawingEngine(
+        {
+          canvasContext: canvasRef.current.getContext('2d'),
+          setCanvasMouseDown,
+          whiteboardId,
+        },
+      );
+      socketEngine.current.drawingEngine = drawingEngine.current;
+      drawingEngine.current.socketEngine = socketEngine.current;
+    }
 
     if (!user.isLoadingUser && user.role) {
       socketEngine.current.initializeSocketListeners(whiteboardId);
@@ -157,30 +158,62 @@ const Canvas = () => {
     };
   }, []);
 
-  function showSuccessToast () {
+  const showSuccessToast = useCallback(() => {
     setIsToastVisible(true);
-  }
+  }, [
+    setIsToastVisible,
+  ]);
 
-  async function handleGuestSubmit (values) {
+  const handleGuestSubmit = useCallback(async (values) => {
     await UserController.createGuest(values);
     dispatch(loginUser('guest'));
-  }
+  }, []);
+
+  const handleMouseMove = useCallback((event, shape) => {
+    // Is object empty? Prevents errors when moving mouse as page loads
+    if (Object.keys(drawingEngine.current).length !== 0) {
+      drawingEngine.current.handleDragTouch(event, shape);
+    }
+  }, []);
+
+  const handleMouseUp = useCallback((event, shape) => {
+    drawingEngine.current.handleEndDrawing(event, shape);
+  }, []);
+
+  const handleTouchEnd = useCallback((event) => {
+    drawingEngine.current.handleEndDrawing(event);
+  }, []);
+
+  const handleTouchMove = useCallback((event) => {
+    drawingEngine.current.handleDragTouch(event);
+  }, []);
+
+  const handleTouchStart = useCallback((event) => {
+    drawingEngine.current.handleDrawingStart(event);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    drawingEngine.current.isMouseDown = false;
+  }, []);
+
+  const handleMouseDown = useCallback((e) => {
+    drawingEngine.current.isMouseDown = true;
+    drawingEngine.current.handleDrawingStart(e);
+  }, []);
 
   return (
     <div id='canvas-container'>
       <canvas
         className='drawing-board'
         height={window.innerHeight}
-        onMouseDown={(event) => {
-          drawingEngine.current.isMouseDown = true;
-          drawingEngine.current.handleDrawingStart(event);
-        }}
-        onMouseLeave={() => drawingEngine.current.isMouseDown = false}
-        onMouseMove={(event) => drawingEngine.current.handleDragTouch(event, shape)}
-        onMouseUp={(event) => drawingEngine.current.handleEndDrawing(event, shape)}
-        onTouchEnd={drawingEngine.current.handleEndDrawing}
-        onTouchMove={drawingEngine.current.handleDragTouch}
-        onTouchStart={drawingEngine.current.handleDrawingStart}
+        id='canvas'
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={(e) => handleMouseMove(e, shape)}
+        onMouseUp={(e) => handleMouseUp(e, shape)}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
+        onTouchStart={handleTouchStart}
         ref={canvasRef}
         width={window.innerWidth}
       >

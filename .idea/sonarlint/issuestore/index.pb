@@ -39,18 +39,12 @@ Q
 !client/src/styles/activeUsers.css,5\1\51464e64234c0839e4ec2728703d0cd8a09d6e4d
 `
 0client/src/handlers/rest/whiteboardController.js,1\b\1bfe6035416975ae15e1a627a4375ca399cf88ae
-N
-server/socket/socketHandler.js,3\f\3f9d4b4126eff8b54a9fa78f8690200d0d019fe9
-T
-$server/service/board/boardService.js,5\1\515b4393951d5ccc5e2e131179c91df1f7fcd489
 V
 &client/src/components/shared/switch.js,a\c\ac5687d7917b1dd51cad77e4020d8a6be88bbaad
 L
 client/src/styles/switch.css,1\2\12c931baf532478b7835199263f76d88e0e3bf8f
 ^
 .server/rest/controller/whiteboardController.js,4\c\4cd74eecca3c2a15c16ec0e5384816ff045000ef
-\
-,server/persistence/board/boardPersistence.js,a\b\ab828d37ba8a72ec3ad779bd4c4d0d744c53ea36
 T
 $client/src/components/shared/line.js,e\e\ee8aa9664043d30dc88dfa26aac912f142c566c3
 R
@@ -119,8 +113,6 @@ R
 "client/src/configuration/socket.js,6\5\65635667ab5423463cd2ab1f3c25b7118cb7e6cd
 T
 $client/src/components/page/signIn.js,6\6\66b37519df478ca360e47d04342251a245a1cc89
-Y
-)server/persistence/connections/mongodb.js,3\a\3a669249a6f8382bddcb9cf78aa6a0019f6893d1
 `
 0client/src/components/toolbar/tools/shapeTool.js,a\6\a6cbacd0a490f3d775ea32c881e31632edd77f0d
 X
@@ -167,5 +159,19 @@ P
  client/src/styles/animations.css,c\8\c867aec2a2882073e3dd436070005f5961bc2c58
 R
 "client/src/components/page/home.js,c\a\caa41c621ea60b95b9e596e660b236f70aa33012
+W
+'client/src/components/routing/router.js,3\d\3d69d53d87b86b91bab06687b9fbdc9f1f894a25
+C
+client/src/index.js,7\6\76cbb38a5cef42611c7af13985f39248682f4aa1
+@
+client/server.js,5\7\5721a0d275d3d75e2ae2f7f6f4216b0d461a2407
+X
+(client/src/components/toolbar/toolbar.js,3\6\36b81b7235a097e7485d6bcc39bb3636912dfd3e
 =
 server/app.js,5\a\5a213799dbe3ac4e529d1609c34bb35426f86370
+Y
+)server/persistence/connections/mongodb.js,3\a\3a669249a6f8382bddcb9cf78aa6a0019f6893d1
+\
+,server/persistence/board/boardPersistence.js,a\b\ab828d37ba8a72ec3ad779bd4c4d0d744c53ea36
+U
+%client/src/configuration/constants.js,b\7\b7ef099665c377faa523a0890daf30e3abac9bdf
