@@ -194,10 +194,12 @@ export class DrawingEngine {
 
       switch (shape) {
       case Shapes.LINE:
+      case Shapes.SQUARE:
         if (this.shapeStartPoint) {
           if (!this.canvasPic) {
             const canvasPic = new Image();
             canvasPic.src = document.querySelector('#canvas').toDataURL();
+            canvasPic.onload = () => context.drawImage(canvasPic, 0, 0);
             this.canvasPic = canvasPic;
           }
 
@@ -205,21 +207,7 @@ export class DrawingEngine {
           // This causes a very unfortunate flashing
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
           context.drawImage(this.canvasPic, 0, 0);
-          this.drawLine(this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
-        } else {
-          this.shapeStartPoint = {
-            x: mouseX,
-            y: mouseY,
-          };
-        }
-
-        break;
-      case Shapes.SQUARE:
-        if (this.shapeStartPoint) {
-          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-          this.drawSquare(this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
-          context.beginPath();
-          this.draw(this.drawingData);
+          this.drawShape(shape, this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
         } else {
           this.shapeStartPoint = {
             x: mouseX,
@@ -357,14 +345,22 @@ export class DrawingEngine {
     });
   }
 
-  drawSquare (startX, startY, currentX, currentY) {
+  drawShape (shape, startX, startY, currentX, currentY) {
     const context = this.canvasContext;
     context.lineJoin = 'round';
     context.lineCap = 'round';
     context.lineWidth = this.paintSize;
     context.strokeStyle = this.markerColor;
     context.moveTo(startX, startY);
-    context.strokeRect(startX, startY, currentX - startX, currentY - startY);
+    switch (shape) {
+    case Shapes.SQUARE:
+      context.strokeRect(startX, startY, currentX - startX, currentY - startY);
+      break;
+    case Shapes.LINE:
+      context.lineTo(currentX, currentY);
+      break;
+    }
+
     context.stroke();
   }
 }
