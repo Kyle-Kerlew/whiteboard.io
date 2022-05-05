@@ -276,13 +276,13 @@ export class DrawingEngine {
   }
 
   scaleUp () {
-    this.scale = 1.25;
-    this.handleZoom();
+    this.scale *= 1.25; // inverse of 4/5 or 0.8
+    this.handleZoom(1.25, 1.25);
   }
 
   scaleDown () {
-    this.scale = 0.8;
-    this.handleZoom();
+    this.scale *= 0.8; // inverse of 5/4 or 1.25
+    this.handleZoom(0.8, 0.8);
   }
 
   drawPoint (x, y, colorToDraw, sizeToUse, moveTo, shape, array = false) {
@@ -323,12 +323,13 @@ export class DrawingEngine {
     this.drawPoint(data.x, data.y, data.color, data.size, data.moveTo, data.shape);
   }
 
-  handleZoom () {
+  handleZoom (canvasTransformX, canvasTransformY) {
     const context = this.canvasContext;
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.canvas.width *= this.scale;
-    context.canvas.height *= this.scale;
-    this.draw(this.applyScaleToData());
+    context.canvas.width *= canvasTransformX;
+    context.canvas.height *= canvasTransformY;
+    context.scale(this.scale, this.scale);
+    this.draw(this.drawingData);
     context.beginPath();
   }
 
