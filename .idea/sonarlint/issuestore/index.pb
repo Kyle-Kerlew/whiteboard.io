@@ -93,8 +93,6 @@ X
 (client/src/resources/svg/circle-icon.svg,0\3\03878b24f08cda722e5c27da4082df1e3d66ed51
 J
 client/src/types/Shapes.js,0\e\0e6b0246b54aef13119d8665cde054adb769a4f3
-a
-1client/src/components/toolbar/tools/zoomInTool.js,7\b\7b3a323a469c8957d45e3165a42d94629f79f257
 d
 4client/src/components/toolbar/tools/linkShareTool.js,a\a\aa60fcefe0cd5acb6a24e5cf0a252666d75c4097
 a
@@ -175,3 +173,7 @@ U
 %client/src/configuration/constants.js,b\7\b7ef099665c377faa523a0890daf30e3abac9bdf
 ]
 -client/src/components/drawing/socketEngine.js,e\3\e3102349e1a9ecb9e590aa6cfed5cdb3f871d4e7
+R
+"client/src/styles/shareLinkBox.css,5\c\5c056eea921820382068d18e07941fc0cd0dcfa0
+a
+1client/src/components/toolbar/tools/zoomInTool.js,7\b\7b3a323a469c8957d45e3165a42d94629f79f257
