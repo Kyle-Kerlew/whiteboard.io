@@ -99,6 +99,7 @@ const Canvas = () => {
     if (event.ctrlKey) {
       event.preventDefault();
       if (event.deltaY < 0) {
+        console.log('DeltaY', event.deltaY);
         drawingEngine.current.scaleUp();
       } else {
         drawingEngine.current.scaleDown();
@@ -241,8 +242,14 @@ const Canvas = () => {
         />
         <EraserTool setIsErasing={() => drawingEngine.current.markerColor = 'white'} />
         <Divider flexItem orientation='vertical' />
-        <ZoomInTool zoomIn={drawingEngine.current.scaleUp} />
-        <ZoomOutTool zoomOut={drawingEngine.current.scaleDown} />
+        <ZoomInTool zoomIn={useCallback(() => drawingEngine.current.scaleUp(), [
+          drawingEngine.current,
+        ])}
+        />
+        <ZoomOutTool zoomOut={useCallback(() => drawingEngine.current.scaleDown(), [
+          drawingEngine.current,
+        ])}
+        />
         <Divider flexItem orientation='vertical' />
         <ClearBoardTool clearBoard={drawingEngine.current.clearBoard} />
         <ShareLinkBox
