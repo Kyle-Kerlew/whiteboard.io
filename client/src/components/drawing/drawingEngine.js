@@ -150,22 +150,26 @@ export class DrawingEngine {
     }
   }
 
-  getMousePositionX (event) {
-    return event.type === 'touchmove' ?
-      event.touches[0].clientX :
-      event.clientX;
+  getMousePositionX (event, xOffset) {
+    if (event.type === 'touchmove') {
+      return (event.touches[0].clientX - xOffset + window.scrollX) / this.scale;
+    } else {
+      return (event.clientX - xOffset + window.scrollX) / this.scale;
+    }
   }
 
-  getMousePositionY (event) {
-    return event.type === 'touchmove' ?
-      event.touches[0].clientY :
-      event.clientY;
+  getMousePositionY (event, yOffset) {
+    if (event.type === 'touchmove') {
+      return (event.touches[0].clientY - yOffset - 56 + window.scrollY) / this.scale;
+    } else {
+      return (event.clientY - yOffset - 56 + window.scrollY) / this.scale;
+    }
   }
 
   handleDrawingStart (event) {
     const context = this.canvasContext;
-    const mouseX = (this.getMousePositionX(event) * this.scale - context.canvas.offsetLeft + window.scrollX) / this.scale;
-    const mouseY = (this.getMousePositionY(event) * this.scale - context.canvas.offsetTop - 56 + window.scrollY) / this.scale;
+    const mouseX = this.getMousePositionX(event, context.canvas.offsetLeft);
+    const mouseY = this.getMousePositionY(event, context.canvas.offsetTop);
     this.isFirstStroke = true;
     context.beginPath();
     context.moveTo(mouseX, mouseY);
@@ -174,8 +178,8 @@ export class DrawingEngine {
   handleDragTouch (event, shape) {
     if (this.isMouseDown) {
       const context = this.canvasContext;
-      const mouseX = (this.getMousePositionX(event) * this.scale - context.canvas.offsetLeft + window.scrollX) / this.scale;
-      const mouseY = (this.getMousePositionY(event) * this.scale - context.canvas.offsetTop - 56 + window.scrollY) / this.scale;
+      const mouseX = this.getMousePositionX(event, context.canvas.offsetLeft);
+      const mouseY = this.getMousePositionY(event, context.canvas.offsetTop);
       const newDrawData = {
         color: this.markerColor,
         size: this.paintSize,
@@ -238,8 +242,8 @@ export class DrawingEngine {
 
   handleEndDrawing (event, shape) {
     const context = this.canvasContext;
-    const mouseX = (this.getMousePositionX(event) * this.scale - context.canvas.offsetLeft + window.scrollX) / this.scale;
-    const mouseY = (this.getMousePositionY(event) * this.scale - context.canvas.offsetTop - 56 + window.scrollY) / this.scale;
+    const mouseX = this.getMousePositionX(event, context.canvas.offsetLeft);
+    const mouseY = this.getMousePositionY(event, context.canvas.offsetTop);
     const newDrawData = {
       color: this.markerColor,
       shape,
