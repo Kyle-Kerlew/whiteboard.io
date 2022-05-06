@@ -103,6 +103,9 @@ const Canvas = () => {
       );
       socketEngine.current.drawingEngine = drawingEngine.current;
       drawingEngine.current.socketEngine = socketEngine.current;
+      const context = canvasRef.current.getContext('2d');
+      context.fillStyle = 'white';
+      context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     }
 
     if (!user.isLoadingUser && user.role) {
