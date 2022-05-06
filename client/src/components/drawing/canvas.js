@@ -92,13 +92,6 @@ const Canvas = () => {
   }
 
   useEffect(() => {
-    // dependent on drawingData state
-    window.addEventListener('resize', drawingEngine.current.handleResize);
-  }, [
-    drawingEngine.current.drawingData,
-  ]);
-
-  useEffect(() => {
     if (drawingEngine && drawingEngine !== {}) {
       socketEngine.current = new SocketEngine();
       drawingEngine.current = new DrawingEngine(
@@ -121,13 +114,13 @@ const Canvas = () => {
   ]);
 
   function attachWindowListeners () {
-    console.log('attach window listeners');
     window.addEventListener('keydown', (e) => drawingEngine.current.handleKeyDown(e), {
       passive: false,
     });
     window.addEventListener('wheel', (e) => drawingEngine.current.handleScrollZoom(e), {
       passive: false,
     });
+    window.addEventListener('resize', () => drawingEngine.current.handleResize());
   }
 
   function removeWindowListeners () {
