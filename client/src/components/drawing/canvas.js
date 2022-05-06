@@ -91,22 +91,6 @@ const Canvas = () => {
     }
   }
 
-  function handleScrollZoom (event) {
-    if (event.origin !== process.env.REACT_APP_BASE_URL) {
-      return;
-    }
-
-    if (event.ctrlKey) {
-      event.preventDefault();
-      if (event.deltaY < 0) {
-        console.log('DeltaY', event.deltaY);
-        drawingEngine.current.scaleUp();
-      } else {
-        drawingEngine.current.scaleDown();
-      }
-    }
-  }
-
   useEffect(() => {
     // dependent on drawingData state
     window.addEventListener('resize', drawingEngine.current.handleResize);
@@ -137,10 +121,11 @@ const Canvas = () => {
   ]);
 
   function attachWindowListeners () {
-    window.addEventListener('keydown', drawingEngine.current.handleKeyDown, {
+    console.log('attach window listeners');
+    window.addEventListener('keydown', (e) => drawingEngine.current.handleKeyDown(e), {
       passive: false,
     });
-    window.addEventListener('wheel', handleScrollZoom, {
+    window.addEventListener('wheel', (e) => drawingEngine.current.handleScrollZoom(e), {
       passive: false,
     });
   }
@@ -148,7 +133,7 @@ const Canvas = () => {
   function removeWindowListeners () {
     window.removeEventListener('keydown', drawingEngine.current.handleKeyDown);
     window.removeEventListener('resize', drawingEngine.current.handleResize);
-    window.removeEventListener('wheel', handleScrollZoom);
+    window.removeEventListener('wheel', drawingEngine.current.handleScrollZoom);
   }
 
   useEffect(() => {
