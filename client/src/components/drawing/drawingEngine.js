@@ -132,11 +132,19 @@ export class DrawingEngine {
     this.draw(this.applyScaleToData());
   }
 
-  handleKeyDown (event) {
-    if (event.origin !== process.env.REACT_APP_BASE_URL) {
-      return;
+  handleScrollZoom (event) {
+    console.log('Handle scroll zoom');
+    if (event.isTrusted && event.ctrlKey) {
+      event.preventDefault();
+      if (event.deltaY < 0) {
+        this.scaleUp();
+      } else {
+        this.scaleDown();
+      }
     }
+  }
 
+  handleKeyDown (event) {
     if (event.ctrlKey && event.key === '=') {
       // prevent browser from zooming normally
       event.preventDefault();
@@ -333,6 +341,7 @@ export class DrawingEngine {
     context.canvas.width *= canvasTransformX;
     context.canvas.height *= canvasTransformY;
     context.scale(this.scale, this.scale);
+    console.log('Drawing data', this.drawingData);
     this.draw(this.drawingData);
     context.beginPath();
   }
