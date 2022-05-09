@@ -35,8 +35,9 @@ module.exports = {
   root: true,
   rules: {
     'arrow-body-style': 'off',
+    'canonical/filename-match-exported': 'off',
+    'canonical/id-match': 'off',
     'func-style': 'off',
     'unicorn/numeric-separators-style': 'off',
-    'canonical/id-match': 'off',
   },
 };

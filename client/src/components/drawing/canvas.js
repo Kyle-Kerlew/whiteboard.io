@@ -4,7 +4,6 @@ import {
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import React, {
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -76,22 +75,22 @@ const Canvas = () => {
   const canvasRef = useRef();
   const dispatch = useDispatch();
 
-  async function setWhiteboardData () {
-    const response = await WhiteboardController.getWhiteboardById(whiteboardId);
-    if (response) {
-      for (const collaborator of response.collaborators) {
-        dispatch(addCollaborator(collaborator));
-      }
-
-      dispatch(editTitle(response.title));
-      if (response.data) {
-        drawingEngine.current.draw(response.data);
-        drawingEngine.current.drawingData = response.data;
-      }
-    }
-  }
-
   useEffect(() => {
+    const setWhiteboardData = async () => {
+      const response = await WhiteboardController.getWhiteboardById(whiteboardId);
+      if (response) {
+        for (const collaborator of response.collaborators) {
+          dispatch(addCollaborator(collaborator));
+        }
+
+        dispatch(editTitle(response.title));
+        if (response.data) {
+          drawingEngine.current.draw(response.data);
+          drawingEngine.current.drawingData = response.data;
+        }
+      }
+    };
+
     if (drawingEngine && drawingEngine !== {}) {
       socketEngine.current = new SocketEngine();
       drawingEngine.current = new DrawingEngine(
@@ -113,24 +112,27 @@ const Canvas = () => {
       setWhiteboardData();
     }
   }, [
+    dispatch,
     user.isLoadingUser,
+    user.role,
+    whiteboardId,
   ]);
 
-  function attachWindowListeners () {
-    window.addEventListener('keydown', (e) => drawingEngine.current.handleKeyDown(e), {
+  const attachWindowListeners = () => {
+    window.addEventListener('keydown', (event) => drawingEngine.current.handleKeyDown(event), {
       passive: false,
     });
-    window.addEventListener('wheel', (e) => drawingEngine.current.handleScrollZoom(e), {
+    window.addEventListener('wheel', (event) => drawingEngine.current.handleScrollZoom(event), {
       passive: false,
     });
     window.addEventListener('resize', () => drawingEngine.current.handleResize());
-  }
+  };
 
-  function removeWindowListeners () {
+  const removeWindowListeners = () => {
     window.removeEventListener('keydown', drawingEngine.current.handleKeyDown);
     window.removeEventListener('resize', drawingEngine.current.handleResize);
     window.removeEventListener('wheel', drawingEngine.current.handleScrollZoom);
-  }
+  };
 
   useEffect(() => {
     attachWindowListeners();
@@ -140,48 +142,60 @@ const Canvas = () => {
     };
   }, []);
 
-  const showSuccessToast = useCallback(() => {
+  const showSuccessToast = () => {
     setIsToastVisible(true);
-  }, [
-    setIsToastVisible,
-  ]);
+  };
 
-  const handleGuestSubmit = useCallback(async (values) => {
+  const handleGuestSubmit = async (values) => {
     await UserController.createGuest(values);
     dispatch(loginUser('guest'));
-  }, []);
+  };
 
-  const handleMouseMove = useCallback((event, shape) => {
+  const handleMouseMove = (event, eventShape) => {
     // Is object empty? Prevents errors when moving mouse as page loads
     if (Object.keys(drawingEngine.current).length !== 0) {
-      drawingEngine.current.handleDragTouch(event, shape);
+      drawingEngine.current.handleDragTouch(event, eventShape);
     }
-  }, []);
+  };
 
-  const handleMouseUp = useCallback((event, shape) => {
-    drawingEngine.current.handleEndDrawing(event, shape);
-  }, []);
+  const handleMouseUp = (event, eventShape) => {
+    drawingEngine.current.handleEndDrawing(event, eventShape);
+  };
 
-  const handleTouchEnd = useCallback((event) => {
+  const handleTouchEnd = (event) => {
     drawingEngine.current.handleEndDrawing(event);
-  }, []);
+  };
 
-  const handleTouchMove = useCallback((event) => {
+  const handleTouchMove = (event) => {
     drawingEngine.current.handleDragTouch(event);
-  }, []);
+  };
 
-  const handleTouchStart = useCallback((event) => {
+  const handleTouchStart = (event) => {
     drawingEngine.current.handleDrawingStart(event);
-  }, []);
+  };
 
-  const handleMouseLeave = useCallback(() => {
+  const handleMouseLeave = () => {
     drawingEngine.current.isMouseDown = false;
-  }, []);
+  };
 
-  const handleMouseDown = useCallback((e) => {
+  const handleMouseDown = (event) => {
     drawingEngine.current.isMouseDown = true;
-    drawingEngine.current.handleDrawingStart(e);
-  }, []);
+    drawingEngine.current.handleDrawingStart(event);
+  };
+
+  const handleZoomIn = drawingEngine.current.scaleUp;
+  const handleZoomOut = drawingEngine.current.scaleDown;
+  const handleMarkerClick = (value) => {
+    drawingEngine.current.paintSize = value;
+  };
+
+  const handleErasing = () => {
+    drawingEngine.current.markerColor = 'white';
+  };
+
+  const handleMarkerSelect = (color) => {
+    drawingEngine.current.markerColor = color;
+  };
 
   return (
     <div id='canvas-container'>
@@ -191,8 +205,8 @@ const Canvas = () => {
         id='canvas'
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
-        onMouseMove={(e) => handleMouseMove(e, shape)}
-        onMouseUp={(e) => handleMouseUp(e, shape)}
+        onMouseMove={(event) => handleMouseMove(event, shape)}
+        onMouseUp={(event) => handleMouseUp(event, shape)}
         onTouchEnd={handleTouchEnd}
         onTouchMove={handleTouchMove}
         onTouchStart={handleTouchStart}
@@ -219,18 +233,12 @@ const Canvas = () => {
       <Toolbar isMouseDown={canvasMouseDown} position='bottom'>
         <ShapeTool handleChange={setShape} />
         <InputModesTool
-          handleMarkerClick={(value) => drawingEngine.current.paintSize = value}
+          handleMarkerClick={handleMarkerClick}
         />
-        <EraserTool setIsErasing={() => drawingEngine.current.markerColor = 'white'} />
+        <EraserTool setIsErasing={handleErasing} />
         <Divider flexItem orientation='vertical' />
-        <ZoomInTool zoomIn={useCallback(() => drawingEngine.current.scaleUp(), [
-          drawingEngine.current,
-        ])}
-        />
-        <ZoomOutTool zoomOut={useCallback(() => drawingEngine.current.scaleDown(), [
-          drawingEngine.current,
-        ])}
-        />
+        <ZoomInTool zoomIn={handleZoomIn} />
+        <ZoomOutTool zoomOut={handleZoomOut} />
         <Divider flexItem orientation='vertical' />
         <ClearBoardTool clearBoard={drawingEngine.current.clearBoard} />
         <ShareLinkBox
@@ -247,7 +255,7 @@ const Canvas = () => {
             <Circle
               color={color}
               identifier={color}
-              onClick={() => drawingEngine.current.markerColor = color}
+              onClick={handleMarkerSelect}
               size={50}
             />
           </React.Fragment>)

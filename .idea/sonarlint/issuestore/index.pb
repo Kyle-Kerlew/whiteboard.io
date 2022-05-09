@@ -99,8 +99,6 @@ a
 1client/src/components/schema/SignInAsGuest.yup.js,b\0\b0516eb53ca427c101a0e086dc63c6048a8069c6
 `
 0client/src/components/shared/constants/colors.js,1\f\1f13b6843b294cb72173f4e94838d6ed9bd3c6ec
-C
-client/.eslintrc.js,f\d\fdf5b3917e455a96a82adb346d5d38060c2d5774
 L
 client/src/styles/footer.css,3\b\3b51955b9572ffa4f063d29a6f797475a36a92f9
 S
@@ -125,8 +123,6 @@ K
 client/public/manifest.json,2\5\253fc91369b428e8530c1e5206f921d081515f15
 R
 "client/src/components/svg/logo.svg,8\5\85a227d7a259f21b6ddd8c2b36d9b5905177172f
-C
-client/package.json,a\d\ad8a30996233c30cdd545dbf5f18765b86e6bf64
 a
 1client/src/components/navigation/drawingNavbar.js,7\c\7cc2ceff41595842f1d6364bbad5f14ad654b91b
 b
@@ -159,8 +155,6 @@ W
 'client/src/components/routing/router.js,3\d\3d69d53d87b86b91bab06687b9fbdc9f1f894a25
 C
 client/src/index.js,7\6\76cbb38a5cef42611c7af13985f39248682f4aa1
-@
-client/server.js,5\7\5721a0d275d3d75e2ae2f7f6f4216b0d461a2407
 X
 (client/src/components/toolbar/toolbar.js,3\6\36b81b7235a097e7485d6bcc39bb3636912dfd3e
 =
@@ -175,3 +169,5 @@ U
 -client/src/components/drawing/socketEngine.js,e\3\e3102349e1a9ecb9e590aa6cfed5cdb3f871d4e7
 a
 1client/src/components/toolbar/tools/zoomInTool.js,7\b\7b3a323a469c8957d45e3165a42d94629f79f257
+R
+"client/src/reducers/userReducer.js,3\a\3af3e9d3f595ac02dfee7e96d822cc0e9c01d450
