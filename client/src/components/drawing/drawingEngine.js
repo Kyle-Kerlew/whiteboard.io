@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import * as Constants from '../../configuration/constants';
 import {
   Socket,
 } from '../../configuration/socket';
 import Shapes from '../../types/Shapes';
+import line from '../svg/line.svg';
 
 function bindAll (target) {
   const keys = Object.getOwnPropertyNames(target.constructor.prototype);
@@ -133,7 +133,6 @@ export class DrawingEngine {
   }
 
   handleScrollZoom (event) {
-    console.log('Handle scroll zoom');
     if (event.isTrusted && event.ctrlKey) {
       event.preventDefault();
       if (event.deltaY < 0) {
@@ -146,13 +145,11 @@ export class DrawingEngine {
 
   handleKeyDown (event) {
     if (event.ctrlKey && event.key === '=') {
-      // prevent browser from zooming normally
       event.preventDefault();
       this.scaleUp();
     }
 
     if (event.ctrlKey && event.key === '-') {
-      // prevent browser from zooming normally
       event.preventDefault();
       this.scaleDown();
     }
@@ -183,7 +180,7 @@ export class DrawingEngine {
     context.moveTo(mouseX, mouseY);
   }
 
-  handleDragTouch (event, shape) {
+  handleDragTouch (event) {
     if (this.isMouseDown) {
       const context = this.canvasContext;
       const mouseX = this.getMousePositionX(event, context.canvas.offsetLeft);
@@ -204,22 +201,14 @@ export class DrawingEngine {
         this.isFirstStroke = false;
       }
 
-      switch (shape) {
+      switch (this.shape) {
       case Shapes.LINE:
       case Shapes.SQUARE:
         if (this.shapeStartPoint) {
-          if (!this.canvasPic) {
-            const canvasPic = new Image();
-            canvasPic.src = document.querySelector('#canvas').toDataURL();
-            canvasPic.onload = () => context.drawImage(canvasPic, 0, 0);
-            this.canvasPic = canvasPic;
-          }
-
           context.beginPath();
-          // This causes a very unfortunate flashing
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-          context.drawImage(this.canvasPic, 0, 0);
-          this.drawShape(shape, this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
+          this.draw(this.drawingData);
+          this.drawShape(this.shape, this.shapeStartPoint.x, this.shapeStartPoint.y, mouseX, mouseY);
         } else {
           this.shapeStartPoint = {
             x: mouseX,
@@ -248,20 +237,20 @@ export class DrawingEngine {
     context.stroke();
   }
 
-  handleEndDrawing (event, shape) {
+  handleEndDrawing (event) {
     const context = this.canvasContext;
     const mouseX = this.getMousePositionX(event, context.canvas.offsetLeft);
     const mouseY = this.getMousePositionY(event, context.canvas.offsetTop);
     const newDrawData = {
       color: this.markerColor,
-      shape,
+      shape: this.shape,
       size: this.paintSize,
       whiteboardId: this.whiteboardId,
       x: mouseX,
       y: mouseY,
     };
 
-    switch (shape) {
+    switch (this.shape) {
     case Shapes.LINE:
     case Shapes.SQUARE:
 
@@ -326,7 +315,7 @@ export class DrawingEngine {
   draw (data) {
     if (_.isArray(data)) {
       for (const item of data) {
-        this.drawPoint(item.x, item.y, item.color, item.size, item.moveTo, item.shape);
+        this.drawPoint(item.x, item.y, item.color, item.size, item.moveTo, item.shape, true);
       }
 
       return;

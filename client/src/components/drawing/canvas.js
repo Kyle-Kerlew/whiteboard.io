@@ -60,11 +60,6 @@ const Canvas = () => {
     setCanvasMouseDown,
   ] = useState(false);
 
-  const [
-    shape,
-    setShape,
-  ] = useState(undefined);
-
   const drawingEngine = useRef({});
   const socketEngine = useRef({});
   const {
@@ -118,6 +113,10 @@ const Canvas = () => {
     whiteboardId,
   ]);
 
+  const setShape = (shape) => {
+    drawingEngine.current.shape = shape;
+  };
+
   const attachWindowListeners = () => {
     window.addEventListener('keydown', (event) => drawingEngine.current.handleKeyDown(event), {
       passive: false,
@@ -151,15 +150,15 @@ const Canvas = () => {
     dispatch(loginUser('guest'));
   };
 
-  const handleMouseMove = (event, eventShape) => {
+  const handleMouseMove = (event) => {
     // Is object empty? Prevents errors when moving mouse as page loads
     if (Object.keys(drawingEngine.current).length !== 0) {
-      drawingEngine.current.handleDragTouch(event, eventShape);
+      drawingEngine.current.handleDragTouch(event);
     }
   };
 
-  const handleMouseUp = (event, eventShape) => {
-    drawingEngine.current.handleEndDrawing(event, eventShape);
+  const handleMouseUp = (event) => {
+    drawingEngine.current.handleEndDrawing(event);
   };
 
   const handleTouchEnd = (event) => {
@@ -205,8 +204,8 @@ const Canvas = () => {
         id='canvas'
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
-        onMouseMove={(event) => handleMouseMove(event, shape)}
-        onMouseUp={(event) => handleMouseUp(event, shape)}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
         onTouchEnd={handleTouchEnd}
         onTouchMove={handleTouchMove}
         onTouchStart={handleTouchStart}
