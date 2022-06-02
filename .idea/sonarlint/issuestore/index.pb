@@ -139,8 +139,6 @@ Q
 !client/src/resources/svg/load.svg,a\1\a1ac155f688fed7b8e0fb4b083417615fd45ef3a
 O
 client/src/styles/boardList.css,6\a\6a63ebc74f5503c0a59b0d30bf9c88db4c258806
-U
-%client/src/components/svg/writing.svg,7\c\7c6ad962e0d1488d39889514e50262c43dbde7c5
 Y
 )client/src/components/svg/marker-icon.svg,2\1\2193f96be843aaf787231a06f658195cde618f7c
 M
@@ -171,3 +169,5 @@ a
 1client/src/components/toolbar/tools/zoomInTool.js,7\b\7b3a323a469c8957d45e3165a42d94629f79f257
 R
 "client/src/reducers/userReducer.js,3\a\3af3e9d3f595ac02dfee7e96d822cc0e9c01d450
+U
+%client/src/components/svg/writing.svg,7\c\7c6ad962e0d1488d39889514e50262c43dbde7c5
