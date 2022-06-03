@@ -204,6 +204,7 @@ export class DrawingEngine {
       switch (this.shape) {
       case Shapes.LINE:
       case Shapes.SQUARE:
+      case Shapes.CIRCLE:
         if (this.shapeStartPoint) {
           context.beginPath();
           context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -253,6 +254,7 @@ export class DrawingEngine {
     switch (this.shape) {
     case Shapes.LINE:
     case Shapes.SQUARE:
+    case Shapes.CIRCLE:
 
       newDrawData.moveTo = {
         x: this.shapeStartPoint ? this.shapeStartPoint.x : newDrawData.x,
@@ -263,7 +265,7 @@ export class DrawingEngine {
       this.shapeStartPoint = undefined;
       this.shape = undefined;
       this.canvasPic = undefined;
-      context.beginPath();
+      // context.beginPath();
 
       break;
     default:
@@ -301,9 +303,18 @@ export class DrawingEngine {
       context.moveTo(moveTo.x, moveTo.y);
     }
 
-    if (shape === Shapes.SQUARE) {
+    switch (shape) {
+    case Shapes.SQUARE:
       context.strokeRect(moveTo.x, moveTo.y, x - moveTo.x, y - moveTo.y);
-    } else {
+      break;
+    case Shapes.CIRCLE:
+      context.beginPath();
+      context.ellipse(moveTo.x, moveTo.y, Math.abs(x - moveTo.x), Math.abs(y - moveTo.y), 0, 0, 2 * Math.PI);
+      break;
+    case Shapes.LINE:
+      context.lineTo(x, y);
+      break;
+    default:
       context.lineTo(x, y);
     }
 
@@ -330,7 +341,6 @@ export class DrawingEngine {
     context.canvas.width *= canvasTransformX;
     context.canvas.height *= canvasTransformY;
     context.scale(this.scale, this.scale);
-    console.log('Drawing data', this.drawingData);
     this.draw(this.drawingData);
     context.beginPath();
   }
@@ -361,6 +371,11 @@ export class DrawingEngine {
       break;
     case Shapes.LINE:
       context.lineTo(currentX, currentY);
+      break;
+    case Shapes.CIRCLE:
+      // We don't want the ellipse to be added to a pre-existing subpath
+      context.beginPath();
+      context.ellipse(startX, startY, Math.abs(currentX - startX), Math.abs(currentY - startY), 0, 0, 2 * Math.PI);
       break;
     }
 
