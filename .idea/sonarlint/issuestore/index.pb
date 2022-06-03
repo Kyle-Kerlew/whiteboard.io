@@ -91,8 +91,6 @@ Z
 .client/src/components/shared/focusDialogBox.js,9\c\9c30033a2fdca24d44a7419b825c0ac80de4c3a9
 X
 (client/src/resources/svg/circle-icon.svg,0\3\03878b24f08cda722e5c27da4082df1e3d66ed51
-J
-client/src/types/Shapes.js,0\e\0e6b0246b54aef13119d8665cde054adb769a4f3
 d
 4client/src/components/toolbar/tools/linkShareTool.js,a\a\aa60fcefe0cd5acb6a24e5cf0a252666d75c4097
 a
@@ -109,8 +107,6 @@ R
 "client/src/configuration/socket.js,6\5\65635667ab5423463cd2ab1f3c25b7118cb7e6cd
 T
 $client/src/components/page/signIn.js,6\6\66b37519df478ca360e47d04342251a245a1cc89
-`
-0client/src/components/toolbar/tools/shapeTool.js,a\6\a6cbacd0a490f3d775ea32c881e31632edd77f0d
 X
 (client/src/reducers/whiteboardReducer.js,b\1\b158e7502f06c2392e53392148ae5fa321e3ab6a
 Q
@@ -171,3 +167,13 @@ R
 "client/src/reducers/userReducer.js,3\a\3af3e9d3f595ac02dfee7e96d822cc0e9c01d450
 U
 %client/src/components/svg/writing.svg,7\c\7c6ad962e0d1488d39889514e50262c43dbde7c5
+R
+"client/src/components/svg/line.svg,e\a\ea0c38f74be0227e72e4d76ab1bb398a57d67c24
+W
+'client/src/components/shared/lineSvg.js,d\e\de11fc3eb4f8c7c7ea80c956173b7ca1586ae501
+Y
+)client/src/components/shared/squareSvg.js,9\e\9e72c99680d3f73401705db70728c68638fc85d2
+`
+0client/src/components/toolbar/tools/shapeTool.js,a\6\a6cbacd0a490f3d775ea32c881e31632edd77f0d
+W
+'client/src/components/drawing/canvas.js,2\d\2dfdf3f9247dbc1908f5eb6bfed676915fac7919
