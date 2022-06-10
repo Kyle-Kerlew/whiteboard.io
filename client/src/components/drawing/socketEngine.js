@@ -11,10 +11,6 @@ import {
 } from '../../reducers/whiteboardReducer';
 
 export class SocketEngine {
-  props = {};
-
-  constructor (props) {}
-
   get drawingEngine () {
     return this._drawingEngine;
   }

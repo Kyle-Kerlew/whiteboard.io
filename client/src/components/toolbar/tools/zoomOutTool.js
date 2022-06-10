@@ -1,12 +1,14 @@
 import React from 'react';
-import ZoomOutIcon from "../../../resources/svg/zoom-out-icon.svg";
+import ZoomOutIcon from '../../../resources/svg/zoom-out-icon.svg';
 
-function ZoomOutTool({zoomOut}) {
-    return (
-        <div>
-            <img onClick={zoomOut} src={ZoomOutIcon} alt={"Zoom Out"}/>
-        </div>
-    )
-}
+const ZoomOutTool = ({
+  zoomOut,
+}) => {
+  return (
+    <div>
+      <img alt='Zoom Out' draggable={false} onClick={zoomOut} src={ZoomOutIcon} />
+    </div>
+  );
+};
 
 export default ZoomOutTool;
