@@ -25,8 +25,6 @@ L
 build-tool/package-lock.json,b\3\b3b292f0f874c57d19deebbaf28f3fe9264c8ce1
 A
 package-lock.json,f\a\fa288d1472d29beccb489a676f68739ad365fc47
-F
-build-tool/gulpfile.js,7\8\78b8462c70eb7afc39f627f244a6d8351496d1f4
 A
 client/.gitignore,e\3\e32ec5c998c4774d8d1bedd59740d14d940c90ec
 M
@@ -127,8 +125,6 @@ C
 client/src/index.js,7\6\76cbb38a5cef42611c7af13985f39248682f4aa1
 X
 (client/src/components/toolbar/toolbar.js,3\6\36b81b7235a097e7485d6bcc39bb3636912dfd3e
-=
-server/app.js,5\a\5a213799dbe3ac4e529d1609c34bb35426f86370
 Y
 )server/persistence/connections/mongodb.js,3\a\3a669249a6f8382bddcb9cf78aa6a0019f6893d1
 U
