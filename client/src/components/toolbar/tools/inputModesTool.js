@@ -100,6 +100,7 @@ const InputModesTool = ({
         >
           <img
             alt='Marker Options'
+            draggable={false}
             height='36px'
             src={MarkerIcon}
             width='36px'

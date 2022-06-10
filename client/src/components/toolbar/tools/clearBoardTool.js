@@ -10,7 +10,7 @@ const ClearBoardTool = ({
 
   return (
     <div>
-      <img alt='Clear Board' onClick={handleOnClick} src={CrossIcon} />
+      <img alt='Clear Board' draggable={false} onClick={handleOnClick} src={CrossIcon} />
     </div>
   );
 };

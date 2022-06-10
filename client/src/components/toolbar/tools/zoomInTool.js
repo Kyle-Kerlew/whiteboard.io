@@ -1,12 +1,14 @@
 import React from 'react';
-import ZoomInIcon from "../../../resources/svg/zoom-in-icon.svg";
+import ZoomInIcon from '../../../resources/svg/zoom-in-icon.svg';
 
-function ZoomInTool({zoomIn}) {
-    return (
-        <div>
-            <img onClick={zoomIn} src={ZoomInIcon} alt={"Zoom In"}/>
-        </div>
-    )
-}
+const ZoomInTool = ({
+  zoomIn,
+}) => {
+  return (
+    <div>
+      <img alt='Zoom In' draggable={false} onClick={zoomIn} src={ZoomInIcon} />
+    </div>
+  );
+};
 
 export default ZoomInTool;
