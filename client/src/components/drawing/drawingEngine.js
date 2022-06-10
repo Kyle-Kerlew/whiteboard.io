@@ -252,7 +252,6 @@ export class DrawingEngine {
       delete this.history[0];
 
       // Shift left
-      console.log('this.history length', Object.keys(this.history).length);
       for (let index = 0; index < Object.keys(this.history).length; index++) {
         if (!this.history[index + 1]) {
           delete this.history[index];
@@ -263,6 +262,7 @@ export class DrawingEngine {
       }
     }
 
+    // initialize new history entry
     this.history[Object.keys(this.history).length] = [];
   }
 
@@ -315,7 +315,6 @@ export class DrawingEngine {
       this.draw(subpathData);
       Socket.emit('drawing-data', subpathData);
       this.drawingData = this.drawingData.concat(subpathData);
-      console.log('pushing on index', Object.keys(this.history).length - 1);
       this.history[Object.keys(this.history).length - 1].push(subpathData);
       context.stroke();
       break;
@@ -338,6 +337,7 @@ export class DrawingEngine {
     this.shape = undefined;
     this.shapeStartPoint = undefined;
     if (this.shapeDataToDraw) {
+      this.history[Object.keys(this.history).length - 1].push(this.shapeDataToDraw);
       this.drawingData = this.drawingData.concat(this.shapeDataToDraw);
       Socket.emit('drawing-data', this.shapeDataToDraw);
       this.shapeDataToDraw = undefined;
@@ -373,16 +373,21 @@ export class DrawingEngine {
     case Shapes.SQUARE:
       context.moveTo(shapeStartPoint.x, shapeStartPoint.y);
       context.strokeRect(shapeStartPoint.x, shapeStartPoint.y, x - shapeStartPoint.x, y - shapeStartPoint.y);
+      context.stroke();
       break;
     case Shapes.CIRCLE:
       context.moveTo(shapeStartPoint.x, shapeStartPoint.y);
       context.beginPath();
       context.ellipse(shapeStartPoint.x, shapeStartPoint.y, Math.abs(x - shapeStartPoint.x), Math.abs(y - shapeStartPoint.y), 0, 0, 2 * Math.PI);
+      context.stroke();
+
       break;
     case Shapes.LINE:
       context.beginPath();
       context.moveTo(shapeStartPoint.x, shapeStartPoint.y);
       context.lineTo(x, y);
+      context.stroke();
+
       break;
     default:
       context.lineTo(x, y);
