@@ -7,7 +7,10 @@
     background-color: #EEEEEE;
     border-radius: 50px;
     box-shadow: rgba(0, 0, 0, 0.19) 0 10px 20px, rgba(0, 0, 0, 0.23) 0 6px 6px;
+    /*Prevent "text highlighting" of images*/
+    user-select: none;
 }
+
 
 .bottom {
     margin: 0 auto;

@@ -40,6 +40,7 @@ import EraserTool from '../toolbar/tools/eraserTool';
 import InputModesTool from '../toolbar/tools/inputModesTool';
 import ShareLinkBox from '../toolbar/tools/linkShareTool';
 import ShapeTool from '../toolbar/tools/shapeTool';
+import UndoRedoTool from '../toolbar/tools/undoRedoTool';
 import ZoomInTool from '../toolbar/tools/zoomInTool';
 import ZoomOutTool from '../toolbar/tools/zoomOutTool';
 import {
@@ -158,11 +159,11 @@ const Canvas = () => {
   };
 
   const handleMouseUp = (event) => {
-    drawingEngine.current.handleEndDrawing(event);
+    drawingEngine.current.handleEndStroke(event);
   };
 
   const handleTouchEnd = (event) => {
-    drawingEngine.current.handleEndDrawing(event);
+    drawingEngine.current.handleEndStroke(event);
   };
 
   const handleTouchMove = (event) => {
@@ -234,7 +235,7 @@ const Canvas = () => {
         <InputModesTool
           handleMarkerClick={handleMarkerClick}
         />
-        <EraserTool setIsErasing={handleErasing} />
+        <UndoRedoTool onRedo={drawingEngine.current.handleRedo} onUndo={drawingEngine.current.handleUndo} />
         <Divider flexItem orientation='vertical' />
         <ZoomInTool zoomIn={handleZoomIn} />
         <ZoomOutTool zoomOut={handleZoomOut} />
