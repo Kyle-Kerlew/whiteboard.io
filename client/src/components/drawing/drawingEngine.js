@@ -373,25 +373,23 @@ export class DrawingEngine {
     case Shapes.SQUARE:
       context.moveTo(shapeStartPoint.x, shapeStartPoint.y);
       context.strokeRect(shapeStartPoint.x, shapeStartPoint.y, x - shapeStartPoint.x, y - shapeStartPoint.y);
-      context.stroke();
       break;
     case Shapes.CIRCLE:
       context.moveTo(shapeStartPoint.x, shapeStartPoint.y);
       context.beginPath();
       context.ellipse(shapeStartPoint.x, shapeStartPoint.y, Math.abs(x - shapeStartPoint.x), Math.abs(y - shapeStartPoint.y), 0, 0, 2 * Math.PI);
-      context.stroke();
-
       break;
     case Shapes.LINE:
       context.beginPath();
       context.moveTo(shapeStartPoint.x, shapeStartPoint.y);
       context.lineTo(x, y);
-      context.stroke();
 
       break;
     default:
       context.lineTo(x, y);
     }
+
+    context.stroke();
   }
 
   draw (data) {

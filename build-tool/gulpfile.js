@@ -50,7 +50,6 @@ function zipClient(cb) {
 
     const zip = new AdmZip();
     zip.addLocalFolder(path.join(clientFolder, '/build'), '/build');
-    zip.addLocalFolder(path.join(clientFolder, '.ebextensions'), '/.ebextensions');
     zip.addLocalFile(path.join(clientFolder, 'package.json'));
     zip.addLocalFile(path.join(clientFolder, 'server.js'));
     zip.writeZip(path.join(__dirname, '..', 'client.zip'), (err) => {
@@ -66,7 +65,6 @@ function zipServer(cb) {
     const serverFolder = path.join(__dirname, '..', 'server');
 
     const zip = new AdmZip();
-    zip.addLocalFolder(path.join(serverFolder, '.ebextensions'), '/.ebextensions');
     zip.addLocalFolder(path.join(serverFolder, './persistence'), '/persistence');
     zip.addLocalFile(path.join(serverFolder, 'package.json'));
     zip.addLocalFile(path.join(serverFolder, 'app.js'));

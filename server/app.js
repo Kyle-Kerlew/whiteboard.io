@@ -25,7 +25,7 @@ const sessionConfig = session({
     name: 'session-id',
     cookie: {
         httpOnly: true,
-        maxAge: 1800000, //30 mins
+        maxAge: 3600000*24, //24 Hours
     },
     saveUninitialized: false,
     resave: false,
