@@ -152,41 +152,33 @@ export class DrawingEngine {
   handleRedo () {
     if (this.currHistoryOffset === 0) {
       // nothing to redo
-      console.log('Nothing to redo');
       return;
     }
 
     this.currHistoryOffset += 1;
     const context = this.canvasContext;
-    console.log('history object', this.history);
-    console.log('History length as an object', Object.keys(this.history).length);
-    const strokesToDraw = [];
-    for (let index = 0; index < Object.keys(this.history).length - Math.abs(this.currHistoryOffset); index++) {
-      strokesToDraw.push(...this.history[index]);
-    }
+    const strokesToDraw = Object.values(Object.fromEntries(Object.entries(this.history).slice(0, Object.keys(this.history).length - Math.abs(this.currHistoryOffset))));
 
-    console.log('Strokes to draw');
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     if (!strokesToDraw || strokesToDraw.length === 0) {
       return;
     }
 
-    const drawingDataOverwrite = strokesToDraw.flat();
-    this.draw(drawingDataOverwrite);
+    for (const strokes of strokesToDraw) {
+      this.canvasContext.beginPath();
+      this.draw(strokes);
+      this.canvasContext.stroke();
+    }
   }
 
   handleUndo () {
     if (Math.abs(this.currHistoryOffset) > Object.keys(this.history).length - 1) {
-      console.log('No undo left');
       return;
     }
 
     const context = this.canvasContext;
     this.currHistoryOffset -= 1;
-    console.log('history obj length', Object.keys(this.history).length);
-
     const strokesToDraw = Object.values(Object.fromEntries(Object.entries(this.history).slice(0, Object.keys(this.history).length - Math.abs(this.currHistoryOffset))));
-    console.log(strokesToDraw);
 
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
@@ -256,9 +248,19 @@ export class DrawingEngine {
     context.moveTo(mouseX, mouseY);
     // initialize a new "stroke"
     context.beginPath();
-    if (this.history && Object.keys(this.history).length === 30) {
+    if (this.history && Object.keys(this.history).length >= 30) {
       delete this.history[0];
-      console.log('Popped first element', this.history);
+
+      // Shift left
+      console.log('this.history length', Object.keys(this.history).length);
+      for (let index = 0; index < Object.keys(this.history).length; index++) {
+        if (!this.history[index + 1]) {
+          delete this.history[index];
+          break;
+        }
+
+        this.history[index] = this.history[index + 1];
+      }
     }
 
     this.history[Object.keys(this.history).length] = [];
