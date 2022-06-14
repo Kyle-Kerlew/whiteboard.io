@@ -69,8 +69,6 @@ V
 &client/src/components/shared/bubble.js,f\e\fed298a998b4c12a8fe7cb1c6ee28a2404757c6c
 H
 client/webpack.config.js,d\b\db91159a4eecb54e3a284cf4001a94c2e39df366
-Z
-*client/src/components/drawing/boardList.js,6\a\6a55fd18ef0ab5e59dee1894cfb5ac451dae4da8
 ^
 .client/src/components/shared/focusDialogBox.js,9\c\9c30033a2fdca24d44a7419b825c0ac80de4c3a9
 X
