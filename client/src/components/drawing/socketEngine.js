@@ -37,10 +37,10 @@ export class SocketEngine {
   initializeSocketListeners (whiteboardId) {
     Socket.connect();
     Socket.emit('join', whiteboardId);
-    Socket.on('empty-page-from-server', () => this.drawingEngine.current.clearBoard(false));
-    Socket.on('drawing-data-from-server', (data) => this.drawingEngine.current.draw(data));
-    Socket.on('joined', (data) => this.props.addCollaborator(data));
-    Socket.on('left', (data) => this.props.removeCollaborator(data));
+    Socket.on('empty-page-from-server', () => this.drawingEngine.clearBoard(false));
+    Socket.on('drawing-data-from-server', (data) => this.drawingEngine.draw(data));
+    Socket.on('joined', (data) => this.drawingEngine.addCollaborator(data));
+    Socket.on('left', (data) => this.drawingEngine.removeCollaborator(data));
   }
 
   disconnect () {

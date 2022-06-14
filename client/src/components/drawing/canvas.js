@@ -32,11 +32,11 @@ import '../../styles/shareLinkBox.css';
 import SignInAsGuestSchema from '../schema/SignInAsGuest.yup';
 import COLORS from '../shared/constants/colors';
 import GuestModalForm from '../shared/guestModalForm';
+import Loading from '../shared/loading';
 import Circle from '../svg/circle';
 import Toolbar from '../toolbar/toolbar';
 import ClearBoardTool from '../toolbar/tools/clearBoardTool';
 import DownloadImageTool from '../toolbar/tools/downloadImageTool';
-import EraserTool from '../toolbar/tools/eraserTool';
 import InputModesTool from '../toolbar/tools/inputModesTool';
 import ShareLinkBox from '../toolbar/tools/linkShareTool';
 import ShapeTool from '../toolbar/tools/shapeTool';
@@ -57,6 +57,10 @@ const Canvas = () => {
   ] = useState(false);
 
   const [
+    isLoading,
+    setIsLoading,
+  ] = useState(false);
+  const [
     canvasMouseDown,
     setCanvasMouseDown,
   ] = useState(false);
@@ -72,6 +76,7 @@ const Canvas = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setIsLoading(true);
     const setWhiteboardData = async () => {
       const response = await WhiteboardController.getWhiteboardById(whiteboardId);
       if (response) {
@@ -84,6 +89,8 @@ const Canvas = () => {
           drawingEngine.current.draw(response.data);
           drawingEngine.current.drawingData = response.data;
         }
+
+        setIsLoading(false);
       }
     };
 
@@ -159,7 +166,9 @@ const Canvas = () => {
   };
 
   const handleMouseUp = (event) => {
-    drawingEngine.current.handleEndStroke(event);
+    if (canvasMouseDown) {
+      drawingEngine.current.handleEndStroke(event);
+    }
   };
 
   const handleTouchEnd = (event) => {
@@ -189,16 +198,14 @@ const Canvas = () => {
     drawingEngine.current.paintSize = value;
   };
 
-  const handleErasing = () => {
-    drawingEngine.current.markerColor = 'white';
-  };
-
   const handleMarkerSelect = (color) => {
     drawingEngine.current.markerColor = color;
   };
 
   return (
     <div id='canvas-container'>
+      {isLoading &&
+      <Loading />}
       <canvas
         className='drawing-board'
         height={window.innerHeight}
@@ -255,7 +262,7 @@ const Canvas = () => {
             <Circle
               color={color}
               identifier={color}
-              onClick={handleMarkerSelect}
+              onClick={() => handleMarkerSelect(color)}
               size={50}
             />
           </React.Fragment>)

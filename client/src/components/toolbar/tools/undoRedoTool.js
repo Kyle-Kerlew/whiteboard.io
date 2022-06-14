@@ -7,16 +7,17 @@ const UndoRedoTool = ({
   onRedo,
 }) => {
   return (
-    <div style={{
-      display: 'flex',
-      gap: '5px',
-    }}
+    <div
+      style={{
+        display: 'flex',
+        gap: '5px',
+      }}
     >
-      <div draggable={false} onClick={onUndo}>
-        <img alt='Undo' src={UndoIcon} />
+      <div onClick={onUndo}>
+        <img alt='Undo' draggable={false} src={UndoIcon} />
       </div>
-      <div draggable={false} onClick={onRedo}>
-        <img alt='Redo' src={RedoIcon} />
+      <div onClick={onRedo}>
+        <img alt='Redo' draggable={false} src={RedoIcon} />
       </div>
     </div>
   );

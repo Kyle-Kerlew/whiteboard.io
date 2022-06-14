@@ -1,4 +1,4 @@
 export const axios = require('axios').create({
-    baseURL: 'http://localhost:3001/',
-    withCredentials: true
+  baseURL: process.env.REACT_APP_BASE_URL,
+  withCredentials: true,
 });
