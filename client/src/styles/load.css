@@ -1,0 +1,16 @@
+.loading-icon {
+    background-color: transparent;
+    position: fixed;
+    top: calc(50% - 56px);
+    left: 50%;
+    animation: load 2s infinite;
+}
+
+@keyframes load {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

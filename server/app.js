@@ -16,6 +16,7 @@ const helmet = require("helmet");
 
 const expressServer = express();
 
+expressServer.set('trust proxy', 1) // trust first proxy
 expressServer.use(express.json());
 expressServer.use(express.urlencoded({extended: false}));
 expressServer.use(cookieParser());
@@ -24,8 +25,9 @@ const sessionConfig = session({
     secret: process.env.SESSION_SECRET, //TODO: Change
     name: 'session-id',
     cookie: {
-        httpOnly: true,
         maxAge: 3600000*24, //24 Hours
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : undefined,
+        secure: process.env.NODE_ENV === 'production'
     },
     saveUninitialized: false,
     resave: false,
@@ -41,24 +43,20 @@ expressServer.use(sessionConfig);
 expressServer.use(helmet());
 expressServer.use(passport.initialize());
 expressServer.use(passport.session());
-expressServer.use(cors({origin: "http://localhost:3000", methods: "*", credentials: true}));
+expressServer.use(cors({origin: process.env.REACT_APP_URL, methods: "*", credentials: true}));
+
 expressServer.use('/user', userController);
 expressServer.use('/whiteboard', whiteboardController);
 
 
-const server = expressServer.listen(process.env.NODE_ENV !== 'production' ? 3001 : 8080, async (error) => {
+const server = expressServer.listen(process.env.PORT || 8080,'0.0.0.0', async (error) => {
     if (error) {
         console.log("Error starting express server", error);
         return;
     }
     await mongodb.run();
-
 });
 const socketIoServer = new Server(server, {
-    cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET"]
-    },
     serveClient: false,
 });
 socketIoServer.on('connection', handleConnection);
