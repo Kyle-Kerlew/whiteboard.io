@@ -360,9 +360,6 @@ export class DrawingEngine {
     context.lineCap = 'round';
     context.lineWidth = sizeToUse;
     context.strokeStyle = colorToDraw;
-    if (moveTo && array) {
-      context.stroke();
-    }
 
     if (moveTo) {
       context.beginPath();
@@ -372,6 +369,7 @@ export class DrawingEngine {
     switch (shape) {
     case Shapes.SQUARE:
       context.moveTo(shapeStartPoint.x, shapeStartPoint.y);
+      context.beginPath();
       context.strokeRect(shapeStartPoint.x, shapeStartPoint.y, x - shapeStartPoint.x, y - shapeStartPoint.y);
       break;
     case Shapes.CIRCLE:
