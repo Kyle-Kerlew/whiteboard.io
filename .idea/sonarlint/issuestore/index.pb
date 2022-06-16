@@ -69,12 +69,8 @@ V
 &client/src/components/shared/bubble.js,f\e\fed298a998b4c12a8fe7cb1c6ee28a2404757c6c
 H
 client/webpack.config.js,d\b\db91159a4eecb54e3a284cf4001a94c2e39df366
-^
-.client/src/components/shared/focusDialogBox.js,9\c\9c30033a2fdca24d44a7419b825c0ac80de4c3a9
 X
 (client/src/resources/svg/circle-icon.svg,0\3\03878b24f08cda722e5c27da4082df1e3d66ed51
-a
-1client/src/components/schema/SignInAsGuest.yup.js,b\0\b0516eb53ca427c101a0e086dc63c6048a8069c6
 `
 0client/src/components/shared/constants/colors.js,1\f\1f13b6843b294cb72173f4e94838d6ed9bd3c6ec
 L
