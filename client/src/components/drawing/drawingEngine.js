@@ -140,13 +140,14 @@ export class DrawingEngine {
 
   clearBoard (emitMessage) {
     const context = this.canvasContext;
-    delete this.drawingData;
+    this.drawingData = [];
     if (emitMessage) {
       Socket.emit('empty-page', this.whiteboardId);
     }
 
-    this.drawingData = [];
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    // I think the context's scale affects clearing the board when zoomed causing the entire board to not clear when zoomed out
+    context.clearRect(0, 0, context.canvas.width * this.scale ** -1, context.canvas.height * this.scale ** -1);
+    context.beginPath();
   }
 
   handleRedo () {
@@ -405,11 +406,11 @@ export class DrawingEngine {
   handleZoom (canvasTransformX, canvasTransformY) {
     const context = this.canvasContext;
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.beginPath();
     context.canvas.width *= canvasTransformX;
     context.canvas.height *= canvasTransformY;
     context.scale(this.scale, this.scale);
     this.draw(this.drawingData);
-    context.beginPath();
   }
 
   applyScaleToData () {
