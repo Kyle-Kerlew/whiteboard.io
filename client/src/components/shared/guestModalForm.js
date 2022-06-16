@@ -26,10 +26,11 @@ const GuestModalForm = ({
         values,
         handleBlur,
         handleSubmit,
+        isValid,
         handleChange,
       }) => <FocusDialogBox
         buttonText='Confirm'
-        isValid={Boolean(values.firstName && values.lastName && values.email)}
+        isValid={isValid}
         onSubmit={(event) => handleSubmit(event)}
         text='Let other collaborators know who you are!'
       >
