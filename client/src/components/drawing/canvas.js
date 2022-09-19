@@ -95,7 +95,7 @@ const Canvas = () => {
     };
 
     if (drawingEngine && drawingEngine !== {}) {
-      socketEngine.current = new SocketEngine();
+      socketEngine.current = new SocketEngine(dispatch);
       drawingEngine.current = new DrawingEngine(
         {
           canvasContext: canvasRef.current.getContext('2d'),
