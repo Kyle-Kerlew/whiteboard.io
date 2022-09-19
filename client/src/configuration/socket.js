@@ -2,11 +2,11 @@ import {
   io,
 } from 'socket.io-client';
 
-export const Socket = io(process.env.NODE_ENV !== 'production' ?
-  'https://whiteboard-io-server-demo.herokuapp.com/' :
+export const Socket = io(
   process.env.REACT_APP_BASE_URL, {
-  autoConnect: false,
-  transports: [
-    'websocket',
-  ],
-});
+    autoConnect: false,
+    transports: [
+      'websocket',
+    ],
+  },
+);

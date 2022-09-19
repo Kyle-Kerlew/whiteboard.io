@@ -13,7 +13,6 @@ const {mongodb} = require('./persistence/connections/mongodb');
 const {Server} = require("socket.io");
 const sharedSession = require('express-socket.io-session');
 const helmet = require("helmet");
-
 const expressServer = express();
 
 expressServer.set('trust proxy', 1) // trust first proxy

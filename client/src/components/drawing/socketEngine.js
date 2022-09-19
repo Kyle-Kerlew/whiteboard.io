@@ -15,6 +15,10 @@ export class SocketEngine {
     return this._drawingEngine;
   }
 
+  constructor (dispatch) {
+    this.dispatch = dispatch;
+  }
+
   set drawingEngine (drawingEngine) {
     this._drawingEngine = drawingEngine;
   }
@@ -27,25 +31,16 @@ export class SocketEngine {
     Socket.emit('drawing-data', data);
   }
 
-  mapDispatchToProps = (dispatch) => {
-    return {
-      addCollaborator: (data) => dispatch(addCollaborator(data)),
-      removeCollaborator: (data) => dispatch(removeCollaborator(data)),
-    };
-  };
-
   initializeSocketListeners (whiteboardId) {
     Socket.connect();
     Socket.emit('join', whiteboardId);
     Socket.on('empty-page-from-server', () => this.drawingEngine.clearBoard(false));
     Socket.on('drawing-data-from-server', (data) => this.drawingEngine.draw(data));
-    Socket.on('joined', (data) => this.drawingEngine.addCollaborator(data));
-    Socket.on('left', (data) => this.drawingEngine.removeCollaborator(data));
+    Socket.on('joined', (data) => this.dispatch(addCollaborator(data)));
+    Socket.on('left', (data) => this.dispatch(removeCollaborator(data)));
   }
 
   disconnect () {
     Socket.disconnect();
   }
 }
-
-export default connect(null, mapDispatchToProps)(SocketEngine);
