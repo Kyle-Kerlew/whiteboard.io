@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3a7f4b9a-4f94-4d50-a94c-c15cd665ff09" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/shared/loading.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/resources/svg/loading.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/styles/load.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/a/3a669249a6f8382bddcb9cf78aa6a0019f6893d1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/c/5c41153cfa750957e7ecb4ef8daff01f2fecc882" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/5/65635667ab5423463cd2ab1f3c25b7118cb7e6cd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/1/b158e7502f06c2392e53392148ae5fa321e3ab6a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.env" beforeDir="false" afterPath="$PROJECT_DIR$/client/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/drawing/boardList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/drawing/boardList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/drawing/canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/drawing/canvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/drawing/drawingEngine.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/drawing/drawingEngine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/drawing/socketEngine.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/drawing/socketEngine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/shared/guestModalForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/shared/guestModalForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/linkShareTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/linkShareTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/undoRedoTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/undoRedoTool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/configuration/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/configuration/axios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/configuration/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/configuration/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/.env" beforeDir="false" afterPath="$PROJECT_DIR$/server/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/configuration/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/configuration/axios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/socket/socketHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/socket/socketHandler.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/Kyle-Kerlew/whiteboard.io" />
+      </set>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/client/package.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/client/src/components/navigation/browsingNavbar.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/client/src/components/navigation/useNavbar.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/client/src/components/page/home.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/client/src/components/routing/router.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/client/src/components/shared/footer.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/client/src/index.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/client/src/styles/footer.css" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/client/src/styles/globals.css" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="1pdWs2rEWN9bkZoMMzrUKc4l9tU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Users\\kylek\\AppData\\Local\\JetBrains\\Toolbox\\apps\\WebStorm\\ch-0\\222.4167.31\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\svg" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\components\svg" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public\demo" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\demo" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\svg" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\configuration" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\styles" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\components\shared" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="scratch" type="NodeJSConfigurationType" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="scratch.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$APPLICATION_CONFIG_DIR$/scratches/scratch.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Node.js.scratch" />
+      <item itemvalue="Node.js.scratch.js" />
+      <item itemvalue="npm.dev" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="Node.js.scratch.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3a7f4b9a-4f94-4d50-a94c-c15cd665ff09" name="Default Changelist" comment="" />
+      <created>1615513652328</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1615513652328</updated>
+      <workItem from="1615513653869" duration="2590000" />
+      <workItem from="1615522590148" duration="757000" />
+      <workItem from="1615561047870" duration="10430000" />
+      <workItem from="1615615756808" duration="288000" />
+      <workItem from="1615616055633" duration="2562000" />
+      <workItem from="1615618779883" duration="265000" />
+      <workItem from="1615619157415" duration="4761000" />
+      <workItem from="1615623975275" duration="101000" />
+      <workItem from="1615624084728" duration="142000" />
+      <workItem from="1615820747647" duration="7709000" />
+      <workItem from="1615866212855" duration="167000" />
+      <workItem from="1615866508726" duration="102000" />
+      <workItem from="1615866622517" duration="2173000" />
+      <workItem from="1615916336424" duration="14269000" />
+      <workItem from="1615948764912" duration="327000" />
+      <workItem from="1615949222137" duration="11202000" />
+      <workItem from="1616047958853" duration="3340000" />
+      <workItem from="1616159533884" duration="6388000" />
+      <workItem from="1616252057222" duration="22480000" />
+      <workItem from="1616339067388" duration="16982000" />
+      <workItem from="1616391175023" duration="209000" />
+      <workItem from="1616391394614" duration="4432000" />
+      <workItem from="1616395928387" duration="5685000" />
+      <workItem from="1616471003340" duration="31279000" />
+      <workItem from="1616605735201" duration="47444000" />
+      <workItem from="1616866672112" duration="1156000" />
+      <workItem from="1617028862245" duration="2945000" />
+      <workItem from="1617151112032" duration="2531000" />
+      <workItem from="1617225993423" duration="4918000" />
+      <workItem from="1617417656646" duration="5696000" />
+      <workItem from="1618249325785" duration="3605000" />
+      <workItem from="1618269862392" duration="553000" />
+      <workItem from="1619669406179" duration="1009000" />
+      <workItem from="1619728444602" duration="7259000" />
+      <workItem from="1619797692071" duration="50163000" />
+      <workItem from="1619999963596" duration="21009000" />
+      <workItem from="1620145030570" duration="24711000" />
+      <workItem from="1620604871499" duration="2706000" />
+      <workItem from="1620668940060" duration="1545000" />
+      <workItem from="1620673007302" duration="41205000" />
+      <workItem from="1620784641156" duration="164000" />
+      <workItem from="1620941191534" duration="601000" />
+      <workItem from="1621235971941" duration="22000" />
+      <workItem from="1621964112558" duration="31991000" />
+      <workItem from="1622014330939" duration="80000" />
+      <workItem from="1622014441690" duration="62736000" />
+      <workItem from="1622501415448" duration="66211000" />
+      <workItem from="1622772495979" duration="2917000" />
+      <workItem from="1623379454923" duration="545000" />
+      <workItem from="1623380020121" duration="54423000" />
+      <workItem from="1624036103034" duration="12513000" />
+      <workItem from="1624062210951" duration="4948000" />
+      <workItem from="1624067262986" duration="88511000" />
+      <workItem from="1624560235902" duration="47729000" />
+      <workItem from="1624923508073" duration="301000" />
+      <workItem from="1624974554815" duration="31697000" />
+      <workItem from="1625702937748" duration="11783000" />
+      <workItem from="1625850219991" duration="18758000" />
+      <workItem from="1626049303492" duration="1042000" />
+      <workItem from="1626711831891" duration="5065000" />
+      <workItem from="1626719128941" duration="15783000" />
+      <workItem from="1626746604810" duration="34920000" />
+      <workItem from="1627187697854" duration="1710000" />
+      <workItem from="1627256423686" duration="20959000" />
+      <workItem from="1627789273491" duration="4017000" />
+      <workItem from="1628041233326" duration="256000" />
+      <workItem from="1628638899433" duration="423000" />
+      <workItem from="1629072880641" duration="4675000" />
+      <workItem from="1629141211779" duration="9000" />
+      <workItem from="1629157052471" duration="346000" />
+      <workItem from="1629915947226" duration="271000" />
+      <workItem from="1631756704845" duration="1043000" />
+      <workItem from="1631811250674" duration="593000" />
+      <workItem from="1632593524210" duration="595000" />
+      <workItem from="1633117904464" duration="12858000" />
+      <workItem from="1633218980865" duration="1925000" />
+      <workItem from="1633999932726" duration="7802000" />
+      <workItem from="1634135521577" duration="14211000" />
+      <workItem from="1634587243782" duration="9000" />
+      <workItem from="1634853154089" duration="10018000" />
+      <workItem from="1636073130959" duration="595000" />
+      <workItem from="1637726956583" duration="6770000" />
+      <workItem from="1638135303568" duration="5141000" />
+      <workItem from="1639364742718" duration="3225000" />
+      <workItem from="1640279048561" duration="4526000" />
+      <workItem from="1640283762427" duration="79000" />
+      <workItem from="1640283863830" duration="1242000" />
+      <workItem from="1640541854982" duration="734000" />
+      <workItem from="1640542768615" duration="833000" />
+      <workItem from="1640546262734" duration="5183000" />
+      <workItem from="1640551666815" duration="6111000" />
+      <workItem from="1640983869873" duration="22061000" />
+      <workItem from="1642301202202" duration="15291000" />
+      <workItem from="1643473186222" duration="593000" />
+      <workItem from="1643991318594" duration="14429000" />
+      <workItem from="1644073975975" duration="659000" />
+      <workItem from="1644080976951" duration="82000" />
+      <workItem from="1644098399586" duration="11000" />
+      <workItem from="1646435944574" duration="5319000" />
+      <workItem from="1646525885397" duration="3528000" />
+      <workItem from="1646883328066" duration="411000" />
+      <workItem from="1646954259987" duration="10055000" />
+      <workItem from="1648329468121" duration="9131000" />
+      <workItem from="1648403765655" duration="14467000" />
+      <workItem from="1649020255485" duration="608000" />
+      <workItem from="1649266975792" duration="1235000" />
+      <workItem from="1649477418746" duration="735000" />
+      <workItem from="1649524266047" duration="7604000" />
+      <workItem from="1649622313369" duration="6761000" />
+      <workItem from="1649721855643" duration="998000" />
+      <workItem from="1649887177633" duration="9949000" />
+      <workItem from="1650823374825" duration="6624000" />
+      <workItem from="1651358104740" duration="5549000" />
+      <workItem from="1651364850087" duration="148000" />
+      <workItem from="1651365324170" duration="5940000" />
+      <workItem from="1651420000369" duration="1880000" />
+      <workItem from="1651447271092" duration="4708000" />
+      <workItem from="1651704099390" duration="595000" />
+      <workItem from="1651793201214" duration="5551000" />
+      <workItem from="1652065841442" duration="1125000" />
+      <workItem from="1652067048359" duration="3445000" />
+      <workItem from="1652143759250" duration="4342000" />
+      <workItem from="1652216761153" duration="812000" />
+      <workItem from="1652288253489" duration="7979000" />
+      <workItem from="1652314226781" duration="4402000" />
+      <workItem from="1652319215348" duration="36000" />
+      <workItem from="1652393336459" duration="812000" />
+      <workItem from="1652999094954" duration="160000" />
+      <workItem from="1654128016429" duration="4686000" />
+      <workItem from="1654217418760" duration="4428000" />
+      <workItem from="1654462629668" duration="11008000" />
+      <workItem from="1654873092899" duration="16021000" />
+      <workItem from="1654890267017" duration="7433000" />
+      <workItem from="1654973628918" duration="103000" />
+      <workItem from="1655228346137" duration="8451000" />
+      <workItem from="1655335518664" duration="3910000" />
+      <workItem from="1656021502175" duration="65000" />
+      <workItem from="1657025298108" duration="2174000" />
+      <workItem from="1657030625657" duration="6000" />
+      <workItem from="1657740361179" duration="629000" />
+      <workItem from="1659467281010" duration="726000" />
+      <workItem from="1659630681259" duration="690000" />
+      <workItem from="1659631569029" duration="43000" />
+      <workItem from="1660578067561" duration="756000" />
+      <workItem from="1660657687331" duration="717000" />
+      <workItem from="1662996879824" duration="1226000" />
+      <workItem from="1663121050932" duration="109000" />
+      <workItem from="1663544394819" duration="3068000" />
+      <workItem from="1663620103004" duration="5004000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="includedJSSourcePackages">
+      <set>
+        <option value="socket.io-client" />
+      </set>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

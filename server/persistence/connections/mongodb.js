@@ -1,8 +1,5 @@
 const {MongoClient} = require('mongodb');
-
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
+require('dotenv').config();
 const uri = process.env.DB_URI;
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -50,12 +47,13 @@ async function run() {
 
 
 module.exports = {
+    client,
     mongodb: {
         insertOne,
         update,
         findAndUpdate,
-        read,
         client,
+        read,
         run,
         findAll
     }
