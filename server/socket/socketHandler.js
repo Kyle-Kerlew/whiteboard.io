@@ -2,6 +2,7 @@ const {BoardService} = require("../service/board/boardService");
 
 function handleConnection(socket) {
     socket.on('join', async whiteboardId => {
+        console.log("user joining", whiteboardId)
         const user = socket.handshake.session?.passport?.user;
         console.log("User has joined the whiteboard", user);
         socket.join(whiteboardId);

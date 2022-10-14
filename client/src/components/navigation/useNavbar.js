@@ -11,11 +11,8 @@ function useNavbar (NavigationOptionsComponent, collapse = true) {
         return (
           <Navbar bg='light' expand={collapse ? 'lg' : undefined} fixed='top'>
             <div
-              className='container-xl' style={{
-                justifyContent: 'unset',
-              }}
-            >
-              <Navbar.Brand href='/'>
+              className='container-xl d-flex align-items-center justify-content-between w-100'>
+              <Navbar.Brand className={"align-self-start"} href='/'>
                 <img alt='logo' src={logo} />
               </Navbar.Brand>
               <Navbar.Toggle />

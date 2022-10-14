@@ -17,13 +17,9 @@
     bottom: 15px;
     left: 0;
     right: 0;
-    max-width: 500px;
+    max-width: 650px;
     padding: 15px;
-    gap: 0 10px;
-}
-
-.bottom img {
-    width: 100%;
+    gap: 0 20px;
 }
 
 /*Collapse separators for mobile view*/
@@ -48,17 +44,7 @@
     top: 0;
     left: 15px;
     padding: 15px;
-    gap: 10px 0;
-}
-
-.left svg {
-    height: 100%;
-}
-
-@media screen and (min-height: 600px) {
-
-    .left {
-    }
+    gap: 20px 0;
 }
 
 .left img {

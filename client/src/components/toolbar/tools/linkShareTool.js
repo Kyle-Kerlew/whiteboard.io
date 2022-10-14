@@ -14,7 +14,7 @@ import React, {
 import {
   useRouteMatch,
 } from 'react-router-dom';
-import LinkIcon from '../../../resources/svg/link-icon.svg';
+import LinkIcon from '../../../resources/consistentsvg/share.svg';
 import '../../../styles/shareLinkBox.css';
 
 const ShareLinkBox = ({

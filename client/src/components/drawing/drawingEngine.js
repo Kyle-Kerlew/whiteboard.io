@@ -141,6 +141,7 @@ export class DrawingEngine {
   clearBoard (emitMessage) {
     const context = this.canvasContext;
     this.drawingData = [];
+    this.history = [];
     if (emitMessage) {
       Socket.emit('empty-page', this.whiteboardId);
     }

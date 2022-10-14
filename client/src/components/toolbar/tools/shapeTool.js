@@ -5,13 +5,14 @@ import {
   MenuItem,
   MenuList,
   Paper,
-  Popper,
-  Stack,
+  Popper
 } from '@mui/material';
 import React, {
   useState,
 } from 'react';
 import Shapes from '../../../types/Shapes';
+import ShapeDropdownClosed from "../../../resources/consistentsvg/shape-dropdown-closed.svg";
+import ShapeDropdownOpen from "../../../resources/consistentsvg/shape-dropdown-open.svg";
 
 const ShapeTool = ({
   handleChange,
@@ -54,12 +55,7 @@ const ShapeTool = ({
   }
 
   return (
-    <Stack direction='row' height='36px' spacing={2} width='36px'>
-      <div style={{
-        height: '36px',
-        width: '36px',
-      }}
-      >
+      <div>
         <Button
           aria-controls={open ?
             'composition-menu' :
@@ -72,19 +68,11 @@ const ShapeTool = ({
           onClick={handleClick}
           ref={anchorElement}
           style={{
-            height: '36px',
-            minWidth: '36px',
             padding: 'unset',
-            width: '36px',
+            minWidth: 'unset'
           }}
         >
-          <div style={{
-            border: '3px solid black',
-            borderRadius: '6px',
-            height: '36px',
-            width: '36px',
-          }}
-          />
+          <img alt='Select Shape' draggable={false} src={open ? ShapeDropdownOpen : ShapeDropdownClosed} />
         </Button>
         <Popper
           anchorEl={anchorElement}
@@ -130,7 +118,6 @@ const ShapeTool = ({
           </Grow>}
         </Popper>
       </div>
-    </Stack>
   );
 };
 

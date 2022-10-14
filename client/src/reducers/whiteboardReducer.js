@@ -14,7 +14,10 @@ export const whiteboardSlice = createSlice(
     name: 'whiteboard',
     reducers: {
       addCollaborator: (state, action) => {
-        state.value.collaborators = state.value.collaborators.concat(action.payload);
+        if (state.value.collaborators.find(collaborator => action.payload.firstName === collaborator.firstName && action.payload.lastName)) {
+          return;
+        }
+        state.value.collaborators.push(action.payload);
       },
       editTitle: (state, action) => {
         state.value.title = action.payload;
