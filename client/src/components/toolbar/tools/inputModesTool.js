@@ -5,13 +5,13 @@ import {
   MenuItem,
   MenuList,
   Paper,
-  Popper,
-  Stack,
+  Popper
 } from '@mui/material';
 import React, {
   useState,
 } from 'react';
-import MarkerIcon from '../../../resources/svg/marker-icon.svg';
+import SizeDropdownClosed from '../../../resources/consistentsvg/size-dropdown-closed.svg';
+import SizeDropdownOpen from '../../../resources/consistentsvg/size-dropdown-open.svg';
 
 const InputModesTool = ({
   handleMarkerClick,
@@ -73,12 +73,7 @@ const InputModesTool = ({
   ];
 
   return (
-    <Stack direction='row' height={32} pacing={2} width={32}>
-      <div style={{
-        height: '36px',
-        width: '36px',
-      }}
-      >
+      <div>
         <Button
           aria-controls={open ?
             'composition-menu' :
@@ -92,18 +87,14 @@ const InputModesTool = ({
           onClick={handleClick}
           ref={anchorElement}
           style={{
-            height: '36px',
-            minWidth: '36px',
             padding: 'unset',
-            width: '36px',
+            minWidth: 'unset'
           }}
         >
           <img
             alt='Marker Options'
             draggable={false}
-            height='36px'
-            src={MarkerIcon}
-            width='36px'
+            src={open ? SizeDropdownOpen : SizeDropdownClosed}
           />
         </Button>
         <Popper
@@ -149,7 +140,6 @@ const InputModesTool = ({
           </Grow>}
         </Popper>
       </div>
-    </Stack>
   );
 };
 

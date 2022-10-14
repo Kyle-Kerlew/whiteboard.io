@@ -1,5 +1,5 @@
 import React from 'react';
-import CrossIcon from '../../../resources/svg/cross-icon.svg';
+import CrossIcon from '../../../resources/consistentsvg/trash.svg';
 
 const ClearBoardTool = ({
   clearBoard,

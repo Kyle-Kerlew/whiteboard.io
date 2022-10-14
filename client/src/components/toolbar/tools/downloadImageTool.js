@@ -1,7 +1,7 @@
 import React, {
   useState,
 } from 'react';
-import DownloadIcon from '../../../resources/svg/download-icon.svg';
+import DownloadIcon from '../../../resources/consistentsvg/download.svg';
 
 const DownloadImageTool = ({
   getDownloadData,

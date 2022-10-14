@@ -9,7 +9,7 @@ function BrowsingNavbar () {
   const user = useSelector((state) => state.user.value);
   const BrowserNavComponent = () => <>
     {!user.isLoadingUser &&
-      <>
+      <div className={'d-inline-flex'}>
         {user.isAuthenticated ?
           <Nav.Link href='/my-boards'>My Boards</Nav.Link> :
           <>
@@ -17,7 +17,7 @@ function BrowsingNavbar () {
             <Nav.Link href='/create-account'>Create Account</Nav.Link>
           </>}
 
-      </>}
+      </div>}
   </>;
 
   return useNavbar(BrowserNavComponent, false);

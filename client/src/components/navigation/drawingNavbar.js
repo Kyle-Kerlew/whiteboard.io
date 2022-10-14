@@ -6,8 +6,8 @@ import {
 import ActiveUsers from './activeUsers';
 import useNavbar from './useNavbar';
 
-function DrawingNavbar (props) {
-  const DrawingNavbarComponent = () => <Navbar.Text><ActiveUsers collaborators={props?.collaborators || []} /></Navbar.Text>;
+function DrawingNavbar () {
+  const DrawingNavbarComponent = () => <Navbar.Text><ActiveUsers/></Navbar.Text>;
   return useNavbar(DrawingNavbarComponent, false);
 }
 

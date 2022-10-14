@@ -1,5 +1,5 @@
 import React from 'react';
-import ZoomOutIcon from '../../../resources/svg/zoom-out-icon.svg';
+import ZoomOutIcon from '../../../resources/consistentsvg/zoom-out.svg';
 
 const ZoomOutTool = ({
   zoomOut,
