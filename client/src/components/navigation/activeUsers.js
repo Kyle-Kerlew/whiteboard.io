@@ -2,16 +2,19 @@ import Bubble from '../shared/bubble';
 import '../../styles/activeUsers.css';
 import React from 'react';
 import _ from 'lodash';
+import {useSelector} from "react-redux";
 
-const ActiveUsers = ({
-  collaborators,
-}) => {
+const ActiveUsers = () => {
+  const collaborators =  useSelector((state) => {
+    return state.whiteboard.value.collaborators;
+  })
   const colors = [
     '#7CC0EB',
     '#94EB65',
     '#EB4DEB',
     '#EBA23A',
   ];
+  console.log()
   const maxCircles = 4;
   const overflow = collaborators.length - maxCircles;
 
@@ -39,12 +42,13 @@ const ActiveUsers = ({
   return (
     <div className='users-container'>
       {collaboratorInfo.collaborators.map((user) => <Bubble
+          key={user.lastName + user.lastName}
         color={getRandomColor()}
         text={user.firstName.slice(0, 1) + user.lastName.slice(0, 1)}
       />)}
       {collaboratorInfo.overflowUsers.length > 0 && collaboratorInfo.overflowUsers.map((overflowUser) => <div
         className='overflow'
-        key={overflowUser.firstName}
+        key={user.lastName + user.lastName}
       >{`+ ${overflow} other${overflow > 1 ?
           's' :
           ''}`}</div>)}

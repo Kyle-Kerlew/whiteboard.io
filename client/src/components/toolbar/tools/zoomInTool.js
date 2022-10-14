@@ -1,5 +1,5 @@
 import React from 'react';
-import ZoomInIcon from '../../../resources/svg/zoom-in-icon.svg';
+import ZoomInIcon from '../../../resources/consistentsvg/zoom-in.svg';
 
 const ZoomInTool = ({
   zoomIn,

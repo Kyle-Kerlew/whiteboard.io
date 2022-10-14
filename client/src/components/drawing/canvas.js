@@ -29,6 +29,7 @@ import {
   editTitle,
 } from '../../reducers/whiteboardReducer';
 import '../../styles/shareLinkBox.css';
+import '../../styles/divider.css';
 import SignInAsGuestSchema from '../schema/SignInAsGuest.yup';
 import COLORS from '../shared/constants/colors';
 import GuestModalForm from '../shared/guestModalForm';
@@ -109,9 +110,9 @@ const Canvas = () => {
       context.fillStyle = 'white';
       context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     }
-
     if (!user.isLoadingUser && user.role) {
       socketEngine.current.initializeSocketListeners(whiteboardId);
+
       setWhiteboardData();
     }
   }, [
@@ -243,11 +244,9 @@ const Canvas = () => {
           handleMarkerClick={handleMarkerClick}
         />
         <UndoRedoTool onRedo={drawingEngine.current.handleRedo} onUndo={drawingEngine.current.handleUndo} />
-        <Divider flexItem orientation='vertical' />
+        <Divider className="divider" flexItem orientation='vertical' />
         <ZoomInTool zoomIn={handleZoomIn} />
         <ZoomOutTool zoomOut={handleZoomOut} />
-        <Divider flexItem orientation='vertical' />
-        <ClearBoardTool clearBoard={drawingEngine.current.clearBoard} />
         <ShareLinkBox
           showSuccessToast={showSuccessToast}
           text='Copy this link to share and collaborate!'
@@ -255,6 +254,8 @@ const Canvas = () => {
         <DownloadImageTool
           getDownloadData={() => canvasRef.current.toDataURL('image/png')}
         />
+        <Divider className="divider" flexItem orientation='vertical' />
+        <ClearBoardTool clearBoard={drawingEngine.current.clearBoard} />
       </Toolbar>
       <Toolbar isMouseDown={drawingEngine.current.isMouseDown} position='left'>
         {

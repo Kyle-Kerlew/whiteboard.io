@@ -1,6 +1,6 @@
 import React from 'react';
-import RedoIcon from '../../../resources/svg/redo-icon.svg';
-import UndoIcon from '../../../resources/svg/undo-icon.svg';
+import RedoIcon from '../../../resources/consistentsvg/redo.svg';
+import UndoIcon from '../../../resources/consistentsvg/undo.svg';
 
 const UndoRedoTool = ({
   onUndo,
@@ -8,10 +8,7 @@ const UndoRedoTool = ({
 }) => {
   return (
     <div
-      style={{
-        display: 'flex',
-        gap: '5px',
-      }}
+        style={{display: 'inherit', gap: "inherit"}}
     >
       <div onClick={onUndo}>
         <img alt='Undo' draggable={false} src={UndoIcon} />
