@@ -198,13 +198,14 @@ export class DrawingEngine {
   handleResize () {
     const context = this.canvasContext;
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.canvas.width = window.innerWidth;
-    context.canvas.height = window.innerHeight;
     this.draw(this.applyScaleToData());
   }
 
   handleScrollZoom (event) {
-    if (event.isTrusted && event.ctrlKey) {
+    if (!event.isTrusted) {
+     return;
+    }
+    if (event.ctrlKey) {
       event.preventDefault();
       if (event.deltaY < 0) {
         this.scaleUp();
@@ -309,7 +310,7 @@ export class DrawingEngine {
         subpathData.moveTo = this.shapeStartPoint;
       }
 
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      context.clearRect(0, 0, context.canvas.width / this.scale, context.canvas.height  / this.scale);
       this.draw(this.drawingData.concat(subpathData));
       this.shapeDataToDraw = subpathData;
       break;
@@ -356,7 +357,7 @@ export class DrawingEngine {
     this.handleZoom(0.8, 0.8);
   }
 
-  drawPoint (x, y, colorToDraw, sizeToUse, moveTo, shape, shapeStartPoint, array = false) {
+  drawPoint (x, y, colorToDraw, sizeToUse, moveTo, shape, shapeStartPoint) {
     const context = this.canvasContext;
     context.lineJoin = 'round';
     context.lineCap = 'round';
@@ -407,7 +408,6 @@ export class DrawingEngine {
   handleZoom (canvasTransformX, canvasTransformY) {
     const context = this.canvasContext;
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.beginPath();
     context.canvas.width *= canvasTransformX;
     context.canvas.height *= canvasTransformY;
     context.scale(this.scale, this.scale);
