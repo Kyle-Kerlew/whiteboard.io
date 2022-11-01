@@ -28,13 +28,9 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.snap {
-    block-size: 100vh;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-}
 .navbar {
     display: flex;
+    padding: 0;
 }
 
 .navbar > .nav-link {

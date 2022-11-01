@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3a7f4b9a-4f94-4d50-a94c-c15cd665ff09" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/navigation/EditableTitle.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/components/shared/loading.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/3d-rect-corner-to-corner.svg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/cancel.svg" afterDir="false" />
@@ -34,6 +35,8 @@
       <change beforePath="$PROJECT_DIR$/client/src/components/navigation/browsingNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/browsingNavbar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/navigation/drawingNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/drawingNavbar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/navigation/useNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/useNavbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/page/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/page/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/page/signIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/page/signIn.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/shared/guestModalForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/shared/guestModalForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/svg/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/svg/logo.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/clearBoardTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/clearBoardTool.js" afterDir="false" />
@@ -49,7 +52,12 @@
       <change beforePath="$PROJECT_DIR$/client/src/reducers/whiteboardReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/whiteboardReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/resources/svg/download-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/resources/svg/download-icon.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/resources/svg/link-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/resources/svg/link-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/activeUsers.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/activeUsers.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/boardList.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/boardList.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/home.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/sign-in.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/sign-in.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/toolbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/toolbar.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.env" beforeDir="false" afterPath="$PROJECT_DIR$/server/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
@@ -57,7 +65,9 @@
       <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/socket/socketHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/socket/socketHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/utils/hash.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/hash.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -338,6 +348,21 @@
       <workItem from="1664282705458" duration="2668000" />
       <workItem from="1664375325570" duration="4455000" />
       <workItem from="1664638634314" duration="6036000" />
+      <workItem from="1665770229257" duration="78000" />
+      <workItem from="1665969472337" duration="983000" />
+      <workItem from="1666026778934" duration="755000" />
+      <workItem from="1666050009111" duration="658000" />
+      <workItem from="1666093399281" duration="245000" />
+      <workItem from="1666095700331" duration="1198000" />
+      <workItem from="1666130570214" duration="3270000" />
+      <workItem from="1666449747321" duration="18000" />
+      <workItem from="1666900892623" duration="6029000" />
+      <workItem from="1666984326205" duration="1700000" />
+      <workItem from="1667062423559" duration="1200000" />
+      <workItem from="1667255233444" duration="166000" />
+      <workItem from="1667255735810" duration="3462000" />
+      <workItem from="1667259404298" duration="2861000" />
+      <workItem from="1667300620028" duration="3452000" />
     </task>
     <servers />
   </component>
@@ -367,12 +392,6 @@
           <url>file://$PROJECT_DIR$/client/src/components/drawing/socketEngine.js</url>
           <line>26</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/client/src/components/navigation/useNavbar.js</url>
-          <line>7</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
