@@ -16,7 +16,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px 0 25px 0;
 }
 
 .text-button-container > p {
