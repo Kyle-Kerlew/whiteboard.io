@@ -1,14 +1,21 @@
 import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
 import {
-  connect,
+    connect, useSelector,
 } from 'react-redux';
 import ActiveUsers from './activeUsers';
 import useNavbar from './useNavbar';
+import EditableTitle from "./EditableTitle";
 
-function DrawingNavbar () {
-  const DrawingNavbarComponent = () => <Navbar.Text><ActiveUsers/></Navbar.Text>;
-  return useNavbar(DrawingNavbarComponent, false);
+function DrawingNavbar() {
+    const DrawingNavbarComponent = () => {
+        return (
+            <>
+                <EditableTitle/>
+                <ActiveUsers/>
+            </>
+        )
+    };
+    return useNavbar(DrawingNavbarComponent, false);
 }
 
 const mapStateToProps = (state) => state.whiteboard.value;

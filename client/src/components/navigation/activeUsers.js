@@ -14,7 +14,6 @@ const ActiveUsers = () => {
     '#EB4DEB',
     '#EBA23A',
   ];
-  console.log()
   const maxCircles = 4;
   const overflow = collaborators.length - maxCircles;
 
@@ -40,7 +39,7 @@ const ActiveUsers = () => {
     overflowUsers: getOverflowUsers(),
   };
   return (
-    <div className='users-container'>
+    <div>
       {collaboratorInfo.collaborators.map((user) => <Bubble
           key={user.lastName + user.lastName}
         color={getRandomColor()}

@@ -13,14 +13,15 @@ function SignIn() {
     const dispatch = useDispatch();
 
     async function handleSignIn(formValues) {
+        const values = Object.assign({}, formValues)
         try {
-            formValues.password = btoa(formValues.password);
-            const response = await UserController.signIn(formValues);
+            values.password = btoa(values.password);
+            const response = await UserController.signIn(values);
             dispatch(loginUser(response.email));
             history.push('/');
         } catch (e) {
             console.log("Incorrect password.", e);
-            //TODO: toasst
+            alert('Incorrect Password');
         }
     }
 
@@ -33,9 +34,9 @@ function SignIn() {
                 {({handleSubmit, values, handleChange, onBlur}) => (
                     <form className="form" onSubmit={handleSubmit}>
                         <TextField type="username" value={values.username} onBlur={onBlur} onChange={handleChange}
-                                   name="username" label="Username"/>
+                                   name="username" label="Username" required/>
                         <TextField type="password" value={values.password} onBlur={onBlur} onChange={handleChange}
-                                   name="password" label="Password"/>
+                                   name="password" label="Password" required/>
 
                         <Button type="submit" variant="contained">Sign In</Button>
                         <p>Don't have an account? Create one <a href="/create-account">here</a></p>

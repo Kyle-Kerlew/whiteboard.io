@@ -9,9 +9,9 @@ function useNavbar (NavigationOptionsComponent, collapse = true) {
     <>
       {useMemo(() => {
         return (
-          <Navbar bg='light' expand={collapse ? 'lg' : undefined} fixed='top'>
+          <Navbar style={{margin: 'none'}} bg='light' expand={collapse ? 'lg' : undefined} fixed='top'>
             <div
-              className='container-xl d-flex align-items-center justify-content-between w-100'>
+              className='container-xl'>
               <Navbar.Brand className={"align-self-start"} href='/'>
                 <img alt='logo' src={logo} />
               </Navbar.Brand>

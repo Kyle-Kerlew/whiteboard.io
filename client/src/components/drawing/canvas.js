@@ -26,7 +26,7 @@ import {
 } from '../../reducers/userReducer';
 import {
   addCollaborator,
-  editTitle,
+  setTitle,
 } from '../../reducers/whiteboardReducer';
 import '../../styles/shareLinkBox.css';
 import '../../styles/divider.css';
@@ -85,7 +85,7 @@ const Canvas = () => {
           dispatch(addCollaborator(collaborator));
         }
 
-        dispatch(editTitle(response.title));
+        dispatch(setTitle(response.title));
         if (response.data) {
           drawingEngine.current.draw(response.data);
           drawingEngine.current.drawingData = response.data;

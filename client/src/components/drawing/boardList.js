@@ -39,17 +39,17 @@ const BoardList = () => {
       <div className='page-title'>
         <h1>Your Whiteboards</h1>
       </div>
-      <div className='item-container'>
+      <div className='item-container container-xl'>
         {isLoading &&
         <Loading />}
         {boardList.length > 0 &&
-                boardList.map((board) => <div className='item' key={board._id}>
+                boardList.map((board) => <a href={`/boards/${board._id}`} className='item' key={board._id}>
                   <div className='item-title'>{board.title}</div>
                   <ActiveUsers collaborators={[
                     ...board.collaborators,
                   ]}
                   />
-                </div>)}
+                </a>)}
       </div>
     </div>
   );

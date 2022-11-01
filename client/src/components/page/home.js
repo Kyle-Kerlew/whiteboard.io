@@ -29,7 +29,6 @@ const Home = () => {
   return (
     <div className='flex-container container-xl'>
       <div
-        className='snap'
         style={{
           alignItems: 'center',
           display: 'flex',
@@ -40,10 +39,12 @@ const Home = () => {
           flex: '1 1 50%',
           flexDirection: 'column',
           maxWidth: '500px',
+          gap: '15px'
 
         }}
         >
-          <h6>Whiteboard IO</h6>
+
+          <h1>Whiteboard IO</h1>
           <div className='text-button-container'>
             <p style={{
               color: '#8A969F',

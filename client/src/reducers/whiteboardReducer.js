@@ -19,7 +19,7 @@ export const whiteboardSlice = createSlice(
         }
         state.value.collaborators.push(action.payload);
       },
-      editTitle: (state, action) => {
+      setTitle: (state, action) => {
         state.value.title = action.payload;
       },
       removeCollaborator: (state, action) => {
@@ -35,7 +35,7 @@ export const whiteboardSlice = createSlice(
 export const {
   addCollaborator,
   removeCollaborator,
-  editTitle,
+  setTitle,
   setShape,
 } = whiteboardSlice.actions;
 

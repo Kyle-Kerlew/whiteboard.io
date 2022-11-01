@@ -4,6 +4,7 @@
     width: 50vw;
     max-width: 400px;
     margin: 25vh auto;
+    gap: 15px;
 }
 .form button {
     margin: 25px auto;
