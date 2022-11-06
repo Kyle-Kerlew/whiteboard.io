@@ -25,6 +25,10 @@ function handleConnection(socket) {
         socket.to(data.whiteboardId).emit("drawing-data-from-server", data);
         BoardService.updateDrawingData(data.whiteboardId, data);
     });
+    socket.on("update-title", data => {
+        socket.to(data.whiteboardId).emit("update-title", data.title);
+        BoardService.updateBoardTitle(data.whiteboardId, data.title);
+    });
     socket.on("empty-page", whiteboardId => {
         socket.to(whiteboardId).emit("empty-page-from-server");
         BoardService.deleteDrawingData(whiteboardId);

@@ -16,6 +16,13 @@ async function updateDrawingData(whiteboardId, data) {
     const updateQuery = {$push: {data: data}};
     await mongodb.update(query, updateQuery, drawingCollection);
 }
+async function updateBoardTitle(whiteboardId, title) {
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+
+    const query = {_id: new ObjectID(whiteboardId)};
+    const updateQuery = {$set: {title}};
+    await mongodb.update(query, updateQuery, drawingCollection);
+}
 
 function createWhiteboard(whiteboard) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
@@ -63,6 +70,7 @@ module.exports = {
         findWhiteboardById,
         deleteWhiteboardDrawingData,
         updateDrawingData,
+        updateBoardTitle,
         countWhiteboards,
         createWhiteboard,
         removeCollaborator,
