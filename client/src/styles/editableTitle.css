@@ -1,0 +1,16 @@
+.form {
+    width: min-content;
+}
+.title {
+    border: none;
+    background: none;
+    font-size: 2rem;
+    text-align: center;
+    text-overflow: ellipsis;
+    margin-left: -1.25rem;
+}
+
+.title:hover {
+    border-radius: 5px;
+    border: 1px solid black;
+}

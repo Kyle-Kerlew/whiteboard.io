@@ -1,24 +1,41 @@
-import React, {useRef} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, {useState} from 'react';
+import { useSelector} from "react-redux";
+
 import {
-    setTitle,
-} from '../../reducers/whiteboardReducer';
+    Socket,
+} from '../../configuration/socket';
+import "../../styles/editableTitle.css";
+
+import {useRouteMatch} from "react-router-dom";
+
 const EditableTitle = () => {
-    const title = useSelector((state) => state.whiteboard.value.title);
-    const formTitle = useRef();
-    const dispatch = useDispatch();
+    const currTitle = useSelector((state) => state.whiteboard.value.title);
+
+    const {
+        canvasId: whiteboardId,
+    } = useRouteMatch('/boards/:canvasId').params;
+    const [formTitle, setTitle] = useState();
     const handleChange = (title) => {
-        formTitle.current = title;
-        // dispatch(setTitle(title))
+        setTitle(title);
     }
-    const handleSubmit =(title) => {
-        formTitle.current = title;
-        dispatch(setTitle(title))
+    const handleSubmit = (title) => {
+        setTitle(title);
+        Socket.emit('update-title', {whiteboardId, title: title?.trim()});
     }
     return (
         <>
-            <form>
-                <input type="text" defaultValue={title} value={formTitle.current} style={{margin: '0'}} contentEditable name="title" onBlur={(e) => handleSubmit(e.currentTarget.value)} onChange={(e) => handleChange(e.currentTarget.value)}/>
+            <form onSubmit={(e) => e.preventDefault()}>
+                <input
+                    type="text"
+                    className="title"
+                    value={formTitle ?? currTitle}
+                    onBlur={() => handleSubmit(formTitle)}
+                    style={{margin: '0'}}
+                    spellCheck={false}
+                    contentEditable
+                    name="title"
+                    onChange={(e) => handleChange(e.currentTarget.value)}
+                />
             </form>
         </>
     );
