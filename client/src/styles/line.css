@@ -1,6 +1,5 @@
 .line {
-    margin: 50px 0 50px 0;
-    width: 80vw;
+    margin: 50px auto;
     height: 2px;
     background-color: #FF9314;
 }

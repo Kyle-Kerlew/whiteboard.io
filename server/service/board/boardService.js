@@ -33,6 +33,9 @@ function findWhiteboardByOwner(owner) {
 function updateDrawingData(whiteboardId, data) {
     return BoardPersistence.updateDrawingData(whiteboardId, data);
 }
+function updateBoardTitle(whiteboardId, title) {
+    return BoardPersistence.updateBoardTitle(whiteboardId, title);
+}
 
 function addCollaborator(whiteboardId, collaborator) {
     return BoardPersistence.addCollaborator(whiteboardId, collaborator);
@@ -49,6 +52,7 @@ module.exports = {
         createWhiteboard,
         countWhiteboards,
         updateDrawingData,
+        updateBoardTitle,
         removeCollaborator,
         addCollaborator,
         findWhiteboardByOwner

@@ -103,3 +103,8 @@
 .content > h1, img {
     cursor: pointer;
 }
+
+.features {
+    flex-direction: column;
+    margin: 0 auto;
+}

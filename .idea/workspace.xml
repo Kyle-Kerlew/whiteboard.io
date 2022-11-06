@@ -23,6 +23,7 @@
       <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/zoom-out.svg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/resources/svg/loading.svg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/styles/divider.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/styles/editableTitle.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/styles/load.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/.env" beforeDir="false" afterPath="$PROJECT_DIR$/client/.env" afterDir="false" />
@@ -38,6 +39,7 @@
       <change beforePath="$PROJECT_DIR$/client/src/components/page/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/page/home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/page/signIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/page/signIn.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/shared/guestModalForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/shared/guestModalForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/shared/line.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/shared/line.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/svg/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/svg/logo.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/clearBoardTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/clearBoardTool.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/downloadImageTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/downloadImageTool.js" afterDir="false" />
@@ -56,6 +58,7 @@
       <change beforePath="$PROJECT_DIR$/client/src/styles/boardList.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/boardList.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/line.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/line.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/sign-in.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/sign-in.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/toolbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/toolbar.css" afterDir="false" />
@@ -64,8 +67,10 @@
       <change beforePath="$PROJECT_DIR$/server/configuration/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/configuration/axios.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/persistence/board/boardPersistence.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/board/boardPersistence.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/service/board/boardService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/board/boardService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/socket/socketHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/socket/socketHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/utils/hash.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/hash.js" afterDir="false" />
     </list>
@@ -77,8 +82,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -131,12 +136,18 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/kylek/IdeaProjects/collaborative-drawing-app/client/src/resources/consistentsvg&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\kylek\\AppData\\Local\\JetBrains\\Toolbox\\apps\\WebStorm\\ch-0\\222.4167.31\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JavaScript&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -159,6 +170,9 @@
     <configuration name="scratch" type="NodeJSConfigurationType" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
+    <configuration name="scratch_2.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
     <configuration name="scratch.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$APPLICATION_CONFIG_DIR$/scratches/scratch.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
@@ -174,12 +188,14 @@
     </configuration>
     <list>
       <item itemvalue="Node.js.scratch" />
+      <item itemvalue="Node.js.scratch_2.js" />
       <item itemvalue="Node.js.scratch.js" />
       <item itemvalue="npm.dev" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
+        <item itemvalue="Node.js.scratch_2.js" />
         <item itemvalue="Node.js.scratch.js" />
       </list>
     </recent_temporary>
@@ -362,7 +378,11 @@
       <workItem from="1667255233444" duration="166000" />
       <workItem from="1667255735810" duration="3462000" />
       <workItem from="1667259404298" duration="2861000" />
-      <workItem from="1667300620028" duration="3452000" />
+      <workItem from="1667300620028" duration="3482000" />
+      <workItem from="1667353932841" duration="1333000" />
+      <workItem from="1667515533761" duration="31000" />
+      <workItem from="1667580342915" duration="12112000" />
+      <workItem from="1667742802004" duration="440000" />
     </task>
     <servers />
   </component>
@@ -390,7 +410,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/client/src/components/drawing/socketEngine.js</url>
-          <line>26</line>
+          <line>24</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

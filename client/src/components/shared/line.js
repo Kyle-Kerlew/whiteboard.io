@@ -3,8 +3,8 @@ import '../../styles/line.css';
 
 function Line() {
     return (
-        <div className='line'>
-        </div>
+        <span className='line container-xl'>
+        </span>
     );
 }
 

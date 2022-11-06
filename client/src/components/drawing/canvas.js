@@ -85,6 +85,7 @@ const Canvas = () => {
           dispatch(addCollaborator(collaborator));
         }
 
+
         dispatch(setTitle(response.title));
         if (response.data) {
           drawingEngine.current.draw(response.data);
