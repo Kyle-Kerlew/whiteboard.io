@@ -16,10 +16,15 @@ const EditableTitle = () => {
     } = useRouteMatch('/boards/:canvasId').params;
     const [formTitle, setTitle] = useState();
     const handleChange = (title) => {
+
         setTitle(title);
     }
     const handleSubmit = (title) => {
-        setTitle(title);
+        if (!title) {
+            setTitle(currTitle);
+            return;
+        }
+
         Socket.emit('update-title', {whiteboardId, title: title?.trim()});
     }
     return (
