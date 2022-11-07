@@ -69,6 +69,7 @@
       <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/persistence/board/boardPersistence.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/board/boardPersistence.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/rest/controller/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/rest/controller/userController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/service/board/boardService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/board/boardService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/socket/socketHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/socket/socketHandler.js" afterDir="false" />
@@ -88,7 +89,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/client" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/server" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -382,7 +383,9 @@
       <workItem from="1667353932841" duration="1333000" />
       <workItem from="1667515533761" duration="31000" />
       <workItem from="1667580342915" duration="12112000" />
-      <workItem from="1667742802004" duration="1530000" />
+      <workItem from="1667742802004" duration="4487000" />
+      <workItem from="1667764683696" duration="337000" />
+      <workItem from="1667836131162" duration="927000" />
     </task>
     <servers />
   </component>
