@@ -31,7 +31,11 @@ function findWhiteboardByOwner(owner) {
 }
 
 function updateDrawingData(whiteboardId, data) {
+
     return BoardPersistence.updateDrawingData(whiteboardId, data);
+}
+function removeDrawingData(whiteboardId, data) {
+    return BoardPersistence.removeDrawingData(whiteboardId, data);
 }
 function updateBoardTitle(whiteboardId, title) {
     return BoardPersistence.updateBoardTitle(whiteboardId, title);
@@ -55,6 +59,7 @@ module.exports = {
         updateBoardTitle,
         removeCollaborator,
         addCollaborator,
+        removeDrawingData,
         findWhiteboardByOwner
     }
 }
