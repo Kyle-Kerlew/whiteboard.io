@@ -182,8 +182,11 @@ export class DrawingEngine {
     this.currHistoryOffset -= 1;
     const strokesToDraw = Object.values(Object.fromEntries(Object.entries(this.history).slice(0, Object.keys(this.history).length - Math.abs(this.currHistoryOffset))));
 
+    console.log("History", this.history)
+    const undoneDrawing = this.history[Object.keys(this.history).length - Math.abs(this.currHistoryOffset)];
+    console.log("Undone drawing", undoneDrawing)
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
+    Socket.emit('undo', undoneDrawing);
     if (!strokesToDraw || strokesToDraw.length === 0) {
       return;
     }

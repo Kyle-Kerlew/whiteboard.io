@@ -17,6 +17,7 @@ router.post('/create-account', async function (req, res, next) {
 });
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
+    res.end();
 });
 router.post('/guest', passport.authenticate('local-guest'), function (req, res) {
     res.end();
