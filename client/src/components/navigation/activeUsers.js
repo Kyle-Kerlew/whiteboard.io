@@ -1,15 +1,20 @@
 import Bubble from '../shared/bubble';
 import '../../styles/activeUsers.css';
-import React, {useMemo} from 'react';
+import React from 'react';
 import _ from 'lodash';
 import {useSelector} from "react-redux";
 
-const ActiveUsers = () => {
-    const collaborators = useSelector((state) => {
-        return state.whiteboard.value.collaborators;
-    }, (oldVal, newVal) => {
-        return JSON.stringify(oldVal) === JSON.stringify(newVal)
-    })
+const ActiveUsers = ({collaborators: collaboratorProp = []}) => {
+    let collaborators = collaboratorProp;
+    console.log(collaboratorProp)
+    if (collaboratorProp.length !== 0){
+        collaborators = useSelector((state) => {
+            return state.whiteboard.value.collaborators;
+        }, (oldVal, newVal) => {
+            return JSON.stringify(oldVal) === JSON.stringify(newVal)
+        })
+    }
+
     const colors = [
         '#7CC0EB',
         '#94EB65',
