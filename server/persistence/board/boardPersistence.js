@@ -24,6 +24,7 @@ async function removeDrawingData(whiteboardId, data) {
     const updateQuery = {$pullAll: {data}};
     await mongodb.update(query, updateQuery, drawingCollection);
 }
+
 async function updateBoardTitle(whiteboardId, title) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
 
@@ -40,7 +41,11 @@ function createWhiteboard(whiteboard) {
 async function findWhiteboardsByOwner(owner) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
     const findQuery = {owner: owner};
-    return mongodb.findAll(findQuery, drawingCollection).toArray();
+    const result = await mongodb.findAll(findQuery, drawingCollection).toArray();
+    return result.map(item => {
+        delete item.data;
+        return item;
+    });
 }
 
 async function findWhiteboardById(whiteboardId) {
