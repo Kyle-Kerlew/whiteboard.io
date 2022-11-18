@@ -35,7 +35,6 @@
     "utf-8-validate": "^5.0.4",
     "uuid": "^8.3.2"
   },
-  "devDependencies": {},
   "engines": {
     "node": "16.13.1"
   }
