@@ -5,6 +5,9 @@ async function findWhiteboardById(whiteboardId, user) {
     result.collaborators = result.collaborators.filter(collaborator => user?.email !== collaborator.email);
     return result;
 }
+function findStrokesByWhiteboardId(whiteboardId) {
+    return BoardPersistence.findStrokesByWhiteboardId(whiteboardId);
+}
 
 function deleteDrawingData(whiteboardId) {
     return BoardPersistence.deleteWhiteboardDrawingData(whiteboardId);
@@ -31,11 +34,10 @@ function findWhiteboardByOwner(owner) {
 }
 
 function updateDrawingData(whiteboardId, data) {
-
-    return BoardPersistence.updateDrawingData(whiteboardId, data);
+    return BoardPersistence.updateDrawingData(whiteboardId, data.subpath, data.strokeId);
 }
-function removeDrawingData(whiteboardId, data) {
-    return BoardPersistence.removeDrawingData(whiteboardId, data);
+function removeDrawingData(whiteboardId, strokeId) {
+    return BoardPersistence.removeDrawingData(whiteboardId, strokeId);
 }
 function updateBoardTitle(whiteboardId, title) {
     return BoardPersistence.updateBoardTitle(whiteboardId, title);
@@ -60,6 +62,7 @@ module.exports = {
         removeCollaborator,
         addCollaborator,
         removeDrawingData,
-        findWhiteboardByOwner
+        findWhiteboardByOwner,
+        findStrokesByWhiteboardId
     }
 }

@@ -4,42 +4,53 @@ const {ObjectID} = require("mongodb");
 async function deleteWhiteboardDrawingData(whiteboardId) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
 
-    const fillQuery = {_id: new ObjectID(whiteboardId)};
-    const updateQuery = {$set: {data: []}};
-    await mongodb.update(fillQuery, updateQuery, drawingCollection);
+    const searchQuery = {whiteboardId: whiteboardId};
+    await mongodb.deleteAll(searchQuery, drawingCollection);
 }
 
-async function updateDrawingData(whiteboardId, data) {
+async function updateDrawingData(whiteboardId, subpath, strokeId) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
 
-    const query = {_id: new ObjectID(whiteboardId)};
-    const updateQuery = {$push: {data: data}};
-    await mongodb.update(query, updateQuery, drawingCollection);
+    const query = {
+        _id: strokeId
+    };
+
+    const updateQuery = {
+        $set: {
+            whiteboardId: whiteboardId
+        },
+        $push: {
+            subpath: subpath
+        }
+    }
+    await mongodb.update(query, updateQuery, drawingCollection, {upsert: true});
+
 }
 
-async function removeDrawingData(whiteboardId, data) {
+async function removeDrawingData(whiteboardId, strokeId) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
-
-    const query = {_id: new ObjectID(whiteboardId)};
-    const updateQuery = {$pullAll: {data}};
-    await mongodb.update(query, updateQuery, drawingCollection);
+    console.log('remove stroke', strokeId)
+    const query = {_id: strokeId};
+    await mongodb.deleteOne(query, drawingCollection);
 }
 
 async function updateBoardTitle(whiteboardId, title) {
-    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('boardData');
 
     const query = {_id: new ObjectID(whiteboardId)};
-    const updateQuery = {$set: {title}};
+    const updateQuery = {$set: {title, lastUpdated: "$$NOW"}};
     await mongodb.update(query, updateQuery, drawingCollection);
 }
 
 function createWhiteboard(whiteboard) {
-    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
-    return mongodb.insertOne(whiteboard, drawingCollection);
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('boardData');
+    //todo: align this date with mongodb $$now so there's no discrepancy between format on creation vs on update
+    const date = new Date();
+    return mongodb.insertOne({...whiteboard, lastUpdated: date.toISOString()}, drawingCollection);
 }
 
 async function findWhiteboardsByOwner(owner) {
-    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('boardData');
     const findQuery = {owner: owner};
     const result = await mongodb.findAll(findQuery, drawingCollection).toArray();
     return result.map(item => {
@@ -49,13 +60,19 @@ async function findWhiteboardsByOwner(owner) {
 }
 
 async function findWhiteboardById(whiteboardId) {
-    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('boardData');
     const findQuery = {_id: new ObjectID(whiteboardId)};
     return mongodb.read(findQuery, drawingCollection);
 }
 
-function countWhiteboards() {
+function findStrokesByWhiteboardId(whiteboardId) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const findQuery = {whiteboardId: whiteboardId};
+    return mongodb.findAll(findQuery, drawingCollection);
+}
+
+function countWhiteboards() {
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('boardData');
     try {
         return drawingCollection.countDocuments();
     } catch (error) {
@@ -64,7 +81,7 @@ function countWhiteboards() {
 }
 
 function removeCollaborator(whiteboardId, collaborator) {
-    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('boardData');
     const findQuery = {_id: new ObjectID(whiteboardId)};
     const removeQuery = {$pull: {collaborators: collaborator}};
     return mongodb.update(findQuery, removeQuery, drawingCollection);
@@ -72,7 +89,7 @@ function removeCollaborator(whiteboardId, collaborator) {
 }
 
 function addCollaborator(whiteboardId, collaborator) {
-    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('boardData');
     const findQuery = {_id: new ObjectID(whiteboardId)};
     const updateQuery = {$push: {collaborators: collaborator}};
     return mongodb.update(findQuery, updateQuery, drawingCollection);
@@ -89,6 +106,7 @@ module.exports = {
         createWhiteboard,
         removeCollaborator,
         addCollaborator,
-        findWhiteboardsByOwner
+        findWhiteboardsByOwner,
+        findStrokesByWhiteboardId
     }
 }
