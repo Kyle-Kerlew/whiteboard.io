@@ -7,7 +7,6 @@ async function verifyPassword(user) {
         return null;
     }
     const validCredentials = await doesPasswordMatch(user.password, userEntity.password);
-    console.log("Valid credentials?", validCredentials);
     if (!validCredentials) {
         return null;
     }

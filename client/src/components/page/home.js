@@ -7,6 +7,8 @@ import {
     WhiteboardController,
 } from '../../handlers/rest/whiteboardController';
 import EasyToUseIcon from '../../resources/svg/easy-to-use-icon.svg';
+import CollaborationFriendlyIcon from '../../resources/svg/collaboration-friendly.svg';
+import OrganizedIcon from '../../resources/svg/organized.svg';
 import MarkerIcon from '../../resources/svg/marker-icon.svg';
 import Button from '../shared/button';
 import Footer from '../shared/footer';
@@ -133,9 +135,9 @@ const Home = () => {
                         class!
                     </p>
                 </div>
-                <div className={'d-flex'}>
+                <div className={'d-flex'} style={{marginTop: '2.45rem'}}>
                     <div className='column'>
-                        <img alt='Easy to use' height={50} src={EasyToUseIcon} width={50}/>
+                        <img alt='Easy to use' height={75} src={EasyToUseIcon} width={75}/>
                         <h4>
                             Easy to Use
                         </h4>
@@ -144,7 +146,7 @@ const Home = () => {
                             class!</p>
                     </div>
                     <div className='column'>
-                        <img alt='Easy to use' height={50} src={EasyToUseIcon} width={50}/>
+                        <img alt='Collaborate' height={75} src={CollaborationFriendlyIcon} width={75}/>
                         <h4>
                             Collaborate
                         </h4>
@@ -156,7 +158,7 @@ const Home = () => {
                             collaborate quickly and effectively.</p>
                     </div>
                     <div className='column'>
-                        <img alt='Easy to use' height={50} src={EasyToUseIcon} width={50}/>
+                        <img alt='Organized' height={75} src={OrganizedIcon} width={75}/>
                         <h4>
                             Keep Organized
                         </h4>
