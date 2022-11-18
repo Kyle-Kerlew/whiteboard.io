@@ -21,7 +21,9 @@
       <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/undo.svg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/zoom-in.svg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/zoom-out.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/resources/svg/collaboration-friendly.svg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/resources/svg/loading.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/resources/svg/organized.svg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/styles/divider.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/styles/editableTitle.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/styles/load.css" afterDir="false" />
@@ -53,6 +55,7 @@
       <change beforePath="$PROJECT_DIR$/client/src/configuration/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/configuration/socket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/reducers/whiteboardReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/whiteboardReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/resources/svg/download-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/resources/svg/download-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/resources/svg/easy-to-use-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/resources/svg/easy-to-use-icon.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/resources/svg/link-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/resources/svg/link-icon.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/activeUsers.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/activeUsers.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/boardList.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/boardList.css" afterDir="false" />
@@ -62,19 +65,6 @@
       <change beforePath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/sign-in.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/sign-in.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/styles/toolbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/toolbar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.env" beforeDir="false" afterPath="$PROJECT_DIR$/server/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/configuration/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/configuration/axios.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/persistence/board/boardPersistence.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/board/boardPersistence.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/rest/controller/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/rest/controller/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/rest/controller/whiteboardController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/rest/controller/whiteboardController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/service/board/boardService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/board/boardService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/socket/socketHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/socket/socketHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/utils/hash.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/utils/hash.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +80,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/server" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/client" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -132,30 +122,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kylek/IdeaProjects/collaborative-drawing-app/client/src/resources/consistentsvg&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\kylek\\AppData\\Local\\JetBrains\\Toolbox\\apps\\WebStorm\\ch-0\\222.4167.31\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/kylek/IdeaProjects/collaborative-drawing-app/client/src/resources/svg",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Users\\kylek\\AppData\\Local\\JetBrains\\Toolbox\\apps\\WebStorm\\ch-0\\222.4167.31\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;JavaScript&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JavaScript"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\consistentsvg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\svg" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\consistentsvg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\components\svg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public\demo" />
@@ -395,6 +385,8 @@
       <workItem from="1668262316129" duration="3773000" />
       <workItem from="1668289091151" duration="1429000" />
       <workItem from="1668725243190" duration="595000" />
+      <workItem from="1668730563556" duration="283000" />
+      <workItem from="1668737827438" duration="3964000" />
     </task>
     <servers />
   </component>
