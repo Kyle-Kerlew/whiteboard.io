@@ -8,9 +8,9 @@ async function insertOne(doc, collection) {
     return {...ops[0]};
 }
 
-function update(findQuery, updateQuery, collection) {
+function update(findQuery, updateQuery, collection, options) {
     try {
-        return collection.updateOne(findQuery, updateQuery);
+        return collection.updateOne(findQuery, updateQuery, options);
     } catch (error) {
         console.log("An error happened while updating db", error);
     }
@@ -26,6 +26,12 @@ async function findAndUpdate(query, updateQuery, collection, options, callback) 
 
 function read(findQuery, collection) {
     return collection.findOne(findQuery);
+}
+function deleteOne(findQuery, collection) {
+    return collection.deleteOne(findQuery);
+}
+function deleteAll(findQuery, collection) {
+    return collection.deleteMany(findQuery);
 }
 
 function findAll(findQuery, collection) {
@@ -51,10 +57,12 @@ module.exports = {
     mongodb: {
         insertOne,
         update,
+        deleteAll,
         findAndUpdate,
         client,
         read,
         run,
-        findAll
+        findAll,
+        deleteOne
     }
 }

@@ -70,6 +70,7 @@
       <change beforePath="$PROJECT_DIR$/server/persistence/board/boardPersistence.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/board/boardPersistence.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/persistence/connections/mongodb.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/rest/controller/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/rest/controller/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/rest/controller/whiteboardController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/rest/controller/whiteboardController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/authentication/authenticationService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/service/board/boardService.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/service/board/boardService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/socket/socketHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/socket/socketHandler.js" afterDir="false" />
@@ -386,7 +387,14 @@
       <workItem from="1667742802004" duration="4487000" />
       <workItem from="1667764683696" duration="337000" />
       <workItem from="1667836131162" duration="2396000" />
-      <workItem from="1667844854168" duration="958000" />
+      <workItem from="1667844854168" duration="1655000" />
+      <workItem from="1667917496945" duration="19058000" />
+      <workItem from="1668084760580" duration="2364000" />
+      <workItem from="1668184308280" duration="5840000" />
+      <workItem from="1668197485262" duration="13317000" />
+      <workItem from="1668262316129" duration="3773000" />
+      <workItem from="1668289091151" duration="1429000" />
+      <workItem from="1668725243190" duration="595000" />
     </task>
     <servers />
   </component>
