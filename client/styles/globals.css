@@ -1,0 +1,47 @@
+svg, img {
+    cursor: pointer;
+}
+.content > h1, img {
+    cursor: pointer;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+html {
+    scroll-snap-type: y mandatory;
+    overflow-x: hidden;
+    margin-top: 56px; /* margin to account for fixed navigation bar*/
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.navbar {
+    display: flex;
+    padding: 0;
+}
+
+.navbar > .nav-link {
+    align-self: flex-end !important;
+}
+
+img svg {
+    user-select: none;
+}
