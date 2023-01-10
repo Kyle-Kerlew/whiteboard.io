@@ -401,8 +401,12 @@ export class DrawingEngine {
     draw(data) {
         if (_.isArray(data)) {
             for (const item of data) {
-                for (const subpathStroke of item.subpath) {
-                    this.drawPoint(subpathStroke.x, subpathStroke.y, subpathStroke.color, subpathStroke.size, subpathStroke.moveTo, subpathStroke.shape, subpathStroke.shapeStartPoint, true);
+                if (item.subpath) {
+                    for (const subpathStroke of item.subpath) {
+                        this.drawPoint(subpathStroke.x, subpathStroke.y, subpathStroke.color, subpathStroke.size, subpathStroke.moveTo, subpathStroke.shape, subpathStroke.shapeStartPoint, true);
+                    }
+                } else {
+                    this.drawPoint(item.x, item.y, item.color, item.size, item.moveTo, item.shape, item.shapeStartPoint, true);
                 }
             }
             return;
