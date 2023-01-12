@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const Loading = () => {
   return (
-    <div className={style.loadingIcon}>
+    <div className={style['loading-icon']}>
       <Image priority={true} alt='Loading' src={LoadIcon} />
     </div>
   );

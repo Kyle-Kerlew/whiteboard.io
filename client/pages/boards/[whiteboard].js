@@ -224,7 +224,7 @@ export default function Whiteboard({data}) {
                 <Loading/>}
             <canvas
                 className={shareLinkBox['drawing-board']}
-                height={windowSize.height}
+                height={windowSize.height || 0}
                 id='canvas'
                 onMouseDown={handleMouseDown}
                 onMouseLeave={handleMouseLeave}
@@ -234,7 +234,7 @@ export default function Whiteboard({data}) {
                 onTouchMove={handleTouchMove}
                 onTouchStart={handleTouchStart}
                 ref={canvasRef}
-                width={windowSize.width}
+                width={windowSize.width || 0}
             >
                 Please update your browser.
             </canvas>
