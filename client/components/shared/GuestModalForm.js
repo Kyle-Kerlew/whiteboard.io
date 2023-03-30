@@ -1,0 +1,75 @@
+import {
+  TextField,
+} from '@mui/material';
+import {
+  ErrorMessage,
+  Formik,
+} from 'formik';
+import React from 'react';
+import style from './../../styles/ShareLinkBox.module.css';
+import FocusDialogBox from './focusDialogBox';
+
+const GuestModalForm = ({
+  handleFormSubmit,
+  schema,
+}) => {
+  return (
+    <Formik
+      initialValues={{
+        email: '',
+        firstName: '',
+        lastName: '',
+      }}
+      onSubmit={handleFormSubmit}
+      validationSchema={schema}
+    >
+      {({
+        values,
+        handleBlur,
+        handleSubmit,
+        isValid,
+        handleChange,
+      }) => <FocusDialogBox
+        buttonText='Confirm'
+        isValid={isValid}
+        onSubmit={(event) => handleSubmit(event)}
+        text='Let other collaborators know who you are!'
+      >
+        <div className={style['form-container']}>
+          <TextField
+            label='First Name'
+            name='firstName'
+            onBlur={handleBlur}
+            onChange={handleChange}
+            required
+            type='text'
+            value={values.firstName}
+          />
+          <ErrorMessage name='firstName' />
+          <TextField
+            label='Last Name'
+            name='lastName'
+            onBlur={handleBlur}
+            onChange={handleChange}
+            required
+            type='text'
+            value={values.lastName}
+          />
+          <ErrorMessage name='lastName' />
+          <TextField
+            label='Email'
+            name='email'
+            onBlur={handleBlur}
+            onChange={handleChange}
+            required
+            type='email'
+            value={values.email}
+          />
+          <ErrorMessage name='email' />
+        </div>
+      </FocusDialogBox>}
+    </Formik>
+  );
+};
+
+export default GuestModalForm;
