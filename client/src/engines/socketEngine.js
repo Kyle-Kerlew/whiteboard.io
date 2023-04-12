@@ -1,12 +1,12 @@
 
 import {
     Socket,
-} from '../../configuration/socket';
+} from '../configuration/socket';
 import {
     addCollaborator,
     removeCollaborator,
     setTitle
-} from '../../reducers/whiteboardReducer';
+} from '../reducers/whiteboardReducer';
 
 export class SocketEngine {
     get drawingEngine() {

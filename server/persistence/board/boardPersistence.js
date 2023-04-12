@@ -60,12 +60,18 @@ async function findWhiteboardsByOwner(owner) {
 }
 
 async function findWhiteboardById(whiteboardId) {
-    const drawingCollection = mongodb.client.db('whiteboardio').collection('boardData');
+    let response = {};
+    const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
+    const boardCollection = mongodb.client.db('whiteboardio').collection('boardData');
     const findQuery = {_id: new ObjectID(whiteboardId)};
-    return mongodb.read(findQuery, drawingCollection);
+    const drawingDataQuery = {whiteboardId: whiteboardId};
+    const drawingDataCursor = mongodb.findAll(drawingDataQuery, drawingCollection);
+    response = await mongodb.read(findQuery, boardCollection);
+    response.strokes = await drawingDataCursor.toArray()
+    return response;
 }
 
-function findStrokesByWhiteboardId(whiteboardId) {
+async function findStrokesByWhiteboardId(whiteboardId) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
     const findQuery = {whiteboardId: whiteboardId};
     return mongodb.findAll(findQuery, drawingCollection);

@@ -5,66 +5,138 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3a7f4b9a-4f94-4d50-a94c-c15cd665ff09" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/navigation/EditableTitle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/shared/loading.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/3d-rect-corner-to-corner.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/cancel.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/design-pencil.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/download.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/redo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/shape-dropdown-closed.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/shape-dropdown-open.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/share.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/size-dropdown-closed.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/size-dropdown-open.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/trash.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/undo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/zoom-in.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/consistentsvg/zoom-out.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/svg/collaboration-friendly.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/svg/loading.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/resources/svg/organized.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/styles/divider.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/styles/editableTitle.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/styles/load.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.env" beforeDir="false" afterPath="$PROJECT_DIR$/client/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.gcloudignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/client/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/drawing/DrawingEngine.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/drawing/SocketEngine.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/layout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/navigation/ActiveUsers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/navigation/BrowsingNavbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/navigation/DrawingNavbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/navigation/EditableTitle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/navigation/NavBar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/navigation/UseNavbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/schema/SignInAsGuest.yup.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/Authentication.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/Bubble.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/Button.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/FocusDialogBox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/Footer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/GuestModalForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/ImageTextBox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/Line.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/LineSvg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/Loading.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/Switch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/shared/constants/Colors.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/toolbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/clearBoardTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/downloadImageTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/eraserTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/inputModesTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/linkShareTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/shapeTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/undoRedoTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/zoomInTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/toolbar/tools/zoomOutTool.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/configuration/axios.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/configuration/constants.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/configuration/passportConfig.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/configuration/socket.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/configuration/store.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/handlers/rest/userController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/handlers/rest/whiteboardController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/lib/auth-cookies.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/lib/auth.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/drawing/boardList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/drawing/boardList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/drawing/canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/drawing/canvas.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/drawing/drawingEngine.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/drawing/drawingEngine.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/drawing/socketEngine.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/drawing/socketEngine.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/navigation/activeUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/activeUsers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/navigation/browsingNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/browsingNavbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/navigation/drawingNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/drawingNavbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/navigation/useNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/navigation/useNavbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/page/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/page/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/page/signIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/page/signIn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/shared/guestModalForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/shared/guestModalForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/shared/line.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/shared/line.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/svg/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/svg/logo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/clearBoardTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/clearBoardTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/downloadImageTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/downloadImageTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/inputModesTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/inputModesTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/linkShareTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/linkShareTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/shapeTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/shapeTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/undoRedoTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/undoRedoTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/zoomInTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/zoomInTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/toolbar/tools/zoomOutTool.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/toolbar/tools/zoomOutTool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/configuration/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/configuration/axios.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/configuration/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/configuration/socket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/reducers/whiteboardReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/whiteboardReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/resources/svg/download-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/resources/svg/download-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/resources/svg/easy-to-use-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/resources/svg/easy-to-use-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/resources/svg/link-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/resources/svg/link-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/activeUsers.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/activeUsers.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/boardList.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/boardList.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/home.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/line.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/line.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/shareLinkBox.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/sign-in.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/sign-in.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/toolbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/toolbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/_app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/api/socket.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/api/user/details.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/api/user/guest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/api/user/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/api/whiteboard/create.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/api/whiteboard/read/[whiteboardId].js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/boards/[whiteboard].js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/create-account.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/my-boards.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/sign-in.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/3d-rect-corner-to-corner.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/cancel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/design-pencil.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/download.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/redo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/shape-dropdown-closed.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/shape-dropdown-open.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/share.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/size-dropdown-closed.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/size-dropdown-open.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/trash.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/undo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/zoom-in.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/consistentsvg/zoom-out.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/circle-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/circle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/collaboration-friendly.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/cross-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/download-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/easy-to-use-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/eraser-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/internet.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/line.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/link-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/load.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/loading.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/marker-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/new-whiteboard-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/organized.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/presentation-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/redo-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/square.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/undo-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/writing.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/zoom-in-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/resources/svg/zoom-out-icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/reducers/userReducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/reducers/whiteboardReducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/.gcloudignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/Procfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/configuration/axios.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/persistence/board/boardPersistence.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/persistence/connections/mongodb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/persistence/user/userPersistence.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/rest/controller/userController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/rest/controller/whiteboardController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/service/authentication/authenticationService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/service/board/boardService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/service/user/userService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/socket/socketHandler.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/server/utils/hash.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/ActiveUsers.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Animations.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/BoardList.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Bubble.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Button.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Divider.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/EditableTitle.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Footer.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Home.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/ImageTextBox.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Line.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Load.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/ShareLinkBox.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/SignIn.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Switch.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/Toolbar.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/create-account.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/styles/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/types/Shapes.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,40 +194,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/kylek/IdeaProjects/collaborative-drawing-app/client/src/resources/svg",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Users\\kylek\\AppData\\Local\\JetBrains\\Toolbox\\apps\\WebStorm\\ch-0\\222.4167.31\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kylek/IdeaProjects/collaborative-drawing-app/server&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\kylek\\AppData\\Local\\JetBrains\\Toolbox\\apps\\WebStorm\\ch-0\\222.4167.31\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JavaScript"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JavaScript&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\server" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\svg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\consistentsvg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\components\svg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public" />
-      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public\demo" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\engines" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\consistentsvg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\svg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\configuration" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\styles" />
-      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -387,6 +459,8 @@
       <workItem from="1668725243190" duration="595000" />
       <workItem from="1668730563556" duration="283000" />
       <workItem from="1668737827438" duration="3964000" />
+      <workItem from="1681307933275" duration="4423000" />
+      <workItem from="1681318404884" duration="14430000" />
     </task>
     <servers />
   </component>
@@ -413,7 +487,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/client/src/components/drawing/socketEngine.js</url>
+          <url>file://$PROJECT_DIR$/client/src/engines/socketEngine.js</url>
           <line>24</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
