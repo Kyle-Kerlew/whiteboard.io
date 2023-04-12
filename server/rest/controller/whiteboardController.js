@@ -3,17 +3,13 @@ const router = express.Router();
 const {BoardService} = require('../../service/board/boardService');
 
 router.get('/read/:whiteboardId', async function (req, res) {
-    const [board, response2] = await Promise.all([
-        BoardService.findWhiteboardById(req.params.whiteboardId, req.session.passport?.user),
-        BoardService.findStrokesByWhiteboardId(req.params.whiteboardId)
-    ]);
-    if ((await response2.count()) === 0) {
-        board.data = [];
+    const board = await
+        BoardService.findWhiteboardById(req.params.whiteboardId, req.session.passport?.user)
+
+    if (board.strokes.length > 0) {
+        board.data = undefined;
     } else {
-        board.data = [];
-        await response2.forEach(item => {
-            board.data.push(...item.subpath)
-        });
+        board.strokes = undefined;
     }
     res.json(board);
 });

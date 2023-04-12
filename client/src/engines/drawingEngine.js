@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import {
     Socket,
-} from '../../configuration/socket';
-import Shapes from '../../types/Shapes';
+} from '../configuration/socket';
+import Shapes from '../types/Shapes';
 
 function bindAll(target) {
     const keys = Object.getOwnPropertyNames(target.constructor.prototype);
@@ -17,7 +17,9 @@ function bindAll(target) {
 export class DrawingEngine {
     constructor(props) {
         this._canvasContext = props.canvasContext;
+        this._animationContext = props.animationContext;
         this._shapeStartPoint = undefined;
+        this._animating = false;
         this._shape = props.shape;
         this._paintSize = 25;
         this._markerColor = props.markerColor || 'black';
@@ -26,7 +28,7 @@ export class DrawingEngine {
         this._currHistoryOffset = 0;
         this._drawingData = [];
         this._isMouseDown = false;
-        this._shapeDataToDraw = [];
+        this._shapeDataToDraw = undefined;
         // 2D array. Each index represents a "stroke" and contains an array of the values of the subpath
         this._history = {};
         this._setCanvasMouseDown = props.setCanvasMouseDown;
@@ -56,6 +58,14 @@ export class DrawingEngine {
 
     set drawingData(drawingData) {
         this._drawingData = drawingData;
+    }
+
+    get animating() {
+        return this._animating;
+    }
+
+    set animating(animating) {
+        this._animating = animating;
     }
 
     get history() {
@@ -88,6 +98,14 @@ export class DrawingEngine {
 
     set canvasContext(canvasContext) {
         this._canvasContext = canvasContext;
+    }
+
+    get animationContext() {
+        return this._animationContext;
+    }
+
+    set animationContext(animationContext) {
+        this._animationContext = animationContext;
     }
 
     get shapeStartPoint() {
@@ -168,7 +186,7 @@ export class DrawingEngine {
 
         for (const strokes of strokesToDraw) {
             this.canvasContext.beginPath();
-            this.draw(strokes);
+            this.draw(strokes, this.canvasContext);
             this.canvasContext.stroke();
         }
     }
@@ -192,7 +210,7 @@ export class DrawingEngine {
 
         for (const strokes of strokesToDraw) {
             // this.canvasContext.beginPath();
-            this.draw(strokes);
+            this.draw(strokes, this.canvasContext);
             this.canvasContext.stroke();
         }
     }
@@ -200,7 +218,7 @@ export class DrawingEngine {
     handleResize() {
         const context = this.canvasContext;
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        this.draw(this.applyScaleToData());
+        this.draw(this.applyScaleToData(), this.canvasContext);
     }
 
     handleScrollZoom(event) {
@@ -246,7 +264,12 @@ export class DrawingEngine {
     }
 
     handleDrawingStart(event) {
-        const context = this.canvasContext;
+        const context = this.shape !== undefined ? this.animationContext : this.canvasContext;
+        // if (this.shape !== undefined) {
+        //     context.canvas.style.zIndex = "3";
+        //     this.animating = true;
+        // }
+
         const mouseX = this.getMousePositionX(event, context.canvas.offsetLeft);
         const mouseY = this.getMousePositionY(event, context.canvas.offsetTop);
         // initialize a new "stroke"
@@ -277,7 +300,7 @@ export class DrawingEngine {
             return;
         }
 
-        const context = this.canvasContext;
+        let context = this.shape !== undefined ? this.animationContext : this.canvasContext;
         const mouseX = this.getMousePositionX(event, context.canvas.offsetLeft);
         const mouseY = this.getMousePositionY(event, context.canvas.offsetTop);
         const subpathData = {
@@ -301,7 +324,7 @@ export class DrawingEngine {
             case Shapes.SQUARE:
             case Shapes.CIRCLE:
                 subpathData.shape = this.shape;
-
+                context = this.animationContext;
                 if (this.shapeStartPoint) {
                     subpathData.shapeStartPoint = this.shapeStartPoint;
                 } else {
@@ -314,19 +337,23 @@ export class DrawingEngine {
                 }
 
                 context.clearRect(0, 0, context.canvas.width / this.scale, context.canvas.height / this.scale);
-                this.draw(this.drawingData.concat(subpathData));
+                let stroke = this.history[Object.keys(this.history).length - 1];
+
+                // stroke.subpath = [subpathData];
+                // this.drawingData.push(stroke)
+                this.draw(subpathData, context);
                 this.shapeDataToDraw = subpathData;
                 break;
             default:
-                this.draw(subpathData);
-                const stroke = this.history[Object.keys(this.history).length - 1];
+                this.draw(subpathData, this.canvasContext);
+                const prevStroke = this.history[Object.keys(this.history).length - 1];
                 Socket.emit('drawing-data', {
                     whiteboardId: this.whiteboardId,
                     subpath: subpathData,
-                    strokeId: stroke.strokeId
+                    strokeId: prevStroke.strokeId
                 });
-                this.drawingData = this.drawingData.concat(subpathData);
-                stroke.subpath.push(subpathData);
+                prevStroke.subpath = prevStroke.subpath.concat(subpathData);
+                this.drawingData.push(prevStroke);
                 context.stroke();
                 break;
         }
@@ -334,11 +361,20 @@ export class DrawingEngine {
 
     handleEndStroke() {
         this.isMouseDown = false;
+        console.log("ending stroke")
+
         this.shape = undefined;
         this.shapeStartPoint = undefined;
+        this.animating = false;
         if (this.shapeDataToDraw) {
+            //clear animation layer
+            this.animationContext.clearRect(0, 0, this.animationContext.canvas.width, this.animationContext.canvas.height);
+
+            //draw shape on main layer
+
             const stroke = this.history[Object.keys(this.history).length - 1];
             stroke.subpath.push(this.shapeDataToDraw);
+            this.draw(this.shapeDataToDraw, this.canvasContext);
             this.drawingData = this.drawingData.concat(this.shapeDataToDraw);
             Socket.emit('drawing-data', {
                 whiteboardId: this.whiteboardId,
@@ -359,8 +395,7 @@ export class DrawingEngine {
         this.handleZoom(0.8, 0.8);
     }
 
-    drawPoint(x, y, colorToDraw, sizeToUse, moveTo, shape, shapeStartPoint) {
-        const context = this.canvasContext;
+    drawPoint(x, y, colorToDraw, sizeToUse, moveTo, shape, shapeStartPoint, context) {
         context.lineJoin = 'round';
         context.lineCap = 'round';
         context.lineWidth = sizeToUse;
@@ -395,16 +430,17 @@ export class DrawingEngine {
         context.stroke();
     }
 
-    draw(data) {
+    draw(data, context = this.canvasContext) {
         if (_.isArray(data)) {
-            for (const item of data) {
-                this.drawPoint(item.x, item.y, item.color, item.size, item.moveTo, item.shape, item.shapeStartPoint, true);
+            for (const stroke of data) {
+                for (const point of stroke.subpath) {
+                    this.drawPoint(point.x, point.y, point.color, point.size, point.moveTo, point.shape, point.shapeStartPoint, context);
+                }
             }
-
             return;
         }
 
-        this.drawPoint(data.x, data.y, data.color, data.size, data.moveTo, data.shape, data.shapeStartPoint);
+        this.drawPoint(data.x, data.y, data.color, data.size, data.moveTo, data.shape, data.shapeStartPoint, context);
     }
 
     handleZoom(canvasTransformX, canvasTransformY) {
@@ -413,7 +449,7 @@ export class DrawingEngine {
         context.canvas.width *= canvasTransformX;
         context.canvas.height *= canvasTransformY;
         context.scale(this.scale, this.scale);
-        this.draw(this.drawingData);
+        this.draw(this.drawingData, context);
     }
 
     applyScaleToData() {

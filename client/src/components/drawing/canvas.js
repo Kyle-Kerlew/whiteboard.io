@@ -46,10 +46,10 @@ import ZoomInTool from '../toolbar/tools/zoomInTool';
 import ZoomOutTool from '../toolbar/tools/zoomOutTool';
 import {
   DrawingEngine,
-} from './drawingEngine';
+} from '../../engines/drawingEngine';
 import {
   SocketEngine,
-} from './socketEngine';
+} from '../../engines/socketEngine';
 
 const Canvas = () => {
   const [
@@ -74,6 +74,7 @@ const Canvas = () => {
 
   const user = useSelector((state) => state.user.value);
   const canvasRef = useRef();
+  const animationCanvasRef = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -87,9 +88,9 @@ const Canvas = () => {
 
 
         dispatch(setTitle(response.title));
-        if (response.data) {
-          drawingEngine.current.draw(response.data);
-          drawingEngine.current.drawingData = response.data;
+        if (response.strokes) {
+          drawingEngine.current.draw(response.strokes);
+          drawingEngine.current.drawingData = response.strokes;
         }
 
         setIsLoading(false);
@@ -101,6 +102,7 @@ const Canvas = () => {
       drawingEngine.current = new DrawingEngine(
         {
           canvasContext: canvasRef.current.getContext('2d'),
+          animationContext: animationCanvasRef.current.getContext('2d', {alpha: true}),
           setCanvasMouseDown,
           whiteboardId,
         },
@@ -108,8 +110,8 @@ const Canvas = () => {
       socketEngine.current.drawingEngine = drawingEngine.current;
       drawingEngine.current.socketEngine = socketEngine.current;
       const context = canvasRef.current.getContext('2d');
-      context.fillStyle = 'white';
-      context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+      // context.fillStyle = 'white';
+      // context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     }
     if (!user.isLoadingUser && user.role) {
       socketEngine.current.initializeSocketListeners(whiteboardId);
@@ -190,8 +192,8 @@ const Canvas = () => {
   };
 
   const handleMouseDown = (event) => {
-    drawingEngine.current.isMouseDown = true;
     drawingEngine.current.handleDrawingStart(event);
+    drawingEngine.current.isMouseDown = true;
   };
 
   const handleZoomIn = drawingEngine.current.scaleUp;
@@ -210,7 +212,6 @@ const Canvas = () => {
       <Loading />}
       <canvas
         className='drawing-board'
-        height={window.innerHeight}
         id='canvas'
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
@@ -220,10 +221,22 @@ const Canvas = () => {
         onTouchMove={handleTouchMove}
         onTouchStart={handleTouchStart}
         ref={canvasRef}
+        height={window.innerHeight}
         width={window.innerWidth}
       >
         Please update your browser.
       </canvas>
+      <canvas
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+          onTouchMove={handleTouchMove}
+          onMouseUp={handleMouseUp}
+          onTouchEnd={handleTouchEnd}
+          onTouchStart={handleTouchStart}
+          ref={animationCanvasRef}
+          height={window.innerHeight}
+          width={window.innerWidth}
+          id="animation-layer"></canvas>
       {isToastVisible &&
         <Snackbar
           autoHideDuration={6000}
