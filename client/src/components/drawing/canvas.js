@@ -102,16 +102,13 @@ const Canvas = () => {
       drawingEngine.current = new DrawingEngine(
         {
           canvasContext: canvasRef.current.getContext('2d'),
-          animationContext: animationCanvasRef.current.getContext('2d', {alpha: true}),
+          animationContext: animationCanvasRef.current.getContext('2d'),
           setCanvasMouseDown,
           whiteboardId,
         },
       );
       socketEngine.current.drawingEngine = drawingEngine.current;
       drawingEngine.current.socketEngine = socketEngine.current;
-      const context = canvasRef.current.getContext('2d');
-      // context.fillStyle = 'white';
-      // context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     }
     if (!user.isLoadingUser && user.role) {
       socketEngine.current.initializeSocketListeners(whiteboardId);
