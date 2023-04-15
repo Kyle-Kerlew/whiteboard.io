@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import {
-    Socket,
-} from '../configuration/socket';
+import {Socket,} from '../configuration/socket';
 import Shapes from '../types/Shapes';
 
 function bindAll(target) {
@@ -177,29 +175,27 @@ export class DrawingEngine {
 
         this.currHistoryOffset += 1;
         const context = this.canvasContext;
-        const strokesToDraw = Object.values(Object.fromEntries(Object.entries(this.history).slice(0, Object.keys(this.history).length - Math.abs(this.currHistoryOffset))));
+        const strokesToDraw = Object.values(Object.fromEntries(Object.entries(this.history).slice(0, Object.keys(this.history).length - Math.abs(this.currHistoryOffset))))
 
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         if (!strokesToDraw || strokesToDraw.length === 0) {
             return;
         }
 
-        for (const strokes of strokesToDraw) {
-            this.canvasContext.beginPath();
-            this.draw(strokes, this.canvasContext);
-            this.canvasContext.stroke();
-        }
+        this.canvasContext.beginPath();
+        this.draw(strokesToDraw, this.canvasContext);
+        this.canvasContext.stroke();
     }
 
     handleUndo() {
         if (Math.abs(this.currHistoryOffset) > Object.keys(this.history).length - 1) {
+            //Nothing to undo
             return;
         }
 
         const context = this.canvasContext;
         this.currHistoryOffset -= 1;
         const strokesToDraw = Object.values(Object.fromEntries(Object.entries(this.history).slice(0, Object.keys(this.history).length - Math.abs(this.currHistoryOffset))))
-            .flatMap(item => item.subpath);
 
         const undoneDrawingStrokeId = this.history[Object.keys(this.history).length - Math.abs(this.currHistoryOffset)].strokeId;
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -208,11 +204,9 @@ export class DrawingEngine {
             return;
         }
 
-        for (const strokes of strokesToDraw) {
-            // this.canvasContext.beginPath();
-            this.draw(strokes, this.canvasContext);
-            this.canvasContext.stroke();
-        }
+        // this.canvasContext.beginPath();
+        this.draw(strokesToDraw, this.canvasContext);
+        this.canvasContext.stroke();
     }
 
     handleResize() {
@@ -265,11 +259,6 @@ export class DrawingEngine {
 
     handleDrawingStart(event) {
         const context = this.shape !== undefined ? this.animationContext : this.canvasContext;
-        // if (this.shape !== undefined) {
-        //     context.canvas.style.zIndex = "3";
-        //     this.animating = true;
-        // }
-
         const mouseX = this.getMousePositionX(event, context.canvas.offsetLeft);
         const mouseY = this.getMousePositionY(event, context.canvas.offsetTop);
         // initialize a new "stroke"
@@ -361,16 +350,13 @@ export class DrawingEngine {
 
     handleEndStroke() {
         this.isMouseDown = false;
-        console.log("ending stroke")
-
         this.shape = undefined;
         this.shapeStartPoint = undefined;
         this.animating = false;
+
         if (this.shapeDataToDraw) {
             //clear animation layer
             this.animationContext.clearRect(0, 0, this.animationContext.canvas.width, this.animationContext.canvas.height);
-
-            //draw shape on main layer
 
             const stroke = this.history[Object.keys(this.history).length - 1];
             stroke.subpath.push(this.shapeDataToDraw);
@@ -383,6 +369,12 @@ export class DrawingEngine {
             });
             this.shapeDataToDraw = undefined;
         }
+        if (this.currHistoryOffset !== 0) {
+            //clear history?
+            this.history.splice(this.history.length - (Math.abs(this.currHistoryOffset)) - 1, 1)
+        }
+        this.currHistoryOffset = 0;
+
     }
 
     scaleUp() {
