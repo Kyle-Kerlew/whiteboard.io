@@ -27,7 +27,7 @@ async function updateDrawingData(whiteboardId, subpath, strokeId) {
 
 }
 
-async function removeDrawingData(whiteboardId, strokeId) {
+async function removeDrawingData(strokeId) {
     const drawingCollection = mongodb.client.db('whiteboardio').collection('drawingData');
     console.log('remove stroke', strokeId)
     const query = {_id: strokeId};
@@ -67,7 +67,9 @@ async function findWhiteboardById(whiteboardId) {
     const drawingDataQuery = {whiteboardId: whiteboardId};
     const drawingDataCursor = mongodb.findAll(drawingDataQuery, drawingCollection);
     response = await mongodb.read(findQuery, boardCollection);
-    response.strokes = await drawingDataCursor.toArray()
+    if (response) {
+        response.strokes = await drawingDataCursor.toArray()
+    }
     return response;
 }
 

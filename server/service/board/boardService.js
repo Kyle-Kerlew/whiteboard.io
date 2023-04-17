@@ -36,8 +36,8 @@ function findWhiteboardByOwner(owner) {
 function updateDrawingData(whiteboardId, data) {
     return BoardPersistence.updateDrawingData(whiteboardId, data.subpath, data.strokeId);
 }
-function removeDrawingData(whiteboardId, strokeId) {
-    return BoardPersistence.removeDrawingData(whiteboardId, strokeId);
+function removeDrawingData(strokeId) {
+    return BoardPersistence.removeDrawingData(strokeId);
 }
 function updateBoardTitle(whiteboardId, title) {
     return BoardPersistence.updateBoardTitle(whiteboardId, title);
