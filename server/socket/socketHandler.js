@@ -24,9 +24,8 @@ function handleConnection(socket) {
         BoardService.updateDrawingData(data.whiteboardId, data);
     });
     socket.on('undo', data => {
-
         socket.to(data.whiteboardId).emit("remove-data-from-server", data);
-        BoardService.removeDrawingData(data.whiteboardId, data);
+        BoardService.removeDrawingData(data.strokeId);
     })
     socket.on("update-title", data => {
         socket.to(data.whiteboardId).emit("update-title", data.title);

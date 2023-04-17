@@ -183,6 +183,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -460,7 +463,8 @@
       <workItem from="1668730563556" duration="283000" />
       <workItem from="1668737827438" duration="3964000" />
       <workItem from="1681307933275" duration="4423000" />
-      <workItem from="1681318404884" duration="27580000" />
+      <workItem from="1681318404884" duration="29580000" />
+      <workItem from="1681576648725" duration="2104000" />
     </task>
     <servers />
   </component>
@@ -490,6 +494,11 @@
           <url>file://$PROJECT_DIR$/client/src/engines/socketEngine.js</url>
           <line>24</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/client/src/engines/drawingEngine.js</url>
+          <line>211</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
