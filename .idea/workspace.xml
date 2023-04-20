@@ -465,6 +465,9 @@
       <workItem from="1681307933275" duration="4423000" />
       <workItem from="1681318404884" duration="29580000" />
       <workItem from="1681576648725" duration="2104000" />
+      <workItem from="1681763333364" duration="28000" />
+      <workItem from="1681763709751" duration="596000" />
+      <workItem from="1682032364236" duration="2624000" />
     </task>
     <servers />
   </component>
@@ -497,7 +500,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/client/src/engines/drawingEngine.js</url>
-          <line>211</line>
+          <line>213</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
