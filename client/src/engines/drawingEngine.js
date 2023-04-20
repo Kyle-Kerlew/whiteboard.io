@@ -14,6 +14,8 @@ function bindAll(target) {
 
 export class DrawingEngine {
     constructor(props) {
+        this.canvasTransformX = 1;
+        this.canvasTransformY = 1;
         this._canvasContext = props.canvasContext;
         this._animationContext = props.animationContext;
         this._shapeStartPoint = undefined;
@@ -211,8 +213,14 @@ export class DrawingEngine {
 
     handleResize() {
         const context = this.canvasContext;
+        // context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        const strokesToDraw = Object.values(Object.fromEntries(Object.entries(this.history).slice(0, Object.keys(this.history).length - Math.abs(this.currHistoryOffset))))
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        this.draw(this.applyScaleToData(), this.canvasContext);
+        if (!strokesToDraw || strokesToDraw.length === 0) {
+            return;
+        }
+
+        this.draw(strokesToDraw, this.canvasContext);
     }
 
     handleScrollZoom(event) {
@@ -243,17 +251,17 @@ export class DrawingEngine {
 
     getMousePositionX(event, xOffset) {
         if (event.type === 'touchmove') {
-            return (event.touches[0].clientX - xOffset + window.scrollX) / this.scale;
+            return (event.touches[0].clientX - xOffset + window.scrollX) / (this.scale *  this.canvasTransformX);
         } else {
-            return (event.clientX - xOffset + window.scrollX) / this.scale;
+            return (event.clientX - xOffset + window.scrollX) /  (this.scale *  this.canvasTransformX);
         }
     }
 
     getMousePositionY(event, yOffset) {
         if (event.type === 'touchmove') {
-            return (event.touches[0].clientY - yOffset - 56 + window.scrollY) / this.scale;
+            return (event.touches[0].clientY - yOffset - 56 + window.scrollY) / (this.scale * this.canvasTransformY);
         } else {
-            return (event.clientY - yOffset - 56 + window.scrollY) / this.scale;
+            return (event.clientY - yOffset - 56 + window.scrollY) / (this.scale * this.canvasTransformY);
         }
     }
 
@@ -436,24 +444,14 @@ export class DrawingEngine {
     }
 
     handleZoom(canvasTransformX, canvasTransformY) {
-        const context = this.canvasContext;
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        context.canvas.width *= canvasTransformX;
-        context.canvas.height *= canvasTransformY;
-        context.scale(this.scale, this.scale);
-        this.draw(this.drawingData, context);
+        const canvas = this.canvasContext.canvas;
+        const scaleToFit = Math.min(this.scale * canvasTransformX, this.scale * canvasTransformY);
+        const scaleToCover = Math.max(this.scale * canvasTransformX, this.scale * canvasTransformY);
+
+        canvas.style.transformOrigin = "0 0"; //scale from top left
+        canvas.style.transform = `scale(${scaleToFit})`;
+        this.canvasTransformX = canvasTransformX;
+        this.canvasTransformY = canvasTransformY;
     }
 
-    applyScaleToData() {
-        return this.drawingData.map((item) => {
-            item.x *= this.scale;
-            item.y *= this.scale;
-            if (item.moveTo) {
-                item.moveTo.x *= this.scale;
-                item.moveTo.y *= this.scale;
-            }
-
-            return item;
-        });
-    }
 }
