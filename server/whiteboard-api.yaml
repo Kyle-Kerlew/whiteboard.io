@@ -1,0 +1,9 @@
+runtime: nodejs16
+env: standard
+instance_class: F1
+service: whiteboard-api
+handlers:
+  - url: .*
+    script: auto
+includes:
+  - .env.production.yml

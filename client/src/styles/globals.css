@@ -22,11 +22,14 @@
 
 
 html {
-    scroll-snap-type: y mandatory;
     overflow-x: hidden;
     margin-top: 56px; /* margin to account for fixed navigation bar*/
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
 }
 .navbar {
     display: flex;

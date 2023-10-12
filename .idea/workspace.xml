@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3a7f4b9a-4f94-4d50-a94c-c15cd665ff09" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/whiteboard.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.gcloudignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/client/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/components/drawing/DrawingEngine.js" beforeDir="false" />
@@ -197,33 +198,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kylek/IdeaProjects/collaborative-drawing-app/server&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\kylek\\AppData\\Local\\JetBrains\\Toolbox\\apps\\WebStorm\\ch-0\\222.4167.31\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/kylek/IdeaProjects/collaborative-drawing-app/server",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Users\\kylek\\AppData\\Local\\JetBrains\\Toolbox\\apps\\WebStorm\\ch-0\\222.4167.31\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;JavaScript&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JavaScript"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\server" />
+      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\svg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\resources\consistentsvg" />
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\components\svg" />
-      <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\kylek\IdeaProjects\collaborative-drawing-app\client\src\engines" />
@@ -467,7 +468,11 @@
       <workItem from="1681576648725" duration="2104000" />
       <workItem from="1681763333364" duration="28000" />
       <workItem from="1681763709751" duration="596000" />
-      <workItem from="1682032364236" duration="2624000" />
+      <workItem from="1682032364236" duration="2741000" />
+      <workItem from="1682261942045" duration="4679000" />
+      <workItem from="1682553821315" duration="776000" />
+      <workItem from="1682804873883" duration="29000" />
+      <workItem from="1696955002222" duration="11191000" />
     </task>
     <servers />
   </component>
@@ -497,11 +502,6 @@
           <url>file://$PROJECT_DIR$/client/src/engines/socketEngine.js</url>
           <line>24</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/client/src/engines/drawingEngine.js</url>
-          <line>213</line>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
