@@ -4,8 +4,11 @@ import '../../styles/load.css';
 
 const Loading = () => {
   return (
-    <div className='loading-icon'>
-      <img alt='Loading' src={LoadIcon} />
+    <div className="background">
+
+      <div className='loading-icon'>
+        <img alt='Loading' src={LoadIcon} />
+      </div>
     </div>
   );
 };

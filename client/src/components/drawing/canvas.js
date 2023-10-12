@@ -88,12 +88,12 @@ const Canvas = () => {
 
 
         dispatch(setTitle(response.title));
-        if (response.strokes) {
-          canvasRef.current.width = window.innerWidth;
-          canvasRef.current.height = window.innerHeight;
-          animationCanvasRef.current.width = window.innerWidth;
-          animationCanvasRef.current.height = window.innerHeight;
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
+        animationCanvasRef.current.width = window.innerWidth;
+        animationCanvasRef.current.height = window.innerHeight;
 
+        if (response.strokes) {
           drawingEngine.current.draw(response.strokes);
           drawingEngine.current.drawingData = response.strokes;
         }
@@ -222,8 +222,6 @@ const Canvas = () => {
       <canvas
         className='drawing-board'
         id='canvas'
-        width="100%"
-        height="100%"
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
@@ -236,8 +234,6 @@ const Canvas = () => {
         Please update your browser.
       </canvas>
       <canvas
-        width="100%"
-        height="100%"
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
         onTouchMove={handleTouchMove}
