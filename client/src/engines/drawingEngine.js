@@ -211,16 +211,11 @@ export class DrawingEngine {
         this.canvasContext.stroke();
     }
 
-    handleResize() {
+    redraw() {
         const context = this.canvasContext;
-        // context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        const strokesToDraw = Object.values(Object.fromEntries(Object.entries(this.history).slice(0, Object.keys(this.history).length - Math.abs(this.currHistoryOffset))))
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        if (!strokesToDraw || strokesToDraw.length === 0) {
-            return;
-        }
 
-        this.draw(strokesToDraw, this.canvasContext);
+        this.draw(this.drawingData, this.canvasContext);
     }
 
     handleScrollZoom(event) {

@@ -24,7 +24,7 @@ const ShareLinkBox = ({
   const {
     canvasId: whiteboardId,
   } = useRouteMatch('/boards/:canvasId').params;
-  const baseurl = `${process.env.REACT_APP_BASE_URL}/boards/`;
+  const baseurl = '/boards/';
   const [
     isPopupVisible,
     setIsPopupVisible,
