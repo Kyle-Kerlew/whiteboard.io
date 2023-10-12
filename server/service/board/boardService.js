@@ -32,6 +32,9 @@ function createWhiteboard(user) {
 function findWhiteboardByOwner(owner) {
     return BoardPersistence.findWhiteboardsByOwner(owner);
 }
+function setLastUpdated(whiteboardId) {
+    return BoardPersistence.setLastUpdated(whiteboardId);
+}
 
 function updateDrawingData(whiteboardId, data) {
     return BoardPersistence.updateDrawingData(whiteboardId, data.subpath, data.strokeId);
@@ -63,6 +66,7 @@ module.exports = {
         addCollaborator,
         removeDrawingData,
         findWhiteboardByOwner,
-        findStrokesByWhiteboardId
+        findStrokesByWhiteboardId,
+        setLastUpdated
     }
 }
