@@ -30,7 +30,7 @@ export class DrawingEngine {
         this._isMouseDown = false;
         this._shapeDataToDraw = undefined;
         // 2D array. Each index represents a "stroke" and contains an array of the values of the subpath
-        this._history = {};
+        this._history = [];
         this._setCanvasMouseDown = props.setCanvasMouseDown;
         bindAll(this);
     }
@@ -373,7 +373,6 @@ export class DrawingEngine {
             this.shapeDataToDraw = undefined;
         }
         if (this.currHistoryOffset !== 0) {
-            //clear history?
             this.history.splice(this.history.length - (Math.abs(this.currHistoryOffset)) - 1, 1)
         }
         this.currHistoryOffset = 0;
