@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Socket,} from '../configuration/socket';
+import { Socket, } from '../configuration/socket';
 import Shapes from '../types/Shapes';
 
 function bindAll(target) {
@@ -201,7 +201,7 @@ export class DrawingEngine {
 
         const undoneDrawingStrokeId = this.history[Object.keys(this.history).length - Math.abs(this.currHistoryOffset)].strokeId;
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        Socket.emit('undo', {strokeId: undoneDrawingStrokeId, whiteboardId: this.whiteboardId});
+        Socket.emit('undo', { strokeId: undoneDrawingStrokeId, whiteboardId: this.whiteboardId });
         if (!strokesToDraw || strokesToDraw.length === 0) {
             return;
         }
@@ -246,9 +246,9 @@ export class DrawingEngine {
 
     getMousePositionX(event, xOffset) {
         if (event.type === 'touchmove') {
-            return (event.touches[0].clientX - xOffset + window.scrollX) / (this.scale *  this.canvasTransformX);
+            return (event.touches[0].clientX - xOffset + window.scrollX) / (this.scale * this.canvasTransformX);
         } else {
-            return (event.clientX - xOffset + window.scrollX) /  (this.scale *  this.canvasTransformX);
+            return (event.clientX - xOffset + window.scrollX) / (this.scale * this.canvasTransformX);
         }
     }
 
@@ -284,7 +284,7 @@ export class DrawingEngine {
         }
 
         // initialize new history entry
-        this.history[Object.keys(this.history).length] = {strokeId, subpath: []};
+        this.history[Object.keys(this.history).length] = { strokeId, subpath: [] };
     }
 
     handleDragTouch(event) {
@@ -380,12 +380,12 @@ export class DrawingEngine {
     }
 
     scaleUp() {
-        this.scale *= 1.25; // inverse of 4/5 or 0.8
+        this.scale = (this.scale * 1.25).toFixed(2); // inverse of 4/5 or 0.8
         this.handleZoom(1.25, 1.25);
     }
 
     scaleDown() {
-        this.scale *= 0.8; // inverse of 5/4 or 1.25
+        this.scale = (this.scale * 0.8).toFixed(2); // inverse of 5/4 or 1.25
         this.handleZoom(0.8, 0.8);
     }
 
@@ -439,11 +439,12 @@ export class DrawingEngine {
 
     handleZoom(canvasTransformX, canvasTransformY) {
         const canvas = this.canvasContext.canvas;
-        const scaleToFit = Math.min(this.scale * canvasTransformX, this.scale * canvasTransformY);
-        const scaleToCover = Math.max(this.scale * canvasTransformX, this.scale * canvasTransformY);
-
+        const animationCanvas = this.animationContext.canvas;
         canvas.style.transformOrigin = "0 0"; //scale from top left
-        canvas.style.transform = `scale(${scaleToFit})`;
+        canvas.style.transform = `scale(${this.scale})`;
+        animationCanvas.style.transformOrigin = "0 0"; //scale from top left
+        animationCanvas.style.transform = `scale(${this.scale})`;
+
         this.canvasTransformX = canvasTransformX;
         this.canvasTransformY = canvasTransformY;
     }
