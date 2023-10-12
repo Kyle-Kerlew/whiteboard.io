@@ -14,8 +14,6 @@ function bindAll(target) {
 
 export class DrawingEngine {
     constructor(props) {
-        this.canvasTransformX = 1;
-        this.canvasTransformY = 1;
         this._canvasContext = props.canvasContext;
         this._animationContext = props.animationContext;
         this._shapeStartPoint = undefined;
@@ -206,7 +204,6 @@ export class DrawingEngine {
             return;
         }
 
-        // this.canvasContext.beginPath();
         this.draw(strokesToDraw, this.canvasContext);
         this.canvasContext.stroke();
     }
@@ -246,17 +243,17 @@ export class DrawingEngine {
 
     getMousePositionX(event, xOffset) {
         if (event.type === 'touchmove') {
-            return (event.touches[0].clientX - xOffset + window.scrollX) / (this.scale * this.canvasTransformX);
+            return (event.touches[0].clientX - xOffset + window.scrollX) / (this.scale);
         } else {
-            return (event.clientX - xOffset + window.scrollX) / (this.scale * this.canvasTransformX);
+            return (event.clientX - xOffset + window.scrollX) / (this.scale);
         }
     }
 
     getMousePositionY(event, yOffset) {
         if (event.type === 'touchmove') {
-            return (event.touches[0].clientY - yOffset - 56 + window.scrollY) / (this.scale * this.canvasTransformY);
+            return (event.touches[0].clientY - yOffset - 56 + window.scrollY) / (this.scale);
         } else {
-            return (event.clientY - yOffset - 56 + window.scrollY) / (this.scale * this.canvasTransformY);
+            return (event.clientY - yOffset - 56 + window.scrollY) / (this.scale);
         }
     }
 
@@ -437,16 +434,13 @@ export class DrawingEngine {
         this.drawPoint(data.x, data.y, data.color, data.size, data.moveTo, data.shape, data.shapeStartPoint, context);
     }
 
-    handleZoom(canvasTransformX, canvasTransformY) {
+    handleZoom() {
         const canvas = this.canvasContext.canvas;
         const animationCanvas = this.animationContext.canvas;
         canvas.style.transformOrigin = "0 0"; //scale from top left
         canvas.style.transform = `scale(${this.scale})`;
         animationCanvas.style.transformOrigin = "0 0"; //scale from top left
         animationCanvas.style.transform = `scale(${this.scale})`;
-
-        this.canvasTransformX = canvasTransformX;
-        this.canvasTransformY = canvasTransformY;
     }
 
 }
