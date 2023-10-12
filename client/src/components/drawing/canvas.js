@@ -89,6 +89,11 @@ const Canvas = () => {
 
         dispatch(setTitle(response.title));
         if (response.strokes) {
+          canvasRef.current.width = window.innerWidth;
+          canvasRef.current.height = window.innerHeight;
+          animationCanvasRef.current.width = window.innerWidth;
+          animationCanvasRef.current.height = window.innerHeight;
+
           drawingEngine.current.draw(response.strokes);
           drawingEngine.current.drawingData = response.strokes;
         }
@@ -125,7 +130,14 @@ const Canvas = () => {
   const setShape = (shape) => {
     drawingEngine.current.shape = shape;
   };
-
+  const handleResize = () => {
+    const canvas = canvasRef.current;
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    animationCanvasRef.current.width = window.innerWidth;
+    animationCanvasRef.current.height = window.innerHeight;
+    drawingEngine.current.redraw();
+  }
   const attachWindowListeners = () => {
     window.addEventListener('keydown', (event) => drawingEngine.current.handleKeyDown(event), {
       passive: false,
@@ -133,12 +145,12 @@ const Canvas = () => {
     window.addEventListener('wheel', (event) => drawingEngine.current.handleScrollZoom(event), {
       passive: false,
     });
-    window.addEventListener('resize', () => drawingEngine.current.handleResize());
+    window.addEventListener('resize', handleResize, false);
   };
 
   const removeWindowListeners = () => {
     window.removeEventListener('keydown', drawingEngine.current.handleKeyDown);
-    window.removeEventListener('resize', drawingEngine.current.handleResize);
+    window.removeEventListener('resize', handleResize);
     window.removeEventListener('wheel', drawingEngine.current.handleScrollZoom);
   };
 
@@ -206,10 +218,12 @@ const Canvas = () => {
   return (
     <div id='canvas-container'>
       {isLoading &&
-      <Loading />}
+        <Loading />}
       <canvas
         className='drawing-board'
         id='canvas'
+        width="100%"
+        height="100%"
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
@@ -218,22 +232,22 @@ const Canvas = () => {
         onTouchMove={handleTouchMove}
         onTouchStart={handleTouchStart}
         ref={canvasRef}
-        height={window.innerHeight}
-        width={window.innerWidth}
       >
         Please update your browser.
       </canvas>
       <canvas
-          onMouseLeave={handleMouseLeave}
-          onMouseMove={handleMouseMove}
-          onTouchMove={handleTouchMove}
-          onMouseUp={handleMouseUp}
-          onTouchEnd={handleTouchEnd}
-          onTouchStart={handleTouchStart}
-          ref={animationCanvasRef}
-          height={window.innerHeight}
-          width={window.innerWidth}
-          id="animation-layer"></canvas>
+        width="100%"
+        height="100%"
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
+        onMouseUp={handleMouseUp}
+        onTouchEnd={handleTouchEnd}
+        onTouchStart={handleTouchStart}
+        ref={animationCanvasRef}
+        id="animation-layer">
+
+      </canvas>
       {isToastVisible &&
         <Snackbar
           autoHideDuration={6000}
