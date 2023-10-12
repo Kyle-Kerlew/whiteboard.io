@@ -24,12 +24,12 @@ const ShareLinkBox = ({
   const {
     canvasId: whiteboardId,
   } = useRouteMatch('/boards/:canvasId').params;
-  const baseurl = '/boards/';
   const [
     isPopupVisible,
     setIsPopupVisible,
   ] = useState(false);
 
+  const whiteboardUrl = `${window.location.origin}/boards/${whiteboardId}`;
   function copyLink () {
     const copyText = document.querySelector('#value');
     copy(copyText.value);
@@ -48,7 +48,7 @@ const ShareLinkBox = ({
       <img alt='Get Share Link' draggable={false} onClick={showPopup} src={LinkIcon} />
       <Dialog aria-labelledby='form-dialog-title' onClose={hidePopup} open={isPopupVisible}>
         <DialogTitle id='form-dialog-title'>Share With Your Friends!</DialogTitle>
-        <DialogContent>
+        <DialogContent> 
           <DialogContentText>
             {text}
           </DialogContentText>
@@ -58,7 +58,7 @@ const ShareLinkBox = ({
             id='value'
             margin='dense'
             type='text'
-            value={baseurl + whiteboardId}
+            value={whiteboardUrl}
           />
 
         </DialogContent>
