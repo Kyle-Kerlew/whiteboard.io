@@ -2,7 +2,7 @@ import React, {
   useMemo,
 } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import logo from '../svg/logo.svg';
+import logo from '../../assets/images/logo.png';
 
 function useNavbar (NavigationOptionsComponent, collapse = true) {
   return (
@@ -10,10 +10,9 @@ function useNavbar (NavigationOptionsComponent, collapse = true) {
       {useMemo(() => {
         return (
           <Navbar style={{margin: 'none'}} bg='light' expand={collapse ? 'lg' : undefined} fixed='top'>
-            <div
-              className='container-xl'>
-              <Navbar.Brand className={"align-self-start m-0"} href='/'>
-                <img alt='logo' src={logo} />
+            <div className={'d-flex align-items-center w-100 px-5'}>
+              <Navbar.Brand className={"align-self-start m-0"}  href='/'>
+                <img alt='logo' src={logo} style={{ height: '4rem', width: 'auto' }} />
               </Navbar.Brand>
               <Navbar.Toggle />
               {collapse ?
