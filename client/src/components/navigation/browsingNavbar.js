@@ -1,15 +1,18 @@
-import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import {
   useSelector,
 } from 'react-redux';
 import useNavbar from './useNavbar';
 
-function BrowsingNavbar () {
+function BrowsingNavbar() {
   const user = useSelector((state) => state.user.value);
   const BrowserNavComponent = () => <>
+    <div className={'d-flex'}>
+      <Nav.Link href='/my-boards'>Features</Nav.Link>
+      <Nav.Link href='/my-boards'>How It Works</Nav.Link>
+    </div>
     {!user.isLoadingUser &&
-      <div className={'d-inline-flex'}>
+      <div className={'d-inline-flex'} style={{marginLeft: 'auto'}}>
         {user.isAuthenticated ?
           <Nav.Link href='/my-boards'>My Boards</Nav.Link> :
           <>
