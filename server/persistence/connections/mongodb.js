@@ -2,6 +2,7 @@ const {MongoClient} = require('mongodb');
 require('dotenv').config();
 const uri = process.env.DB_URI;
 const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+const clientPromise = client.connect();
 
 async function insertOne(doc, collection) {
     const {ops} = await collection.insertOne(doc);
@@ -43,23 +44,22 @@ function findAll(findQuery, collection) {
 }
 
 async function run() {
-    try {
-        await client.connect();
-        console.log("Successfully connected")
-    } catch (error) {
-        console.log("Problem connecting to mongo db", error);
-    }
+    await clientPromise;
+    console.log("Successfully connected");
+    return clientPromise;
 }
 
 
 module.exports = {
     client,
+    clientPromise,
     mongodb: {
         insertOne,
         update,
         deleteAll,
         findAndUpdate,
         client,
+        clientPromise,
         read,
         run,
         findAll,

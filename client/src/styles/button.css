@@ -2,7 +2,7 @@
     border-radius: 100px;
     border: none;
     min-height: 35px;
-    color: #ECEDED;
+    color: var(--color-on-accent);
 }
 
 .grow {
@@ -10,9 +10,9 @@
 }
 
 .primary {
-    background-color: #FF9314;
+    background-color: var(--color-accent);
 }
 
 .secondary {
-    background-color: #25282C;
+    background-color: var(--color-dark);
 }

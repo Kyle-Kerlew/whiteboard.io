@@ -1,4 +1,4 @@
-import React, {
+import {
   useRef,
 } from 'react';
 import '../../styles/toolbar.css';

@@ -10,5 +10,5 @@
 
 .bubble .text {
     font-weight: bold;
-    color: white;
+    color: var(--color-on-accent);
 }
