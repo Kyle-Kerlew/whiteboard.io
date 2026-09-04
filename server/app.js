@@ -5,7 +5,7 @@ const compression = require('compression');
 const cors = require('cors');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const {client} = require('./persistence/connections/mongodb');
+const {clientPromise} = require('./persistence/connections/mongodb');
 const passport = require('./configuration/passportConfig');
 const cookieParser = require('cookie-parser')
 const handleConnection = require("./socket/socketHandler");
@@ -31,10 +31,9 @@ const sessionConfig = session({
     saveUninitialized: false,
     resave: false,
     store: MongoStore.create({
-        mongoUrl: process.env.DB_URI,
         dbName: 'whiteboardio',
         collectionName: 'session',
-        clientPromise: client
+        clientPromise
     })
 });
 
@@ -42,23 +41,27 @@ expressServer.use(sessionConfig);
 expressServer.use(helmet());
 expressServer.use(passport.initialize());
 expressServer.use(passport.session());
-expressServer.use(cors({origin: process.env.REACT_APP_URL, methods: "*", credentials: true}));
+expressServer.use(cors({origin: process.env.REACT_APP_BASE_URL, methods: "*", credentials: true}));
 
 expressServer.use('/user', userController);
 expressServer.use('/whiteboard', whiteboardController);
 
 
-const server = expressServer.listen(process.env.PORT || 8080,'0.0.0.0', async (error) => {
-    if (error) {
-        console.log("Error starting express server", error);
-        return;
-    }
+async function startServer() {
     await mongodb.run();
-});
-const socketIoServer = new Server(server, {
-    serveClient: false,
-});
-socketIoServer.on('connection', handleConnection);
-socketIoServer.use(sharedSession(sessionConfig));
 
-module.exports = server;
+    const server = expressServer.listen(process.env.PORT || 8080, '0.0.0.0', (error) => {
+        if (error) {
+            console.log("Error starting express server", error);
+        }
+    });
+    const socketIoServer = new Server(server, {
+        serveClient: false,
+    });
+    socketIoServer.on('connection', handleConnection);
+    socketIoServer.use(sharedSession(sessionConfig));
+
+    return server;
+}
+
+module.exports = startServer();

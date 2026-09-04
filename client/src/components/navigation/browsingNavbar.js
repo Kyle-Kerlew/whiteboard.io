@@ -23,7 +23,7 @@ function BrowsingNavbar() {
       </div>}
   </>;
 
-  return useNavbar(BrowserNavComponent, false);
+  return useNavbar(BrowserNavComponent, false, 'browsing-navbar');
 }
 
 export default BrowsingNavbar;

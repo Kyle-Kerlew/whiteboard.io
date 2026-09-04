@@ -17,6 +17,7 @@ const Home = () => {
     const history = useHistory();
 
     async function createNewWhiteboard() {
+        console.log("hello")
         try {
             const response = await WhiteboardController.createWhiteboard();
             history.push(`/boards/${response._id}`);
@@ -27,39 +28,19 @@ const Home = () => {
 
     return (
         <div className='home-container'>
-            {/* Navigation Bar */}
-            <nav className='navbar-home'>
-                <div className='navbar-content'>
-                    <div className='navbar-logo'>
-                        <span className='logo-icon'>🎨</span>
-                        <span className='logo-text'>Whiteboard IO</span>
-                    </div>
-                    <div className='navbar-links'>
-                        <a href='#features'>Features</a>
-                        <a href='#how-it-works'>How It Works</a>
-                        <a href='https://github.com/Kyle-Kerlew/whiteboard.io' target='_blank' rel='noopener noreferrer'>GitHub</a>
-                    </div>
-                    <div className='navbar-actions'>
-                        <button className='login-btn'>Log In</button>
-                        <Button onClick={createNewWhiteboard} className='get-started-nav'>Get Started</Button>
-                    </div>
-                </div>
-            </nav>
-
-            {/* Hero Section */}
             <section className='hero-section'>
                 <div className='hero-content'>
                     <div className='hero-text'>
                         <span className='hero-label'>REAL-TIME COLLABORATIVE WHITEBOARD</span>
                         <h1>
-                            Think together.<br/>
+                            Think together.<br />
                             <span className='text-highlight'>Draw it out.</span>
                         </h1>
                         <p>A simple, open source whiteboard for brainstorming, planning, and turning ideas into something everyone can see.</p>
                         <div className='hero-buttons'>
-                            <Button grow onClick={createNewWhiteboard} className='hero-btn-primary'>Get Started for Free</Button>
-                            <Button 
-                                grow 
+                            <Button grow onClick={createNewWhiteboard} className='hero-btn-primary px-4 py-2'>Get Started for Free</Button>
+                            <Button
+                                grow
                                 variant='secondary'
                                 onClick={() => window.open('https://github.com/Kyle-Kerlew/whiteboard.io')}
                                 className='hero-btn-secondary'
@@ -80,8 +61,8 @@ const Home = () => {
                         </div>
                     </div>
                     <div className='hero-demo'>
-                        <img 
-                            src='https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop' 
+                        <img
+                            src='https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop'
                             alt='Whiteboard Demo'
                             className='demo-image'
                         />
@@ -98,17 +79,17 @@ const Home = () => {
                 </div>
                 <div className='features-grid'>
                     <div className='feature-card'>
-                        <img src={EasyToUseIcon} alt='Draw freely'/>
+                        <img src={EasyToUseIcon} alt='Draw freely' />
                         <h4>Draw freely</h4>
                         <p>Sketch diagrams, workflows, notes, and ideas without getting in the way.</p>
                     </div>
                     <div className='feature-card'>
-                        <img src={CollaborationFriendlyIcon} alt='Work together'/>
+                        <img src={CollaborationFriendlyIcon} alt='Work together' />
                         <h4>Work together</h4>
                         <p>See who's online and collaborate from anywhere.</p>
                     </div>
                     <div className='feature-card'>
-                        <img src={OrganizedIcon} alt='Stay organized'/>
+                        <img src={OrganizedIcon} alt='Stay organized' />
                         <h4>Stay organized</h4>
                         <p>Create boards for your projects and come back to them whenever you need.</p>
                     </div>
@@ -120,7 +101,7 @@ const Home = () => {
                 <div className='tools-content'>
                     <div className='tools-text'>
                         <span className='section-label'>YOUR IDEAS, ON ONE CANVAS</span>
-                        <h2>Simple tools.<br/>Clear thinking.</h2>
+                        <h2>Simple tools.<br />Clear thinking.</h2>
                         <p>Whiteboard IO gives you just the right tools to get ideas down fast and keep things moving.</p>
                         <ul className='tools-list'>
                             <li>Choose your color</li>
@@ -130,8 +111,8 @@ const Home = () => {
                         </ul>
                     </div>
                     <div className='tools-image'>
-                        <img 
-                            src='https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop' 
+                        <img
+                            src='https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop'
                             alt='Tools Demo'
                             className='tools-demo'
                         />
@@ -169,11 +150,11 @@ const Home = () => {
                 <div className='cta-content'>
                     <h2>Ready to put your ideas on the board?</h2>
                     <p>Free to use. Open source. Start creating.</p>
-                    <Button onClick={createNewWhiteboard} className='cta-button'>Get Started for Free</Button>
+                    <Button onClick={createNewWhiteboard} className='cta-button px-4 py-2'>Get Started for Free</Button>
                 </div>
             </section>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 };

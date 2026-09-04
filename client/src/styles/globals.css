@@ -1,4 +1,29 @@
 
+:root {
+    --color-page: #ffffff;
+    --color-surface: #f3f5f7;
+    --color-surface-strong: #e3e7eb;
+    --color-text: #151719;
+    --color-text-muted: #52606d;
+    --color-border: #cbd5e1;
+    --color-accent: #c2410c;
+    --color-accent-hover: #9a3412;
+    --color-accent-soft: rgba(194, 65, 12, 0.12);
+    --color-dark: #1f2933;
+    --color-dark-alt: #374151;
+    --color-on-accent: #ffffff;
+    --color-transparent: transparent;
+    --color-canvas: #d1d5db;
+    --color-switch-off: #64748b;
+    --color-switch-on: #0369a1;
+    --color-overlay: rgba(15, 23, 42, 0.62);
+    --color-light-overlay: rgba(255, 255, 255, 0.78);
+    --shadow-soft: 0 2px 8px rgba(15, 23, 42, 0.14);
+    --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.16);
+    --shadow-image: 0 10px 40px rgba(15, 23, 42, 0.2);
+    --shadow-modal: rgba(15, 23, 42, 0.32) 0 19px 38px, rgba(15, 23, 42, 0.24) 0 15px 12px;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -7,17 +32,17 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--color-surface);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--color-switch-off);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--color-dark-alt);
 }
 
 
@@ -38,6 +63,32 @@ html {
 
 .navbar > .nav-link {
     align-self: flex-end !important;
+}
+
+.browsing-navbar {
+    background-color: var(--color-dark-alt) !important;
+}
+
+.browsing-navbar .nav-link {
+    color: var(--color-page) !important;
+}
+
+.browsing-navbar .nav-link:hover,
+.browsing-navbar .nav-link:focus {
+    color: var(--color-page) !important;
+}
+
+.drawing-navbar {
+    background-color: var(--color-dark-alt) !important;
+}
+
+.drawing-navbar .nav-link {
+    color: var(--color-page) !important;
+}
+
+.drawing-navbar .nav-link:hover,
+.drawing-navbar .nav-link:focus {
+    color: var(--color-page) !important;
 }
 
 img svg {

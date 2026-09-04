@@ -12,7 +12,7 @@ function DrawingNavbar() {
             </>
         )
     };
-    return useNavbar(DrawingNavbarComponent, false);
+    return useNavbar(DrawingNavbarComponent, false, 'drawing-navbar');
 }
 
 export default DrawingNavbar;

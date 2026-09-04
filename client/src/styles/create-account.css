@@ -13,5 +13,5 @@
     text-align: center;
 }
 .container {
-    background-color: white;
+    background-color: var(--color-page);
 }

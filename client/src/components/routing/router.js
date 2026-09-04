@@ -18,7 +18,6 @@ import SignIn from '../page/signIn';
 import {
   Authentication as getAuthentication,
 } from '../shared/authentication';
-import 'dotenv/config';
 
 const Router = () => {
   const dispatch = useDispatch();

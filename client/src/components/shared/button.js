@@ -1,10 +1,9 @@
-import React from 'react';
 import '../../styles/button.css';
 
-function Button({onClick, variant = "primary", children, grow}) {
+function Button({onClick, variant = "primary", children, grow, className}) {
 
     function getClasses() {
-        return grow ? "button " + variant + ' ' + 'grow' : "button " + variant;
+        return grow ? "button " + variant + ' ' + 'grow' : "button " + variant + ' ' + className;
     }
 
     return (
