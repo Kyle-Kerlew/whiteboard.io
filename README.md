@@ -33,19 +33,11 @@ The project was built as an end-to-end full-stack application, covering **fronte
 
 ![Whiteboard.IO Whiteboard](docs/screenshots/whiteboard.png)
 
-### Active Users & Collaboration
-
-<!-- Add screenshot here -->
-
-![Whiteboard.IO Collaboration](docs/screenshots/collaboration.png)
-
 ### Whiteboard Management
 
 <!-- Add screenshot here -->
 
-![Whiteboard.IO Whiteboard Management](docs/screenshots/whiteboard-management.png)
-
-> **Tip:** Store your screenshots in `docs/screenshots/` within the repository so the README images remain available directly from GitHub.
+![Whiteboard.IO Whiteboard Management](docs/screenshots/your_whiteboards.png)
 
 ---
 
