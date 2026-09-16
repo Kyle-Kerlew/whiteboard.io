@@ -18,6 +18,9 @@ The project was built as an end-to-end full-stack application, covering **fronte
 
 ## Application Screenshots
 
+### Landing Page 
+![Whiteboard.IO Login](docs/screenshots/landing.png)
+
 ### Login & Authentication
 
 <!-- Add screenshot here -->
